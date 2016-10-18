@@ -11,5 +11,13 @@
 
     <artifactId>Rent-Main</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>Rent</groupId>
+            <artifactId>Rent-Data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
