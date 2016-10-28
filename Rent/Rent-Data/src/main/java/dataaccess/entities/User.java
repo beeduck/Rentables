@@ -1,5 +1,7 @@
 package dataaccess.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -8,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class User implements java.io.Serializable {
     private int id;
     private String username;
     private String password;
@@ -34,6 +36,7 @@ public class User {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;

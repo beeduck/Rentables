@@ -12,4 +12,6 @@ public interface UserDAO {
     @SuppressWarnings("unchecked")
     List<User> getAllUsers();
 
+    User getUserByUsername(String username);
+
 }

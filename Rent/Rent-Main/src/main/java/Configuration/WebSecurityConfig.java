@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
@@ -19,7 +20,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
  */
 @Configuration
 @EnableWebSecurity
-@ComponentScan
+@ComponentScan("Services, Configuration")
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,49 +30,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthSuccessHandler authSuccessHandler;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable();  // TODO: enable CSRF
 
-       /* http.authorizeRequests()
-                .antMatchers("*//**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll();*/
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
+            .and()
                 .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
-                .and()
+            .and()
                 .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                .and()
+            .and()
                 .logout();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("===================================\n=========================");
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("123").roles("USER");
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("123").roles("USER");
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean

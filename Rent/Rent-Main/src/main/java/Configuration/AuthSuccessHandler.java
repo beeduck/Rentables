@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by Duck on 10/19/2016.
@@ -24,20 +25,28 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-        if (savedRequest == null) {
-            clearAuthenticationAttributes(request);
-            return;
-        }
-        String targetUrlParam = getTargetUrlParameter();
-        if (isAlwaysUseDefaultTargetUrl() ||
-                (targetUrlParam != null &&
-                        StringUtils.hasText(request.getParameter(targetUrlParam)))) {
-            requestCache.removeRequest(request, response);
-            clearAuthenticationAttributes(request);
-            return;
-        }
+        PrintWriter printWriter = response.getWriter();
+        printWriter.write("TODO: Send user auth details");
+
+        response.setStatus(200);
+
+        // TODO: Return authenticated user details
+
+//        SavedRequest savedRequest = requestCache.getRequest(request, response);
+//
+//        if (savedRequest == null) {
+//            clearAuthenticationAttributes(request);
+//            return;
+//        }
+//        String targetUrlParam = getTargetUrlParameter();
+//        if (isAlwaysUseDefaultTargetUrl() ||
+//                (targetUrlParam != null &&
+//                        StringUtils.hasText(request.getParameter(targetUrlParam)))) {
+//            requestCache.removeRequest(request, response);
+//            clearAuthenticationAttributes(request);
+//            return;
+//        }
 
         clearAuthenticationAttributes(request);
     }
