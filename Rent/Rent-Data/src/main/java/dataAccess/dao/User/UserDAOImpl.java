@@ -32,4 +32,17 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
         return (User) criteria.uniqueResult();
     }
+
+    @Transactional
+    public boolean updateUser(User user) {
+        return this.update(user);
+    }
+
+    @Transactional
+    public User createUser(User user) {
+        if (this.save(user)) {
+            return user;
+        }
+        return null;
+    }
 }
