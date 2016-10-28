@@ -1,4 +1,4 @@
-package Wang;
+package Controllers;
 
 import dataAccess.dao.User.UserDAO;
 import dataAccess.entities.User;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@ComponentScan("dataAccess")
-public class HelloController {
+//@ComponentScan("dataAccess")
+public class GeneralController {
 
     @Autowired
     UserDAO userDao;
