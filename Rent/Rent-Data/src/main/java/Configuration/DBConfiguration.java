@@ -28,7 +28,7 @@ public class DBConfiguration {
     @Bean(name = "sessionFactory")
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource());
-        localSessionFactoryBuilder.scanPackages("dataaccess.entities")
+        localSessionFactoryBuilder.scanPackages("dataAccess.entities")
             .addProperties(getHibernateProperties());
         return localSessionFactoryBuilder.buildSessionFactory();
     }

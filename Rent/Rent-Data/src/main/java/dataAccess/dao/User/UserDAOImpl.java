@@ -1,6 +1,7 @@
-package dataaccess.dao;
+package dataAccess.dao.User;
 
-import dataaccess.entities.User;
+import dataAccess.dao.AbstractDAO;
+import dataAccess.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -14,22 +15,18 @@ import java.util.List;
  * Created by duck on 10/25/16.
  */
 @Repository
-public class UserDAOImpl implements UserDAO {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+        Criteria criteria = getSession().createCriteria(User.class);
         return criteria.list();
     }
 
     @Transactional(readOnly = true)
     public User getUserByUsername(String username) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+        Criteria criteria = getSession().createCriteria(User.class);
 
         criteria.add(Restrictions.eq("username", username));  // TODO: Move to constants file
 

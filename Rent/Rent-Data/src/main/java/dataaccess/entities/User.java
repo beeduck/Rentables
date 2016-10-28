@@ -1,4 +1,4 @@
-package dataaccess.entities;
+package dataAccess.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
