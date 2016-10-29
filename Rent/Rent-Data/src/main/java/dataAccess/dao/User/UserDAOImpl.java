@@ -54,4 +54,11 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         }
         return null;
     }
+
+    @Transactional
+    public boolean toggleUserActivation(User user) {
+        user.setActive(true);
+
+        return this.updateUser(user);
+    }
 }

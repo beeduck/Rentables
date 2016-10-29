@@ -42,10 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
                 .authorizeRequests()
-                .antMatchers("/", "/users/createUser").permitAll()
+                .antMatchers("/", "/users/**").permitAll()
                 .anyRequest().authenticated()
             .and()
-                .formLogin()
+                .formLogin()  // TODO: Remove form login?
                 .successHandler(authSuccessHandler)
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
             .and()

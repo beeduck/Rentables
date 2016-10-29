@@ -20,4 +20,6 @@ public interface UserDAO {
 
     User getUserById(int userId);
 
+    boolean toggleUserActivation(User user);
+
 }

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("Configuration, Controllers")
+@ComponentScan("Configuration, Controllers, Events")
 @EnableAutoConfiguration
 public class Application {
 
