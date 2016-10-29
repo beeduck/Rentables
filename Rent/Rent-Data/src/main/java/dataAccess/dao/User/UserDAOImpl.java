@@ -33,6 +33,15 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         return (User) criteria.uniqueResult();
     }
 
+    @Transactional(readOnly = true)
+    public User getUserById(int userId) {
+        Criteria criteria = getSession().createCriteria(User.class);
+
+        criteria.add(Restrictions.eq("id", userId));
+
+        return (User) criteria.uniqueResult();
+    }
+
     @Transactional
     public boolean updateUser(User user) {
         return this.update(user);

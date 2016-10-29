@@ -1,8 +1,11 @@
 package dataAccess.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by duck on 10/24/16.
@@ -14,9 +17,15 @@ public class User implements java.io.Serializable {
     private int id;
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
+    private boolean isActive;
+    private Timestamp createDate;
+    private Timestamp lastEditDate;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -44,5 +53,60 @@ public class User implements java.io.Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "lastEditDate")
+    public Timestamp getLastEditDate() {
+        return lastEditDate;
+    }
+
+    public void setLastEditDate(Timestamp lastEditDate) {
+        this.lastEditDate = lastEditDate;
+    }
+
+    @Basic
+    @Column(name = "createDate")
+    public Timestamp getCreateDate() {
+
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    @Basic
+    @Column(name = "isActive")
+    @Type(type = "yes_no")
+    public boolean isActive() {
+
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    @Basic
+    @Column(name = "lastName")
+    public String getLastName() {
+
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Basic
+    @Column(name = "firstName")
+    public String getFirstName() {
+
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }

@@ -1,5 +1,6 @@
 package Services.User;
 
+import DTOEntities.User.UserDTO;
 import dataAccess.entities.User;
 
 /**
@@ -8,5 +9,7 @@ import dataAccess.entities.User;
 public interface UserService {
     User updateUser(User user);
 
-    User createUser(User user);
+    User createUser(UserDTO userDTO);
+
+    User getUserById(int userId);
 }

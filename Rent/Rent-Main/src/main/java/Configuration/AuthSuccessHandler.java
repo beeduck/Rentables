@@ -32,6 +32,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         response.setStatus(200);
 
         // TODO: Return authenticated user details
+        // TODO: Update user modified timestamp
 
 //        SavedRequest savedRequest = requestCache.getRequest(request, response);
 //

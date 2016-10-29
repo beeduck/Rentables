@@ -17,6 +17,14 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException ) throws IOException {
-        response.sendError( HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized" );
+
+        String userJson = (String) request.getSession().getAttribute("USER_SESSION");
+
+        if(userJson == null) {
+            response.setStatus(401);
+        }
+
+
+//        response.sendError( HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized" );
     }
 }

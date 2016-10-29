@@ -38,11 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();  // TODO: enable CSRF
 
         http
-                .exceptionHandling()
+                .httpBasic()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/users/createUser").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()

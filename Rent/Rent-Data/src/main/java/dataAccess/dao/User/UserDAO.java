@@ -18,4 +18,6 @@ public interface UserDAO {
 
     User createUser(User user);
 
+    User getUserById(int userId);
+
 }
