@@ -1,5 +1,6 @@
 package Events.Registration;
 
+import Configuration.GeneralProperties;
 import Services.User.UserService;
 import dataAccess.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import javax.mail.internet.MimeMessage;
 import java.util.UUID;
 
 /**
@@ -17,6 +17,9 @@ import java.util.UUID;
  */
 @Component
 public class RegistrationListener implements ApplicationListener<RegistrationCompleteEvent> {
+
+    @Autowired
+    private GeneralProperties generalProperties;
 
     @Autowired
     private UserService userService;
@@ -42,19 +45,17 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         String subject = "Registration Confirmation";
         String confirmationUrl
                 = "/users/registrationConfirm?token=" + token;
+
+        // TODO: Create email template
         //String message = messages.getMessage("mailconfirm.mail.body", null, event.getLocale());
         String message = "Test";
 
 
-        MimeMessage emailMessage = mailSender.createMimeMessage();
-
-
-
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom("b33duck@gmail.com");
+        email.setFrom(generalProperties.getEmailUsername());
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " rn" + "beeduck.ddns.net:8080" + confirmationUrl);
+        email.setText(message + " rn" + "localhost:8080" + confirmationUrl);
         mailSender.send(email);
     }
 }

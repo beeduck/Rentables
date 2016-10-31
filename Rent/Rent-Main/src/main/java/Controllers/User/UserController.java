@@ -4,6 +4,9 @@ import DTOEntities.User.UserDTO;
 import Services.User.UserService;
 import dataAccess.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.Locale;
  */
 @RestController
 @RequestMapping("/users")
+@ComponentScan("Controllers")
 public class UserController {
     @Autowired
     UserService userService;
@@ -37,6 +41,7 @@ public class UserController {
                            HttpServletRequest request) {
 
         if(bindingResult.hasErrors()) {
+            // TODO: Handle binding result errors
             return null;
         }
 
@@ -44,11 +49,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public User registerUser(
-            WebRequest request,
-            @RequestParam("token") final String token) {
-
-        Locale locale = request.getLocale();
+    public User registerUser(@RequestParam("token") final String token) throws Exception {
 
         userService.completeRegistration(token);
 

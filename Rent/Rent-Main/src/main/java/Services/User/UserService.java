@@ -17,5 +17,5 @@ public interface UserService {
 
     boolean createVerificationToken(User user, String token);
 
-    void completeRegistration(String token);
+    void completeRegistration(String token) throws Exception;
 }

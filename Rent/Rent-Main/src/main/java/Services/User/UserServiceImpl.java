@@ -58,8 +58,6 @@ public class UserServiceImpl implements UserService {
 
         userDAO.createUser(user);
 
-//        String appUrl = "beeduck.ddns.net:8080";  // TODO: Change to retrieving request context path from controller
-
         applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(user, locale));
 
         return user;
@@ -84,19 +82,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void completeRegistration(String token) {
+    public void completeRegistration(String token) throws Exception {
         VerificationToken verificationToken = verificationTokenDAO.getTokenByString(token);
 
         if(verificationToken == null) {
-            // TODO: Send error if token does not exist
-            return;
+            // TODO: Create custom exception class
+            throw new Exception("Invalid token: " + token);
         }
 
         User user = userDAO.getUserById(verificationToken.getUserId());
 
         if( !verificationToken.getExpirationDate().after(new Date()) ) {
-            // TODO: Send error if token has expired
-            return;
+            // TODO: Create custom exception class
+            throw new Exception("Expired token: " + token);
         }
 
         user.setActive(true);
