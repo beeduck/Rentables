@@ -1,7 +1,7 @@
-package Wang;
+package Controllers;
 
-import dataaccess.dao.UserDAO;
-import dataaccess.entities.User;
+import dataAccess.dao.User.UserDAO;
+import dataAccess.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@ComponentScan("dataaccess")
-public class HelloController {
+//@ComponentScan("dataAccess")
+public class GeneralController {
 
     @Autowired
     UserDAO userDao;
 
     @RequestMapping("/")
-    public String index() {
+    public List<User> index() {
         List<User> userList = userDao.getAllUsers();
-        return "Greetings from Spring Boot!";
+        return userList;
     }
 
 }
