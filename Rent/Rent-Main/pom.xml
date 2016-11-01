@@ -59,6 +59,12 @@
         </dependency>
 
         <dependency>
+            <groupId>Rent</groupId>
+            <artifactId>Rent-Util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>4.1.3.RELEASE</version>
