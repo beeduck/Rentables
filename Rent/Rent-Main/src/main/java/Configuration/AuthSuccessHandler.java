@@ -29,6 +29,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         PrintWriter printWriter = response.getWriter();
         printWriter.write("TODO: Send user auth details");
 
+        
         response.setStatus(200);
 
         // TODO: Return authenticated user details
