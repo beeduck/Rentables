@@ -1,5 +1,12 @@
 package Configuration;
 
+import Services.User.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dataAccess.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -22,14 +29,28 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 
+    @Autowired
+    UserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
 
         PrintWriter printWriter = response.getWriter();
-        printWriter.write("TODO: Send user auth details");
+
+        Object object = authentication.getPrincipal();
+        String name = authentication.getName();
+        //userService.updateUserModifiedTime(user);
+
+        User user = userService.getUserByName(name);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String userString = mapper.writeValueAsString(user);
+
+        printWriter.write(userString);
 
         response.setStatus(200);
+        response.setHeader("content-type=application/json", "test");
 
         // TODO: Return authenticated user details
         // TODO: Update user modified timestamp

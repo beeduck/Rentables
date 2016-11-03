@@ -35,10 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found in DB.");
         }
 
-        // TODO: Add check if user is active
-
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), true, true, true, true, buildUserAuthority());
+                user.getUsername(), user.getPassword(), user.isActive(), true, true, true, buildUserAuthority());
     }
 
     private List<GrantedAuthority> buildUserAuthority() {

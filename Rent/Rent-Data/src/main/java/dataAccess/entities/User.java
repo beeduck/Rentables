@@ -56,6 +56,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "lastEditDate")
     public Timestamp getLastEditDate() {
         return lastEditDate;
@@ -66,6 +67,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "createDate")
     public Timestamp getCreateDate() {
 

@@ -15,7 +15,11 @@ public interface UserService {
 
     User getUserById(int userId);
 
+    User getUserByName(String username);
+
     boolean createVerificationToken(User user, String token);
 
     void completeRegistration(String token) throws Exception;
+
+    void updateUserModifiedTime(User user);
 }

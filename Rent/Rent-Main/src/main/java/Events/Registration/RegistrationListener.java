@@ -55,7 +55,7 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         email.setFrom(generalProperties.getEmailUsername());
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " rn" + "localhost:8080" + confirmationUrl);
+        email.setText(message + " localhost:8080" + confirmationUrl);
         mailSender.send(email);
     }
 }
