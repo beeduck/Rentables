@@ -15,6 +15,10 @@ public class UserPostDTO implements Serializable {
 
     private int userId;
 
+    private int priceCategoryId;
+
+    private double price;
+
     public UserPostDTO(){}
 
     public UserPostDTO(String title, String description, int userId) {
@@ -45,5 +49,21 @@ public class UserPostDTO implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getPriceCategoryId() {
+        return priceCategoryId;
+    }
+
+    public void setPriceCategoryId(int priceCategoryId) {
+        this.priceCategoryId = priceCategoryId;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

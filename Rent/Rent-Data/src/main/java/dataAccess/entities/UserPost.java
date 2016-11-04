@@ -22,6 +22,8 @@ public class UserPost implements Serializable {
     private Timestamp createDate;
     private Timestamp lastEditDate;
     private int userId;
+    private int priceCategoryId;
+    private double price;
 
     @Id
     @Column(name = "id")
@@ -93,6 +95,26 @@ public class UserPost implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "priceCategoryId")
+    public int getPriceCategoryId() {
+        return priceCategoryId;
+    }
+
+    public void setPriceCategoryId(int priceCategoryId) {
+        this.priceCategoryId = priceCategoryId;
+    }
+
+    @Basic
+    @Column(name = "price")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
 
