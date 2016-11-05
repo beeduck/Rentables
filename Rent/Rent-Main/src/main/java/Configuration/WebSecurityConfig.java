@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by Duck on 10/19/2016.
@@ -28,9 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
-    AuthSuccessHandler authSuccessHandler;
-
-    @Autowired
     UserDetailsService userDetailsService;
 
     @Override
@@ -38,18 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();  // TODO: enable CSRF
 
         http
-                .httpBasic()
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
-            .and()
                 .authorizeRequests()
-                .antMatchers("/", "/users/**").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
             .and()
-                .formLogin()  // TODO: Remove form login?
-                .successHandler(authSuccessHandler)
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-            .and()
-                .logout();
+                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Autowired
