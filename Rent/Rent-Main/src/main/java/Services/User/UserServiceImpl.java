@@ -7,7 +7,7 @@ import Utilities.DateUtils;
 import dataAccess.dao.Registration.VerificationTokenDAO;
 import dataAccess.dao.User.UserDAO;
 import dataAccess.entities.Registration.VerificationToken;
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -91,14 +91,14 @@ public class UserServiceImpl implements UserService {
 
         if(verificationToken == null) {
             // TODO: Create custom exception class
-            throw new Exception("Invalid token: " + token);
+            throw new IllegalArgumentException("Invalid token: " + token);
         }
 
         User user = userDAO.getUserById(verificationToken.getUserId());
 
         if( !verificationToken.getExpirationDate().after(new Date()) ) {
             // TODO: Create custom exception class
-            throw new Exception("Expired token: " + token);
+            throw new IllegalArgumentException("Expired token: " + token);
         }
 
         user.setActive(true);
@@ -110,5 +110,11 @@ public class UserServiceImpl implements UserService {
         user.setLastEditDate(DateUtils.getCurrentUtcTimestamp());
 
         userDAO.updateUser(user);
+    }
+
+    public void updateUserModifiedTime(String username) {
+        User user = userDAO.getUserByUsername(username);
+
+        updateUserModifiedTime(user);
     }
 }

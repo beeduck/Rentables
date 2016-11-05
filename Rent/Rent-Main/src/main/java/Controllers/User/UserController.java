@@ -2,7 +2,8 @@ package Controllers.User;
 
 import DTOEntities.User.UserDTO;
 import Services.User.UserService;
-import dataAccess.entities.User;
+import Utilities.Constants;
+import dataAccess.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +29,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST,
-           headers = "content-type=application/json")
+                    headers = Constants.CONTENT_TYPE_JSON)
     public User createUser(@Valid @RequestBody final UserDTO userDTO,
                            HttpServletRequest request) {
 
         return userService.createUser(userDTO, request.getLocale());
     }
 
-    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
     public User registerUser(@RequestParam("token") final String token) throws Exception {
 
         userService.completeRegistration(token);

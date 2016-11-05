@@ -2,7 +2,7 @@ package Events.Registration;
 
 import Configuration.GeneralProperties;
 import Services.User.UserService;
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
@@ -44,18 +44,16 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         String recipientAddress = user.getUsername();
         String subject = "Registration Confirmation";
         String confirmationUrl
-                = "/users/registrationConfirm?token=" + token;
+                = "/users/confirmRegistration?token=" + token;
 
         // TODO: Create email template
         //String message = messages.getMessage("mailconfirm.mail.body", null, event.getLocale());
-        String message = "Test";
-
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom(generalProperties.getEmailUsername());
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " localhost:8080" + confirmationUrl);
+        email.setText("Confirm registration: localhost:8080" + confirmationUrl);
         mailSender.send(email);
     }
 }

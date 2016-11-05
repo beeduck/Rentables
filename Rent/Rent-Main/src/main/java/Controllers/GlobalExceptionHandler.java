@@ -1,7 +1,6 @@
 package Controllers;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,16 +22,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ResponseEntity<String> JavaException(Exception e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public String JavaException(Exception e) {
+        return e.getMessage();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
-    public ResponseEntity<String> illegalArgumentException(Exception e) {
+    public String illegalArgumentException(Exception e) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        return e.getMessage();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
