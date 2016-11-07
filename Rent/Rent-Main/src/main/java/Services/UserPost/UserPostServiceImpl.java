@@ -25,6 +25,8 @@ public class UserPostServiceImpl implements UserPostService {
         post.setTitle(userPostDTO.getTitle());
         post.setDescription(userPostDTO.getDescription());
         post.setUserId(userPostDTO.getUserId());
+        post.setPrice(userPostDTO.getPrice());
+        post.setPriceCategoryId(userPostDTO.getPriceCategoryId());
         Date date = new Date();
         Timestamp timeStamp = new Timestamp(date.getTime());
         post.setCreateDate(timeStamp);

@@ -21,10 +21,12 @@ public class UserPostDTO implements Serializable {
 
     public UserPostDTO(){}
 
-    public UserPostDTO(String title, String description, int userId) {
+    public UserPostDTO(String title, String description, int userId, int priceCategoryId, double price) {
         this.title = title;
         this.description = description;
         this.userId = userId;
+        this.priceCategoryId = priceCategoryId;
+        this.price = price;
     }
 
     public String getTitle() {
