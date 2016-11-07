@@ -1,7 +1,7 @@
 package Services.Login;
 
-import dataAccess.dao.User.UserDAO;
-import dataAccess.entities.user.User;
+import dataaccess.api.dao.User.UserDAO;
+import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by Duck on 10/27/2016.
  */
-@ComponentScan("dataAccess")
+@ComponentScan("dataaccess")
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired

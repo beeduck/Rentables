@@ -1,6 +1,6 @@
-package dataAccess.dao.UserPost;
+package dataaccess.api.dao.UserPost;
 
-import dataAccess.entities.UserPost;
+import dataaccess.api.entities.UserPost;
 
 import java.util.List;
 

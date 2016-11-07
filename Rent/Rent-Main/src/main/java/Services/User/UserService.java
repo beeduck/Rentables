@@ -1,7 +1,7 @@
 package Services.User;
 
 import DTOEntities.User.UserDTO;
-import dataAccess.entities.user.User;
+import dataaccess.api.entities.User;
 
 import java.util.Locale;
 

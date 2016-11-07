@@ -1,7 +1,7 @@
-package dataAccess.dao.Registration;
+package dataaccess.api.dao.Registration;
 
-import dataAccess.dao.AbstractDAO;
-import dataAccess.entities.Registration.VerificationToken;
+import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.entities.Registration.VerificationToken;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

@@ -1,11 +1,10 @@
-package dataAccess.entities.user;
+package dataaccess.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by duck on 10/24/16.

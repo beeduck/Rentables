@@ -1,7 +1,7 @@
-package dataAccess.dao.UserPost;
+package dataaccess.api.dao.UserPost;
 
-import dataAccess.dao.AbstractDAO;
-import dataAccess.entities.UserPost;
+import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.entities.UserPost;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;

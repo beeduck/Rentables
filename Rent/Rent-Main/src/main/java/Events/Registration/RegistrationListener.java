@@ -2,7 +2,7 @@ package Events.Registration;
 
 import Configuration.GeneralProperties;
 import Services.User.UserService;
-import dataAccess.entities.user.User;
+import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;

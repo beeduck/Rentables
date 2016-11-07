@@ -1,4 +1,4 @@
-package dataAccess.entities;
+package dataaccess.api.entities;
 
 import javax.persistence.*;
 

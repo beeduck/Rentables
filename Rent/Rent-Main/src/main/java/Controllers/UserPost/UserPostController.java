@@ -2,7 +2,7 @@ package Controllers.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Services.UserPost.UserPostService;
-import dataAccess.entities.UserPost;
+import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.validation.BindingResult;

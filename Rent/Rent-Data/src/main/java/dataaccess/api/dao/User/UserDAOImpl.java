@@ -1,7 +1,7 @@
-package dataAccess.dao.User;
+package dataaccess.api.dao.User;
 
-import dataAccess.dao.AbstractDAO;
-import dataAccess.entities.user.User;
+import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
