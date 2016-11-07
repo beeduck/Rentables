@@ -1,12 +1,14 @@
 package Configuration;
 
+import Services.User.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dataAccess.entities.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,9 @@ import java.io.PrintWriter;
 @Component
 public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    @Autowired
+    UserService userService;
+
     private RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
@@ -27,27 +32,17 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                                         Authentication authentication) throws ServletException, IOException {
 
         PrintWriter printWriter = response.getWriter();
-        printWriter.write("TODO: Send user auth details");
+
+        String username = authentication.getName();
+        User user = userService.getUserByName(username);
+        userService.updateUserModifiedTime(user);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String userString = mapper.writeValueAsString(user);
+
+        printWriter.write(userString);
 
         response.setStatus(200);
-
-        // TODO: Return authenticated user details
-        // TODO: Update user modified timestamp
-
-//        SavedRequest savedRequest = requestCache.getRequest(request, response);
-//
-//        if (savedRequest == null) {
-//            clearAuthenticationAttributes(request);
-//            return;
-//        }
-//        String targetUrlParam = getTargetUrlParameter();
-//        if (isAlwaysUseDefaultTargetUrl() ||
-//                (targetUrlParam != null &&
-//                        StringUtils.hasText(request.getParameter(targetUrlParam)))) {
-//            requestCache.removeRequest(request, response);
-//            clearAuthenticationAttributes(request);
-//            return;
-//        }
 
         clearAuthenticationAttributes(request);
     }

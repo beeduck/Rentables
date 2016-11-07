@@ -2,10 +2,12 @@ package Services.User;
 
 import DTOEntities.User.UserDTO;
 import Events.Registration.RegistrationCompleteEvent;
+import Utilities.Constants;
+import Utilities.DateUtils;
 import dataAccess.dao.Registration.VerificationTokenDAO;
 import dataAccess.dao.User.UserDAO;
 import dataAccess.entities.Registration.VerificationToken;
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,15 +46,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User createUser(UserDTO userDTO, Locale locale) {
 
-
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
 
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
+        Timestamp timestamp = DateUtils.getCurrentUtcTimestamp();
         user.setCreateDate(timestamp);
         user.setLastEditDate(timestamp);
 
@@ -67,11 +67,15 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserById(userId);
     }
 
+    public User getUserByName(String username) {
+        return userDAO.getUserByUsername(username);
+    }
+
     @Transactional
     public boolean createVerificationToken(User user, String token) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Timestamp(cal.getTime().getTime()));
-        cal.add(Calendar.MINUTE, 60*24);
+        cal.setTime(DateUtils.getCurrentUtcTimestamp());
+        cal.add(Calendar.MINUTE, Constants.TOKEN_TIME_DURATION);
         Date expirationDate = new Date(cal.getTime().getTime());
 
         VerificationToken verificationToken = new VerificationToken(token, user.getId(), expirationDate);
@@ -87,18 +91,30 @@ public class UserServiceImpl implements UserService {
 
         if(verificationToken == null) {
             // TODO: Create custom exception class
-            throw new Exception("Invalid token: " + token);
+            throw new IllegalArgumentException("Invalid token: " + token);
         }
 
         User user = userDAO.getUserById(verificationToken.getUserId());
 
         if( !verificationToken.getExpirationDate().after(new Date()) ) {
             // TODO: Create custom exception class
-            throw new Exception("Expired token: " + token);
+            throw new IllegalArgumentException("Expired token: " + token);
         }
 
         user.setActive(true);
         userDAO.toggleUserActivation(user);
         verificationTokenDAO.removeToken(verificationToken);
+    }
+
+    public void updateUserModifiedTime(User user) {
+        user.setLastEditDate(DateUtils.getCurrentUtcTimestamp());
+
+        userDAO.updateUser(user);
+    }
+
+    public void updateUserModifiedTime(String username) {
+        User user = userDAO.getUserByUsername(username);
+
+        updateUserModifiedTime(user);
     }
 }

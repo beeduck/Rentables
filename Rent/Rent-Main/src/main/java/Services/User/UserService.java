@@ -1,7 +1,7 @@
 package Services.User;
 
 import DTOEntities.User.UserDTO;
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 
 import java.util.Locale;
 
@@ -15,7 +15,13 @@ public interface UserService {
 
     User getUserById(int userId);
 
+    User getUserByName(String username);
+
     boolean createVerificationToken(User user, String token);
 
     void completeRegistration(String token) throws Exception;
+
+    void updateUserModifiedTime(User user);
+
+    void updateUserModifiedTime(String username);
 }

@@ -1,11 +1,9 @@
 package dataAccess.dao.User;
 
 import dataAccess.dao.AbstractDAO;
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

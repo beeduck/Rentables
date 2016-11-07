@@ -1,4 +1,4 @@
-package dataAccess.entities;
+package dataAccess.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
@@ -56,6 +56,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "lastEditDate")
     public Timestamp getLastEditDate() {
         return lastEditDate;
@@ -66,6 +67,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "createDate")
     public Timestamp getCreateDate() {
 
@@ -89,6 +91,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "lastName")
     public String getLastName() {
 
@@ -100,6 +103,7 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "firstName")
     public String getFirstName() {
 

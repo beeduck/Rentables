@@ -1,6 +1,6 @@
 package Events.Registration;
 
-import dataAccess.entities.User;
+import dataAccess.entities.user.User;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;
