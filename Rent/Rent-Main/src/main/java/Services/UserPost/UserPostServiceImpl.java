@@ -1,6 +1,7 @@
 package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
+import Utilities.DateUtils;
 import dataAccess.dao.UserPost.UserPostDAO;
 import dataAccess.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,16 @@ public class UserPostServiceImpl implements UserPostService {
         post.setTitle(userPostDTO.getTitle());
         post.setDescription(userPostDTO.getDescription());
         post.setUserId(userPostDTO.getUserId());
-        Date date = new Date();
-        Timestamp timeStamp = new Timestamp(date.getTime());
+        post.setPrice(userPostDTO.getPrice());
+        post.setPriceCategoryId(userPostDTO.getPriceCategoryId());
+        Timestamp timeStamp = DateUtils.getCurrentUtcTimestamp();
         post.setCreateDate(timeStamp);
         post.setLastEditDate(timeStamp);
         userPostDAO.createPost(post);
     }
 
     public void updateUser(UserPost userPost) {
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
+        Timestamp timestamp = DateUtils.getCurrentUtcTimestamp();
         userPost.setLastEditDate(timestamp);
         userPostDAO.updatePost(userPost);
     }
