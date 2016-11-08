@@ -11,6 +11,8 @@ public interface UserPostDAO {
 
     List<UserPost> getPostsByUserId(int userId);
 
+    List<UserPost> getPostByKeywords(String[] keywords);
+
     UserPost getPostById(int id);
 
     UserPost createPost(UserPost userPost);

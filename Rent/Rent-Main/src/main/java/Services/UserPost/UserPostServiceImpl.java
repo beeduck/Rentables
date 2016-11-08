@@ -44,6 +44,10 @@ public class UserPostServiceImpl implements UserPostService {
         return userPostDAO.getPostsByUserId(userId);
     }
 
+    public List<UserPost> getPostsByKeywords(String[] keywords) {
+        return userPostDAO.getPostByKeywords(keywords);
+    }
+
     public UserPost getPostById(int id) {
         return userPostDAO.getPostById(id);
     }
