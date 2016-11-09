@@ -1,9 +1,11 @@
 package com.rent.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -24,6 +26,7 @@ import javax.sql.DataSource;
 public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+//    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -38,16 +41,7 @@ public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapt
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .jdbc(authDataSource)
-                .withClient("sampleClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read")
-                .autoApprove(true)
-            .and()
-                .withClient("clientIdPassword")
-                .secret("secret")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .scopes("read");
+                .jdbc(authDataSource);
     }
 
     @Override
@@ -56,7 +50,8 @@ public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapt
 
         authorizationServerEndpointsConfigurer
                 .tokenStore(tokenStore())
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
     @Bean
