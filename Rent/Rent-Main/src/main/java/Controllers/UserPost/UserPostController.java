@@ -38,6 +38,11 @@ public class UserPostController {
         return userPostService.getPostsByKeywords(keywords);
     }
 
+    @RequestMapping(value = "/getPostsByPriceCategory/{priceCategoryId}", method = RequestMethod.GET)
+    public List<UserPost> getPostsByPriceCategory(@PathVariable("priceCategoryId") int priceCategoryId) {
+        return userPostService.getPostsByPriceCategory(priceCategoryId);
+    }
+
     @RequestMapping(value = "/createPost", method = RequestMethod.POST,
             headers = "content-type=application/json")
     public void createPost(@Valid @RequestBody final UserPostDTO userPostDTO,

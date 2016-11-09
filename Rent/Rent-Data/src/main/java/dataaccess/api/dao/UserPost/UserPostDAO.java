@@ -13,6 +13,8 @@ public interface UserPostDAO {
 
     List<UserPost> getPostByKeywords(String[] keywords);
 
+    List<UserPost> getPostsByPriceCategory(int id);
+
     UserPost getPostById(int id);
 
     UserPost createPost(UserPost userPost);

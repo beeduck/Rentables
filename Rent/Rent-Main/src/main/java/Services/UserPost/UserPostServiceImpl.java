@@ -50,4 +50,8 @@ public class UserPostServiceImpl implements UserPostService {
     public UserPost getPostById(int id) {
         return userPostDAO.getPostById(id);
     }
+
+    public List<UserPost> getPostsByPriceCategory(int id) {
+        return userPostDAO.getPostsByPriceCategory(id);
+    }
 }

@@ -19,4 +19,6 @@ public interface UserPostService {
     List<UserPost> getPostsByKeywords(String[] keywords);
 
     UserPost getPostById(int id);
+
+    List<UserPost> getPostsByPriceCategory(int id);
 }

@@ -24,15 +24,22 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
     }
 
     @Transactional(readOnly = true)
+
     public List<UserPost> getPostByKeywords(String[] keywords) {
         Criteria criteria = getSession().createCriteria(UserPost.class);
         Disjunction disjunction = Restrictions.disjunction();
-        for(String e : keywords) {
-            disjunction.add(Restrictions.like("title",e+"%"));
-            disjunction.add(Restrictions.like("title",e));
-            disjunction.add(Restrictions.like("title","%"+e));
+        for (String e : keywords) {
+            disjunction.add(Restrictions.like("title", e + "%"));
+            disjunction.add(Restrictions.like("title", e));
+            disjunction.add(Restrictions.like("title", "%" + e));
         }
         criteria.add(disjunction);
+        return criteria.list();
+    }
+
+    public List<UserPost> getPostsByPriceCategory(int id) {
+        Criteria criteria =getSession().createCriteria(UserPost.class);
+        criteria.add(Restrictions.eq("priceCategoryId", id));
         return criteria.list();
     }
 
