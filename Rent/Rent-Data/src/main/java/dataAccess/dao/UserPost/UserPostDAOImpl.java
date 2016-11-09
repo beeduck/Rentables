@@ -28,7 +28,9 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
         Criteria criteria = getSession().createCriteria(UserPost.class);
         Disjunction disjunction = Restrictions.disjunction();
         for(String e : keywords) {
+            disjunction.add(Restrictions.like("title",e+"%"));
             disjunction.add(Restrictions.like("title",e));
+            disjunction.add(Restrictions.like("title","%"+e));
         }
         criteria.add(disjunction);
         return criteria.list();
