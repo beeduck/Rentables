@@ -3,6 +3,7 @@ package dataAccess.dao.UserPost;
 import dataAccess.dao.AbstractDAO;
 import dataAccess.entities.UserPost;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,19 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
     public List<UserPost> getPostsByUserId(int userId) {
         Criteria criteria = getSession().createCriteria(UserPost.class);
         criteria.add(Restrictions.eq("userId",userId));
+        return criteria.list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserPost> getPostByKeywords(String[] keywords) {
+        Criteria criteria = getSession().createCriteria(UserPost.class);
+        Disjunction disjunction = Restrictions.disjunction();
+        for(String e : keywords) {
+            disjunction.add(Restrictions.like("title",e+"%"));
+            disjunction.add(Restrictions.like("title",e));
+            disjunction.add(Restrictions.like("title","%"+e));
+        }
+        criteria.add(disjunction);
         return criteria.list();
     }
 

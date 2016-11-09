@@ -33,6 +33,11 @@ public class UserPostController {
         return userPostService.getPostById(id);
     }
 
+    @RequestMapping(value = "/getPostsByKeywords", method = RequestMethod.GET)
+    public List<UserPost> getPostsByKeywords(@RequestParam("keyword") String[] keywords) {
+        return userPostService.getPostsByKeywords(keywords);
+    }
+
     @RequestMapping(value = "/createPost", method = RequestMethod.POST,
             headers = "content-type=application/json")
     public void createPost(@Valid @RequestBody final UserPostDTO userPostDTO,
