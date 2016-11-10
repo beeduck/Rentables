@@ -1,24 +1,21 @@
 package Utilities.Filters;
 
-import java.util.List;
-
 /**
  * Created by Asad on 11/9/2016.
  */
 public class UserPostFilter {
-    private List<String> keywords;
+
+    private String[] keywords = null;
     private int userId;
     private int priceCategoryId;
     private double maxPrice;
     private double minPrice;
 
-    public UserPostFilter() {}
-
-    public List<String> getKeywords() {
+    public String[] getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(List<String> keywords) {
+    public void setKeywords(String[] keywords) {
         this.keywords = keywords;
     }
 

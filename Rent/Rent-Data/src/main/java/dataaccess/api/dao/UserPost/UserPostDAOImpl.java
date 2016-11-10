@@ -5,6 +5,7 @@ import dataaccess.api.dao.AbstractDAO;
 import dataaccess.api.entities.UserPost;
 import Utilities.Filters.UserPostFilter;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -48,7 +49,32 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
 
     @Transactional(readOnly = true)
     public List<UserPost> getPostsByFilter(UserPostFilter filter) {
-        return null;
+        Criteria criteria = getSession().createCriteria(UserPost.class);
+        Conjunction conjunction = Restrictions.conjunction();
+        if(filter.getUserId() > 0) {
+            conjunction.add(Restrictions.eq("userId", filter.getUserId()));
+        }
+        if(filter.getMaxPrice() > 0.0) {
+            conjunction.add(Restrictions.le("price", filter.getMaxPrice()));
+        }
+        if(filter.getMinPrice() > 0.0) {
+            conjunction.add(Restrictions.ge("price", filter.getMinPrice()));
+        }
+        if(filter.getPriceCategoryId() > 0) {
+            conjunction.add(Restrictions.eq("priceCategoryId", filter.getPriceCategoryId()));
+        }
+        if(filter.getKeywords().length > 0) {
+            Disjunction disjunction = Restrictions.disjunction();
+            for (String e : filter.getKeywords()) {
+                disjunction.add(Restrictions.like("title", e + "%"));
+                disjunction.add(Restrictions.like("title", e));
+                disjunction.add(Restrictions.like("title", "%" + e));
+                disjunction.add(Restrictions.like("title", "%" + e + "%"));
+            }
+            conjunction.add(disjunction);
+        }
+        criteria.add(conjunction);
+        return criteria.list();
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,7 @@
 package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
+import Utilities.Filters.UserPostFilter;
 import dataaccess.api.entities.UserPost;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface UserPostService {
     UserPost getPostById(int id);
 
     List<UserPost> getPostsByPriceCategory(int id);
+
+    List<UserPost> getPostsByFilter(UserPostFilter filter);
 }

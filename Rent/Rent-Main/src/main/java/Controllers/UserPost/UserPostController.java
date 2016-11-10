@@ -2,6 +2,7 @@ package Controllers.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Services.UserPost.UserPostService;
+import Utilities.Filters.UserPostFilter;
 import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,6 +37,11 @@ public class UserPostController {
     @RequestMapping(value = "/getPostsByKeywords", method = RequestMethod.GET)
     public List<UserPost> getPostsByKeywords(@RequestParam("keyword") String[] keywords) {
         return userPostService.getPostsByKeywords(keywords);
+    }
+
+    @RequestMapping(value = "/getPostsByFilter", method = RequestMethod.GET)
+    public List<UserPost> getPostsByFilter(UserPostFilter filter) {
+        return userPostService.getPostsByFilter(filter);
     }
 
     @RequestMapping(value = "/getPostsByPriceCategory/{priceCategoryId}", method = RequestMethod.GET)

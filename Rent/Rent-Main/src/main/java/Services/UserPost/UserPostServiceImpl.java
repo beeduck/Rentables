@@ -2,6 +2,7 @@ package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Utilities.DateUtils;
+import Utilities.Filters.UserPostFilter;
 import dataaccess.api.dao.UserPost.UserPostDAO;
 import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,9 @@ public class UserPostServiceImpl implements UserPostService {
 
     public List<UserPost> getPostsByPriceCategory(int id) {
         return userPostDAO.getPostsByPriceCategory(id);
+    }
+
+    public List<UserPost> getPostsByFilter(UserPostFilter filter) {
+        return userPostDAO.getPostsByFilter(filter);
     }
 }
