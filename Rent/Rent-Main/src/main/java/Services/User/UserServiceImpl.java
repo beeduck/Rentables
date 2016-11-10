@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     public boolean createVerificationToken(User user, String token) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(DateUtils.getCurrentUtcTimestamp());
-        cal.add(Calendar.MINUTE, Constants.TOKEN_TIME_DURATION);
+        cal.add(Calendar.MINUTE, Constants.REGISTRATION_TOKEN_TIME_DURATION);
         Date expirationDate = new Date(cal.getTime().getTime());
 
         VerificationToken verificationToken = new VerificationToken(token, user.getId(), expirationDate);
