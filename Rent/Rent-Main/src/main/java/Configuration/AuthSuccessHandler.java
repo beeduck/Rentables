@@ -2,7 +2,7 @@ package Configuration;
 
 import Services.User.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccess.entities.user.User;
+import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
