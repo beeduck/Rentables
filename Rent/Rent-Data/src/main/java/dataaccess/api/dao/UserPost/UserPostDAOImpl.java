@@ -1,7 +1,9 @@
 package dataaccess.api.dao.UserPost;
 
+
 import dataaccess.api.dao.AbstractDAO;
 import dataaccess.api.entities.UserPost;
+import Utilities.Filters.UserPostFilter;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
@@ -24,7 +26,6 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
     }
 
     @Transactional(readOnly = true)
-
     public List<UserPost> getPostByKeywords(String[] keywords) {
         Criteria criteria = getSession().createCriteria(UserPost.class);
         Disjunction disjunction = Restrictions.disjunction();
@@ -32,15 +33,22 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
             disjunction.add(Restrictions.like("title", e + "%"));
             disjunction.add(Restrictions.like("title", e));
             disjunction.add(Restrictions.like("title", "%" + e));
+            disjunction.add(Restrictions.like("title", "%" + e + "%"));
         }
         criteria.add(disjunction);
         return criteria.list();
     }
 
+    @Transactional(readOnly = true)
     public List<UserPost> getPostsByPriceCategory(int id) {
-        Criteria criteria =getSession().createCriteria(UserPost.class);
+        Criteria criteria = getSession().createCriteria(UserPost.class);
         criteria.add(Restrictions.eq("priceCategoryId", id));
         return criteria.list();
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserPost> getPostsByFilter(UserPostFilter filter) {
+        return null;
     }
 
     @Transactional(readOnly = true)
