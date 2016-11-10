@@ -26,7 +26,6 @@ import javax.sql.DataSource;
 public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-//    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Autowired
