@@ -10,4 +10,8 @@ public class Constants {
 
     // CONTENT TYPES
     public static final String CONTENT_TYPE_JSON = "content-type=application/json";
+
+
+    // OAUTH2 AUTHORIZATION
+    public static final String OAUTH2_AUTH_USER = "#oauth2.hasScope('user')";
 }
