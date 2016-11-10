@@ -1,7 +1,8 @@
-package dataAccess.dao;
+package dataaccess.api.dao;
 
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.List;
  */
 //@ComponentScan("Configuration")
 public abstract class AbstractDAO {
+
     @Autowired
+    @Qualifier("apiSessionFactory")
     private SessionFactory sessionFactory;
 
     protected final Session getSession() { return sessionFactory.getCurrentSession(); }

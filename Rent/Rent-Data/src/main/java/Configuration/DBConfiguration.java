@@ -24,11 +24,19 @@ public class DBConfiguration {
     @Autowired
     private DBPropertiesPlaceholder dbPropertiesPlaceholder;
 
-    @Bean(name = "sessionFactory")
+    @Bean(name = "apiSessionFactory")
     public SessionFactory sessionFactory() {
-        LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource());
-        localSessionFactoryBuilder.scanPackages("dataAccess.entities")
+        LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(apiDataSource());
+        localSessionFactoryBuilder.scanPackages("dataaccess.api.entities")
             .addProperties(getHibernateProperties());
+        return localSessionFactoryBuilder.buildSessionFactory();
+    }
+
+    @Bean(name = "authSessionFactory")
+    public SessionFactory authSessionFactory() {
+        LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(authDataSource());
+        localSessionFactoryBuilder.scanPackages("dataaccess.auth.entities")
+                .addProperties(getHibernateProperties());
         return localSessionFactoryBuilder.buildSessionFactory();
     }
 
@@ -45,17 +53,40 @@ public class DBConfiguration {
     }
 
     @Bean(destroyMethod = "close")
-    public DataSource dataSource() {
+    public DataSource apiDataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {
-            comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getDriver());
+            comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getApiDriver());
         } catch (PropertyVetoException e) {
             System.out.println(e);  // TODO: Log error
         }
-        comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getUrl());
-        comboPooledDataSource.setUser(dbPropertiesPlaceholder.getUsername());
-        comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getPassword());
+        comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getApiUrl());
+        comboPooledDataSource.setUser(dbPropertiesPlaceholder.getApiUsername());
+        comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getApiPassword());
 
+        setDBPoolSettings(comboPooledDataSource);
+
+        return comboPooledDataSource;
+    }
+
+    @Bean(destroyMethod = "close")
+    public DataSource authDataSource() {
+        ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
+        try {
+            comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getAuthDriver());
+        } catch (PropertyVetoException e) {
+            System.out.println(e);  // TODO: Log error
+        }
+        comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getAuthUrl());
+        comboPooledDataSource.setUser(dbPropertiesPlaceholder.getAuthUsername());
+        comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getAuthPassword());
+
+        setDBPoolSettings(comboPooledDataSource);
+
+        return comboPooledDataSource;
+    }
+
+    private void setDBPoolSettings(ComboPooledDataSource comboPooledDataSource) {
         comboPooledDataSource.setInitialPoolSize(3);
         comboPooledDataSource.setMinPoolSize(10);
         comboPooledDataSource.setMaxPoolSize(100);
@@ -63,7 +94,6 @@ public class DBConfiguration {
         comboPooledDataSource.setAcquireIncrement(1);
         comboPooledDataSource.setMaxStatements(0);
         comboPooledDataSource.setNumHelperThreads(30);
-        return comboPooledDataSource;
     }
 
     @Bean(name = "transactionManager")

@@ -12,32 +12,63 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @PropertySource({"classpath:jdbc.properties"})
 public class DBPropertiesPlaceholder {
-    @Value("${jdbc.driver}")
-    private String driver;
+    @Value("${jdbc.apiDriver}")
+    private String apiDriver;
 
-    @Value("${jdbc.url}")
-    private String url;
+    @Value("${jdbc.apiUrl}")
+    private String apiUrl;
 
-    @Value("${jdbc.username}")
-    private String username;
+    @Value("${jdbc.apiUsername}")
+    private String apiUsername;
 
-    @Value("${jdbc.password}")
-    private String password;
+    @Value("${jdbc.apiPassword}")
+    private String apiPassword;
 
-    public String getDriver() {
-        return driver;
+    @Value("${jdbc.authDriver}")
+    private String authDriver;
+
+    @Value("${jdbc.authUrl}")
+    private String authUrl;
+
+    @Value("${jdbc.authUsername}")
+    private String authUsername;
+
+    @Value("${jdbc.authPassword}")
+    private String authPassword;
+
+    public String getApiDriver() {
+        return apiDriver;
     }
 
-    public String getUrl() {
-        return url;
+    public String getApiUrl() {
+        return apiUrl;
     }
 
-    public String getUsername() {
-        return username;
+    public String getApiUsername() {
+        return apiUsername;
     }
 
-    public String getPassword() {
-        return password;
+    public String getApiPassword() {
+        return apiPassword;
+    }
+
+    public String getAuthPassword() {
+        return authPassword;
+    }
+
+    public String getAuthUsername() {
+
+        return authUsername;
+    }
+
+    public String getAuthUrl() {
+
+        return authUrl;
+    }
+
+    public String getAuthDriver() {
+
+        return authDriver;
     }
 
     @Bean

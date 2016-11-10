@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.auth.configuration;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,6 +1,6 @@
 package Services.UserPost;
 
-import dataAccess.entities.PriceCategory;
+import dataaccess.api.entities.PriceCategory;
 
 import java.util.List;
 

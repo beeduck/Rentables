@@ -1,7 +1,7 @@
 package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
-import dataAccess.entities.UserPost;
+import dataaccess.api.entities.UserPost;
 
 import java.util.List;
 

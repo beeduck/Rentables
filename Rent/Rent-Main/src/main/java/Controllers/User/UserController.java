@@ -3,7 +3,7 @@ package Controllers.User;
 import DTOEntities.User.UserDTO;
 import Services.User.UserService;
 import Utilities.Constants;
-import dataAccess.entities.user.User;
+import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;

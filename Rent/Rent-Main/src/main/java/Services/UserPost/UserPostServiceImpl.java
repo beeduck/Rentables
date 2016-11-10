@@ -2,13 +2,12 @@ package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Utilities.DateUtils;
-import dataAccess.dao.UserPost.UserPostDAO;
-import dataAccess.entities.UserPost;
+import dataaccess.api.dao.UserPost.UserPostDAO;
+import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,7 +1,7 @@
 package Services.UserPost;
 
-import dataAccess.dao.UserPost.PriceCategoryDAO;
-import dataAccess.entities.PriceCategory;
+import dataaccess.api.dao.UserPost.PriceCategoryDAO;
+import dataaccess.api.entities.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

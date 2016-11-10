@@ -41,12 +41,10 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <descriptorRefs>
+                <com.rent.auth.configuration                  <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                </configuration>
-            </plugin>-->
+                </com.rent.auth.configuration          </plugin>-->
 
         </plugins>
     </build>

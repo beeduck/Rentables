@@ -1,7 +1,7 @@
 package Controllers.UserPost;
 
 import Services.UserPost.PriceCategoryService;
-import dataAccess.entities.PriceCategory;
+import dataaccess.api.entities.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;

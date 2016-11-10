@@ -1,5 +1,9 @@
+package com.rent.auth;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,14 +11,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("Configuration, Controllers, Events")
-@EnableAutoConfiguration
-public class Application {
+@ComponentScan("com.rent.auth.configuration")
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+public class OAuthServer extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        ApplicationContext ctx = SpringApplication.run(OAuthServer.class, args);
 
-        System.out.println("Let's inspect the beans provided by Spring Boot:");
+        System.out.println("Starting Oauth Server\nBeans:");
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);

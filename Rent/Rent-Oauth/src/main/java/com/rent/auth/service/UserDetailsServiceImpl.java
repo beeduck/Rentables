@@ -1,4 +1,4 @@
-package Services.Login;
+package com.rent.auth.service;
 
 import dataaccess.api.dao.User.UserDAO;
 import dataaccess.api.entities.User;
@@ -18,11 +18,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Duck on 10/27/2016.
+ * Created by duck on 11/9/16.
  */
 @ComponentScan("dataaccess")
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     UserDAO userDAO;
 

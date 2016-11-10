@@ -1,6 +1,6 @@
-package dataAccess.dao.User;
+package dataaccess.api.dao.User;
 
-import dataAccess.entities.user.User;
+import dataaccess.api.entities.User;
 
 import java.util.List;
 

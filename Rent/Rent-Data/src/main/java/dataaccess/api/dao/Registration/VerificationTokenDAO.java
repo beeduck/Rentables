@@ -1,6 +1,6 @@
-package dataAccess.dao.Registration;
+package dataaccess.api.dao.Registration;
 
-import dataAccess.entities.Registration.VerificationToken;
+import dataaccess.api.entities.Registration.VerificationToken;
 
 /**
  * Created by Duck on 10/28/2016.

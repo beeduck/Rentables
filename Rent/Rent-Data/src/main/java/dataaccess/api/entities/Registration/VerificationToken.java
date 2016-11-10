@@ -1,4 +1,4 @@
-package dataAccess.entities.Registration;
+package dataaccess.api.entities.Registration;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

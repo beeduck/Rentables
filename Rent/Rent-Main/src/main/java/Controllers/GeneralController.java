@@ -1,7 +1,7 @@
 package Controllers;
 
-import dataAccess.dao.User.UserDAO;
-import dataAccess.entities.user.User;
+import dataaccess.api.dao.User.UserDAO;
+import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-//@ComponentScan("dataAccess")
+//@ComponentScan("dataaccess")
 public class GeneralController {
 
     @Autowired
