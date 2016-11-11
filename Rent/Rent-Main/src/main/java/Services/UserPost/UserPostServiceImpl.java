@@ -40,23 +40,11 @@ public class UserPostServiceImpl implements UserPostService {
         userPostDAO.updatePost(userPost);
     }
 
-    public List<UserPost> getPostsByUserId(int userId) {
-        return userPostDAO.getPostsByUserId(userId);
-    }
-
-    public List<UserPost> getPostsByKeywords(String[] keywords) {
-        return userPostDAO.getPostByKeywords(keywords);
-    }
-
     public UserPost getPostById(int id) {
         return userPostDAO.getPostById(id);
     }
 
-    public List<UserPost> getPostsByPriceCategory(int id) {
-        return userPostDAO.getPostsByPriceCategory(id);
-    }
-
-    public List<UserPost> getPostsByFilter(UserPostFilter filter) {
-        return userPostDAO.getPostsByFilter(filter);
+    public List<UserPost> getPosts(UserPostFilter filter) {
+        return userPostDAO.getPosts(filter);
     }
 }

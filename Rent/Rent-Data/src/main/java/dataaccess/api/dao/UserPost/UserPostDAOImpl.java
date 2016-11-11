@@ -20,37 +20,12 @@ import java.util.List;
 public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
 
     @Transactional(readOnly = true)
-    public List<UserPost> getPostsByUserId(int userId) {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
-        criteria.add(Restrictions.eq("userId",userId));
-        return criteria.list();
-    }
-
-    @Transactional(readOnly = true)
-    public List<UserPost> getPostByKeywords(String[] keywords) {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
-        Disjunction disjunction = Restrictions.disjunction();
-        for (String e : keywords) {
-            disjunction.add(Restrictions.like("title", e + "%"));
-            disjunction.add(Restrictions.like("title", e));
-            disjunction.add(Restrictions.like("title", "%" + e));
-            disjunction.add(Restrictions.like("title", "%" + e + "%"));
-        }
-        criteria.add(disjunction);
-        return criteria.list();
-    }
-
-    @Transactional(readOnly = true)
-    public List<UserPost> getPostsByPriceCategory(int id) {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
-        criteria.add(Restrictions.eq("priceCategoryId", id));
-        return criteria.list();
-    }
-
-    @Transactional(readOnly = true)
-    public List<UserPost> getPostsByFilter(UserPostFilter filter) {
+    public List<UserPost> getPosts(UserPostFilter filter) {
         Criteria criteria = getSession().createCriteria(UserPost.class);
         Conjunction conjunction = Restrictions.conjunction();
+        if(filter.getId() > 0) {
+            conjunction.add(Restrictions.eq("id", filter.getId()));
+        }
         if(filter.getUserId() > 0) {
             conjunction.add(Restrictions.eq("userId", filter.getUserId()));
         }
@@ -63,7 +38,7 @@ public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
         if(filter.getPriceCategoryId() > 0) {
             conjunction.add(Restrictions.eq("priceCategoryId", filter.getPriceCategoryId()));
         }
-        if(filter.getKeywords().length > 0) {
+        if(filter.getKeywords() != null) {
             Disjunction disjunction = Restrictions.disjunction();
             for (String e : filter.getKeywords()) {
                 disjunction.add(Restrictions.like("title", e + "%"));

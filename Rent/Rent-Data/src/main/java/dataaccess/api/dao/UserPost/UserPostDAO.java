@@ -10,13 +10,7 @@ import java.util.List;
  */
 public interface UserPostDAO {
 
-    List<UserPost> getPostsByUserId(int userId);
-
-    List<UserPost> getPostByKeywords(String[] keywords);
-
-    List<UserPost> getPostsByPriceCategory(int id);
-
-    List<UserPost> getPostsByFilter(UserPostFilter filter);
+    List<UserPost> getPosts(UserPostFilter filter);
 
     UserPost getPostById(int id);
 

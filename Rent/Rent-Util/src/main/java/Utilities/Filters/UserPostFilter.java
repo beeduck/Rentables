@@ -1,15 +1,29 @@
 package Utilities.Filters;
 
+import javax.validation.Valid;
+
 /**
  * Created by Asad on 11/9/2016.
  */
 public class UserPostFilter {
 
+    @Valid
     private String[] keywords = null;
+
+    @Valid
     private int userId;
+
+    @Valid
     private int priceCategoryId;
+
+    @Valid
     private double maxPrice;
+
+    @Valid
     private double minPrice;
+
+    @Valid
+    private int id;
 
     public String[] getKeywords() {
         return keywords;
@@ -50,4 +64,13 @@ public class UserPostFilter {
     public void setMinPrice(double minPrice) {
         this.minPrice = minPrice;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

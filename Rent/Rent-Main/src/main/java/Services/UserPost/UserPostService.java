@@ -15,13 +15,7 @@ public interface UserPostService {
 
     void updateUser(UserPost userPost);
 
-    List<UserPost> getPostsByUserId(int userId);
-
-    List<UserPost> getPostsByKeywords(String[] keywords);
-
     UserPost getPostById(int id);
 
-    List<UserPost> getPostsByPriceCategory(int id);
-
-    List<UserPost> getPostsByFilter(UserPostFilter filter);
+    List<UserPost> getPosts(UserPostFilter filter);
 }
