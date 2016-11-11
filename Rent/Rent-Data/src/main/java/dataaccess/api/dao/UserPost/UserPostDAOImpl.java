@@ -1,7 +1,6 @@
 package dataaccess.api.dao.UserPost;
 
-
-import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.dao.ApiDAO;
 import dataaccess.api.entities.UserPost;
 import Utilities.Filters.UserPostFilter;
 import org.hibernate.Criteria;
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by Asad on 10/31/2016.
  */
 @Repository
-public class UserPostDAOImpl extends AbstractDAO implements UserPostDAO {
+public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
 
     @Transactional(readOnly = true)
     public List<UserPost> getPosts(UserPostFilter filter) {

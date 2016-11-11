@@ -1,7 +1,7 @@
-package com.rent.auth.service;
+package com.rent.auth.service.login;
 
+import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import dataaccess.api.dao.User.UserDAO;
-import dataaccess.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,12 +25,12 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserDAO userDAO;
+    UserDetailsDAO userDetailsDAO;
 
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        User user = userDAO.getUserByUsername(username);
+        com.rent.data.dataaccess.auth.entities.user.UserDetails user = userDetailsDAO.getUserByUsername(username);
 
         if(user == null) {
             throw new UsernameNotFoundException("User not found in DB.");

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("com.rent.auth.configuration")
+@ComponentScan("com.rent.auth.configuration, Utilities, com.rent.data.dataaccess.auth")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class OAuthServer {
 

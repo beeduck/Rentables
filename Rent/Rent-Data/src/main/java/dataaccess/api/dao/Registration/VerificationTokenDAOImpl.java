@@ -1,6 +1,6 @@
 package dataaccess.api.dao.Registration;
 
-import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.dao.ApiDAO;
 import dataaccess.api.entities.Registration.VerificationToken;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by Duck on 10/28/2016.
  */
 @Repository
-public class VerificationTokenDAOImpl extends AbstractDAO implements VerificationTokenDAO {
+public class VerificationTokenDAOImpl extends ApiDAO implements VerificationTokenDAO {
 
     public boolean saveVerificationToken(VerificationToken token) {
         return this.save(token);

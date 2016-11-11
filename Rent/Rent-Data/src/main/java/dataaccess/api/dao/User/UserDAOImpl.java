@@ -1,6 +1,6 @@
 package dataaccess.api.dao.User;
 
-import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.dao.ApiDAO;
 import dataaccess.api.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by duck on 10/25/16.
  */
 @Repository
-public class UserDAOImpl extends AbstractDAO implements UserDAO {
+public class UserDAOImpl extends ApiDAO implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package Controllers;
+package Utilities;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by duck on 10/30/16.
+ * Created by Duck on 11/11/2016.
  */
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
