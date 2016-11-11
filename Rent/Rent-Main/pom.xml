@@ -13,7 +13,7 @@
 
     <properties>
         <!-- The main class to start by executing java -jar -->
-        <start-class>Application</start-class>
+        <start-class>ApiServer</start-class>
     </properties>
 
     <build>
@@ -41,10 +41,12 @@
                         </goals>
                     </execution>
                 </executions>
-                <com.rent.auth.configuration                  <descriptorRefs>
+                <configuration>
+                    <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                </com.rent.auth.configuration          </plugin>-->
+                </configuration>
+                          </plugin>-->
 
         </plugins>
     </build>

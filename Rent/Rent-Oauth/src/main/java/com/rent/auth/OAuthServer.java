@@ -13,7 +13,7 @@ import java.util.Arrays;
 @Configuration
 @ComponentScan("com.rent.auth.configuration")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class OAuthServer extends SpringBootServletInitializer {
+public class OAuthServer {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(OAuthServer.class, args);
