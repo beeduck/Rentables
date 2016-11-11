@@ -1,6 +1,7 @@
 package dataaccess.api.dao.UserPost;
 
 import dataaccess.api.entities.UserPost;
+import Utilities.Filters.UserPostFilter;
 
 import java.util.List;
 
@@ -9,9 +10,7 @@ import java.util.List;
  */
 public interface UserPostDAO {
 
-    List<UserPost> getPostsByUserId(int userId);
-
-    List<UserPost> getPostByKeywords(String[] keywords);
+    List<UserPost> getPosts(UserPostFilter filter);
 
     UserPost getPostById(int id);
 

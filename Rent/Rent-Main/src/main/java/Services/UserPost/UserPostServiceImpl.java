@@ -2,6 +2,7 @@ package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Utilities.DateUtils;
+import Utilities.Filters.UserPostFilter;
 import dataaccess.api.dao.UserPost.UserPostDAO;
 import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +40,11 @@ public class UserPostServiceImpl implements UserPostService {
         userPostDAO.updatePost(userPost);
     }
 
-    public List<UserPost> getPostsByUserId(int userId) {
-        return userPostDAO.getPostsByUserId(userId);
-    }
-
-    public List<UserPost> getPostsByKeywords(String[] keywords) {
-        return userPostDAO.getPostByKeywords(keywords);
-    }
-
     public UserPost getPostById(int id) {
         return userPostDAO.getPostById(id);
+    }
+
+    public List<UserPost> getPosts(UserPostFilter filter) {
+        return userPostDAO.getPosts(filter);
     }
 }

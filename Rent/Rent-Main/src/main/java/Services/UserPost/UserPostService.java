@@ -1,6 +1,7 @@
 package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
+import Utilities.Filters.UserPostFilter;
 import dataaccess.api.entities.UserPost;
 
 import java.util.List;
@@ -14,9 +15,7 @@ public interface UserPostService {
 
     void updateUser(UserPost userPost);
 
-    List<UserPost> getPostsByUserId(int userId);
-
-    List<UserPost> getPostsByKeywords(String[] keywords);
-
     UserPost getPostById(int id);
+
+    List<UserPost> getPosts(UserPostFilter filter);
 }
