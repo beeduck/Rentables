@@ -8,6 +8,7 @@ import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import dataaccess.api.dao.User.UserInfoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDetailsDAO userDetailsDAO;
+
+    @Autowired
+    UserInfoDAO userInfoDAO;
 
     @Autowired
     RegistrationTokenDAO registrationTokenDAO;
@@ -58,20 +62,22 @@ public class UserServiceImpl implements UserService {
         user.setLastEditDate(timestamp);
 
         userDetailsDAO.createUser(user);
+        userInfoDAO.addUser(user.getId(), user.getUsername());
 
-        registrationEmail(user, locale);
+        String token = UUID.randomUUID().toString();
+        createRegistrationToken(user, token);
+        registrationEmail(user, locale, token);
+
 
         return user;
     }
 
-    private void registrationEmail(UserDetails user, Locale locale) {
-        String token = UUID.randomUUID().toString();
-        createRegistrationToken(user, token);
+    private void registrationEmail(UserDetails user, Locale locale, String token) {
 
         String recipientAddress = user.getUsername();
         String subject = "Registration Confirmation";
         String confirmationUrl
-                = "/users/confirmRegistration?token=" + token;
+                = "/users/completeRegistration?token=" + token;
 
         // TODO: Create email template
 
@@ -83,7 +89,6 @@ public class UserServiceImpl implements UserService {
         mailSender.send(email);
     }
 
-    @Transactional
     private boolean createRegistrationToken(UserDetails user, String token) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(DateUtils.getCurrentUtcTimestamp());

@@ -27,11 +27,12 @@ public class UserController {
         return userService.createUser(userDTO, request.getLocale());
     }
 
-    @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
+    @RequestMapping(value = "/completeRegistration", method = RequestMethod.GET)
     public UserDetails registerUser(@RequestParam("token") final String token) throws Exception {
 
         userService.completeRegistration(token);
 
+        // TODO: Return confirmation
         return null;
     }
 
