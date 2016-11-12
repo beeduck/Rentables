@@ -1,7 +1,6 @@
 package com.rent.auth.service.login;
 
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
-import dataaccess.api.dao.User.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.GrantedAuthority;

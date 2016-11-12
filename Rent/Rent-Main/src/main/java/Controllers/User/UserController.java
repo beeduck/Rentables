@@ -1,15 +1,11 @@
 package Controllers.User;
 
-import DTOEntities.User.UserDTO;
-import Services.User.UserService;
-import Utilities.Constants;
-import dataaccess.api.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import dataaccess.api.entities.user.UserInfo;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Duck on 10/28/2016.
@@ -18,29 +14,12 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 @ComponentScan("Controllers, Services")
 public class UserController {
-    @Autowired
-    UserService userService;
 
     @RequestMapping(value = "/userInfo/{userId}", method = RequestMethod.GET)
-    public User getUserInfo(@PathVariable("userId") int userId) {
-        User user = userService.getUserById(userId);
+    public UserInfo getUserInfo(@PathVariable("userId") int userId) {
+//        User user = userService.getUserById(userId);
 
-        return user;
-    }
-
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST,
-                    headers = Constants.CONTENT_TYPE_JSON)
-    public User createUser(@Valid @RequestBody final UserDTO userDTO,
-                           HttpServletRequest request) {
-
-        return userService.createUser(userDTO, request.getLocale());
-    }
-
-    @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
-    public User registerUser(@RequestParam("token") final String token) throws Exception {
-
-        userService.completeRegistration(token);
-
+//        return user;
         return null;
     }
 }
