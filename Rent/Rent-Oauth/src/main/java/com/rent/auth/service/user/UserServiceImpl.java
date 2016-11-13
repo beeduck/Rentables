@@ -27,7 +27,7 @@ import java.util.UUID;
  * Created by Duck on 11/11/2016.
  */
 @Service("userService")
-@ComponentScan("com.rent.data.dataaccess.auth")
+@ComponentScan("com.rent.data.dataaccess.auth, dataaccess")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -108,14 +108,14 @@ public class UserServiceImpl implements UserService {
 
         if(registrationToken == null) {
             // TODO: Create custom exception class
-            throw new IllegalArgumentException("Invalid token: " + token);
+            throw new IllegalArgumentException("Invalid registration token: " + token);
         }
 
         UserDetails user = userDetailsDAO.getUserById(registrationToken.getUserId());
 
         if( !registrationToken.getExpirationDate().after(new Date()) ) {
             // TODO: Create custom exception class
-            throw new IllegalArgumentException("Expired token: " + token);
+            throw new IllegalArgumentException("Expired registration token: " + token);
         }
 
         user.setActive(true);
