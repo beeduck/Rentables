@@ -1,5 +1,7 @@
 package com.rent.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -27,6 +29,12 @@ public class ApiServer {
         for (String beanName : beanNames) {
             System.out.println(beanName);
         }
+
+        final Logger logger = LoggerFactory.getLogger(ApiServer.class);
+        logger.info("Info message");
+        logger.debug("debug message");
+        logger.warn("warning message");
+        logger.error("error message");
     }
 
 }
