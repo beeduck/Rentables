@@ -35,7 +35,7 @@ public class DBConfiguration {
     @Bean(name = "authSessionFactory")
     public SessionFactory authSessionFactory() {
         LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(authDataSource());
-        localSessionFactoryBuilder.scanPackages("dataaccess.auth.entities")
+        localSessionFactoryBuilder.scanPackages("com.rent.data.dataaccess.auth.entities")
                 .addProperties(getHibernateProperties());
         return localSessionFactoryBuilder.buildSessionFactory();
     }

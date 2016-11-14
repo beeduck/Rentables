@@ -1,17 +1,16 @@
-package Configuration;
+package com.rent.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 /**
- * Created by Duck on 10/28/2016.
+ * Created by Duck on 11/11/2016.
  */
 @Configuration
-@ComponentScan("Configuration")
+@ComponentScan
 public class MailConfig {
 
     @Autowired

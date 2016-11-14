@@ -1,4 +1,4 @@
-package dataaccess.api.entities;
+package com.rent.data.dataaccess.auth.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
@@ -11,8 +11,8 @@ import java.sql.Timestamp;
  */
 
 @Entity
-@Table(name = "Users")
-public class User implements java.io.Serializable {
+@Table(name = "UserDetails")
+public class UserDetails implements java.io.Serializable {
     private int id;
     private String username;
     private String password;

@@ -1,6 +1,6 @@
 package dataaccess.api.dao.UserPost;
 
-import dataaccess.api.dao.AbstractDAO;
+import dataaccess.api.dao.ApiDAO;
 import dataaccess.api.entities.PriceCategory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 @Repository
-public class PriceCategoryDAOImpl extends AbstractDAO implements PriceCategoryDAO {
+public class PriceCategoryDAOImpl extends ApiDAO implements PriceCategoryDAO {
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)

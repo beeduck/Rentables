@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("com.rent.auth.configuration")
+@ComponentScan("com.rent.auth.configuration, Utilities, com.rent.data.dataaccess.auth")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class OAuthServer extends SpringBootServletInitializer {
+public class OAuthServer {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(OAuthServer.class, args);

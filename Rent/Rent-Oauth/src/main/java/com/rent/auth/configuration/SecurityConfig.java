@@ -46,7 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                // TODO: Add restriction for user update password / deactivate
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint)

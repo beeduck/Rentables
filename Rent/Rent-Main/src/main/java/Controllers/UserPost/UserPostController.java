@@ -6,7 +6,6 @@ import Utilities.Filters.UserPostFilter;
 import dataaccess.api.entities.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

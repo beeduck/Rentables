@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,31 +7,41 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
- * Created by duck on 10/31/16.
+ * Created by Duck on 11/11/2016.
  */
 @Configuration
 @PropertySource({"classpath:general.properties"})
 public class GeneralProperties {
 
-    @Value("${auth.server.endpoint}")
-    private String authServerEndpoint;
+    @Value("${email.host}")
+    private String emailHost;
 
-    @Value("${auth.server.client}")
-    private String authClient;
+    @Value("${email.protocol}")
+    private String emailProtocol;
 
-    @Value("${auth.server.secret}")
-    private String authSecret;
+    @Value("${email.port}")
+    private int emailPort;
 
-    public String getAuthServerEndpoint() {
-        return authServerEndpoint;
+    @Value("${email.username}")
+    private String emailUsername;
+
+    public String getEmailUsername() {
+        return emailUsername;
     }
 
-    public String getAuthClient() {
-        return authClient;
+    public int getEmailPort() {
+
+        return emailPort;
     }
 
-    public String getAuthSecret() {
-        return authSecret;
+    public String getEmailProtocol() {
+
+        return emailProtocol;
+    }
+
+    public String getEmailHost() {
+
+        return emailHost;
     }
 
     @Bean
