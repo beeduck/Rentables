@@ -1,4 +1,4 @@
-package Utilities.Filters;
+package com.rent.utility.filters;
 
 import javax.validation.Valid;
 

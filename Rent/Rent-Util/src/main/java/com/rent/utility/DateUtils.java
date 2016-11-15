@@ -1,4 +1,4 @@
-package Utilities;
+package com.rent.utility;
 
 import java.sql.Timestamp;
 import java.util.Date;

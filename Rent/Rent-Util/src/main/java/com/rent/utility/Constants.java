@@ -1,4 +1,4 @@
-package Utilities;
+package com.rent.utility;
 
 /**
  * Created by duck on 11/1/16.

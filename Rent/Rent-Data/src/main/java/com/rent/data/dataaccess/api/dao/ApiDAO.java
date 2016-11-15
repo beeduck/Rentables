@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Created by Duck on 10/27/2016.
  */
-//@ComponentScan("com.rent.api.configuration")
 public abstract class ApiDAO extends AbstractBaseDAO {
 
     @Autowired

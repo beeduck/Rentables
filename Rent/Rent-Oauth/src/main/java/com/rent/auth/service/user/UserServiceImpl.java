@@ -1,7 +1,7 @@
 package com.rent.auth.service.user;
 
-import Utilities.Constants;
-import Utilities.DateUtils;
+import com.rent.utility.Constants;
+import com.rent.utility.DateUtils;
 import com.rent.auth.configuration.GeneralProperties;
 import com.rent.auth.dto.user.UserDTO;
 import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;

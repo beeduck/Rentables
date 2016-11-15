@@ -1,8 +1,8 @@
 package com.rent.api.services.listing;
 
 import com.rent.api.dto.listing.UserPostDTO;
-import Utilities.DateUtils;
-import Utilities.Filters.UserPostFilter;
+import com.rent.utility.DateUtils;
+import com.rent.utility.filters.UserPostFilter;
 import com.rent.data.dataaccess.api.dao.listing.UserPostDAO;
 import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;

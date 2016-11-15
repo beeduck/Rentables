@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 @Configuration
 @ComponentScan("com.rent.api," +
-               "Utilities," +
+               "com.rent.utility," +
                "com.rent.data.configuration," +
                "com.rent.data.dataaccess.api")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class/*, SecurityAutoConfiguration.class*/})

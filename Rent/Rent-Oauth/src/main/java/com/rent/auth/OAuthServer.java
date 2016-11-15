@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 @Configuration
 @ComponentScan("com.rent.auth," +
-               "Utilities," +
+               "com.rent.utility," +
                "com.rent.data.dataaccess.auth," +
                "com.rent.data.configuration")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})

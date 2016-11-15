@@ -2,7 +2,7 @@ package com.rent.api.controllers.listing;
 
 import com.rent.api.dto.listing.UserPostDTO;
 import com.rent.api.services.listing.UserPostService;
-import Utilities.Filters.UserPostFilter;
+import com.rent.utility.filters.UserPostFilter;
 import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
