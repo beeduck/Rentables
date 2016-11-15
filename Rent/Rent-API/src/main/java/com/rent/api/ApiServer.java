@@ -29,12 +29,6 @@ public class ApiServer {
         for (String beanName : beanNames) {
             System.out.println(beanName);
         }
-
-        final Logger logger = LoggerFactory.getLogger(ApiServer.class);
-        logger.info("Info message");
-        logger.debug("debug message");
-        logger.warn("warning message");
-        logger.error("error message");
     }
 
 }
