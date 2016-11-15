@@ -2,7 +2,6 @@ package com.rent.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -10,7 +9,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  * Created by Duck on 11/11/2016.
  */
 @Configuration
-@ComponentScan
 public class MailConfig {
 
     @Autowired

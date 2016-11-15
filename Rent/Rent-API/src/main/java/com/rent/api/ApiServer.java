@@ -1,9 +1,8 @@
-package com.rent.auth;
+package com.rent.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,17 +10,17 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("com.rent.auth," +
+@ComponentScan("com.rent.api," +
                "com.rent.utility," +
-               "com.rent.data.dataaccess.auth," +
-               "com.rent.data.configuration")
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-public class OAuthServer {
+               "com.rent.data.configuration," +
+               "com.rent.data.dataaccess.api")
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class/*, SecurityAutoConfiguration.class*/})
+public class ApiServer {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(OAuthServer.class, args);
+        ApplicationContext ctx = SpringApplication.run(ApiServer.class, args);
 
-        System.out.println("Starting Oauth Server\nBeans:");
+        System.out.println("Let's inspect the beans provided by Spring Boot:");
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);

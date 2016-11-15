@@ -1,6 +1,6 @@
 package com.rent.auth.controller.user;
 
-import Utilities.Constants;
+import com.rent.utility.Constants;
 import com.rent.auth.dto.user.UserDTO;
 import com.rent.auth.service.user.UserService;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;

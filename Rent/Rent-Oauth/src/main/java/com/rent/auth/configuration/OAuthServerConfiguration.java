@@ -1,9 +1,8 @@
 package com.rent.auth.configuration;
 
-import Utilities.Constants;
+import com.rent.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +22,6 @@ import javax.sql.DataSource;
  * Created by Duck on 11/5/2016.
  */
 @Configuration
-@ComponentScan("com.rent.auth.configuration, Configuration")
 @EnableAuthorizationServer
 public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
