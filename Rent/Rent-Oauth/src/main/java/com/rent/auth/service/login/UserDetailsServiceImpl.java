@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         com.rent.data.dataaccess.auth.entities.user.UserDetails user = userDetailsDAO.getUserByUsername(username);
 
         if(user == null) {
-            throw new UsernameNotFoundException("user not found in DB.");
+            throw new UsernameNotFoundException("User not found in DB.");
         }
 
         return new User(user.getUsername(), user.getPassword(), user.isActive(), true, true, true, buildUserAuthority());

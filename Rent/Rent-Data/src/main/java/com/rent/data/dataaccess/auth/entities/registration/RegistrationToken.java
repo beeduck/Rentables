@@ -11,8 +11,6 @@ import java.util.Date;
 @Entity
 @Table(name = "RegistrationTokens")
 public class RegistrationToken {
-    // TODO: Move to service logic
-    private static final int EXPIRATION = 60 * 24;
 
     private int id;
 
@@ -28,14 +26,6 @@ public class RegistrationToken {
         this.userId = userId;
         this.token = token;
         this.expirationDate = expirationDate;
-    }
-
-    // TODO: Move to service logic
-    private Date calculateExpiryDate(int expirationTimeInMinutes) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Timestamp(cal.getTime().getTime()));
-        cal.add(Calendar.MINUTE, expirationTimeInMinutes);
-        return new Date(cal.getTime().getTime());
     }
 
     @Basic
