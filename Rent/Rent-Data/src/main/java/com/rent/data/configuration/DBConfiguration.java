@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.data.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
@@ -27,7 +27,7 @@ public class DBConfiguration {
     @Bean(name = "apiSessionFactory")
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(apiDataSource());
-        localSessionFactoryBuilder.scanPackages("dataaccess.api.entities")
+        localSessionFactoryBuilder.scanPackages("com.rent.data.dataaccess.api.entities")
             .addProperties(getHibernateProperties());
         return localSessionFactoryBuilder.buildSessionFactory();
     }

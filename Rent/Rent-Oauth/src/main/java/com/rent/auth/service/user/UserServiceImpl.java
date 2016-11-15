@@ -4,11 +4,11 @@ import Utilities.Constants;
 import Utilities.DateUtils;
 import com.rent.auth.configuration.GeneralProperties;
 import com.rent.auth.dto.user.UserDTO;
+import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
 import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;
-import dataaccess.api.dao.User.UserInfoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,7 +27,7 @@ import java.util.UUID;
  * Created by Duck on 11/11/2016.
  */
 @Service("userService")
-@ComponentScan("com.rent.data.dataaccess.auth, dataaccess")
+@ComponentScan("com.rent.data.dataaccess.api")
 public class UserServiceImpl implements UserService {
 
     @Autowired

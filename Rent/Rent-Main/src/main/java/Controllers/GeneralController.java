@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@ComponentScan("dataaccess")
 public class GeneralController {
 
     @PreAuthorize(Constants.OAUTH2_AUTH_USER)

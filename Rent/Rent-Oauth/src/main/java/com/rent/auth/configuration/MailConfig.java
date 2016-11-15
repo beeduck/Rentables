@@ -10,7 +10,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  * Created by Duck on 11/11/2016.
  */
 @Configuration
-@ComponentScan
 public class MailConfig {
 
     @Autowired

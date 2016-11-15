@@ -1,6 +1,6 @@
 package Controllers.User;
 
-import dataaccess.api.entities.user.UserInfo;
+import com.rent.data.dataaccess.api.entities.user.UserInfo;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/users")
-@ComponentScan("Controllers, Services")
 public class UserController {
 
     @RequestMapping(value = "/userInfo/{userId}", method = RequestMethod.GET)
     public UserInfo getUserInfo(@PathVariable("userId") int userId) {
-//        User user = userService.getUserById(userId);
+//        user user = userService.getUserById(userId);
 
 //        return user;
         return null;

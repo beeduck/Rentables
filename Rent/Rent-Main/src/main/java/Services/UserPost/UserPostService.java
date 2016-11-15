@@ -2,7 +2,7 @@ package Services.UserPost;
 
 import DTOEntities.UserPost.UserPostDTO;
 import Utilities.Filters.UserPostFilter;
-import dataaccess.api.entities.UserPost;
+import com.rent.data.dataaccess.api.entities.listing.UserPost;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dataaccess.api.dao;
+package com.rent.data.dataaccess.api.dao;
 
 import com.rent.data.dataaccess.AbstractBaseDAO;
 import org.hibernate.*;

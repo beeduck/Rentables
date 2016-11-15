@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
-@ComponentScan("com.rent.auth")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

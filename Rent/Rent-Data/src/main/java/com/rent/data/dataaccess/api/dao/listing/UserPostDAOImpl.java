@@ -1,8 +1,8 @@
-package dataaccess.api.dao.UserPost;
+package com.rent.data.dataaccess.api.dao.listing;
 
-import dataaccess.api.dao.ApiDAO;
-import dataaccess.api.entities.UserPost;
 import Utilities.Filters.UserPostFilter;
+import com.rent.data.dataaccess.api.dao.ApiDAO;
+import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;

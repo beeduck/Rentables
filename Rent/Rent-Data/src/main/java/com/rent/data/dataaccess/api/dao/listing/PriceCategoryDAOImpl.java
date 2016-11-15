@@ -1,7 +1,7 @@
-package dataaccess.api.dao.UserPost;
+package com.rent.data.dataaccess.api.dao.listing;
 
-import dataaccess.api.dao.ApiDAO;
-import dataaccess.api.entities.PriceCategory;
+import com.rent.data.dataaccess.api.dao.ApiDAO;
+import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

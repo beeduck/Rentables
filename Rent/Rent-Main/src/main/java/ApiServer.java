@@ -9,7 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-@ComponentScan("Configuration, Controllers, Events, Utilities")
+@ComponentScan("Configuration," +
+               "Controllers," +
+               "Services," +
+               "Utilities," +
+               "com.rent.data.configuration," +
+               "com.rent.data.dataaccess.api")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class/*, SecurityAutoConfiguration.class*/})
 public class ApiServer {
 

@@ -3,8 +3,8 @@ package Services.UserPost;
 import DTOEntities.UserPost.UserPostDTO;
 import Utilities.DateUtils;
 import Utilities.Filters.UserPostFilter;
-import dataaccess.api.dao.UserPost.UserPostDAO;
-import dataaccess.api.entities.UserPost;
+import com.rent.data.dataaccess.api.dao.listing.UserPostDAO;
+import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

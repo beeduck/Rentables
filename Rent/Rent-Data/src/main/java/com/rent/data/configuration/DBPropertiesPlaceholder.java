@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.data.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

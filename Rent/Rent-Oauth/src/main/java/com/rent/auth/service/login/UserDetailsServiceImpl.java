@@ -22,7 +22,6 @@ import java.util.Set;
 /**
  * Created by duck on 11/9/16.
  */
-@ComponentScan("com.rent.data.dataaccess.auth")
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
     private Logger logger = LoggerFactory.getLogger(UserDetailsService.class);

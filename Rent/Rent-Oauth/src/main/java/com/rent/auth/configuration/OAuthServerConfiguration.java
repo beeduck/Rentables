@@ -23,7 +23,6 @@ import javax.sql.DataSource;
  * Created by Duck on 11/5/2016.
  */
 @Configuration
-@ComponentScan("com.rent.auth.configuration, Configuration")
 @EnableAuthorizationServer
 public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapter {
 

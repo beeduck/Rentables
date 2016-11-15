@@ -1,6 +1,6 @@
-package dataaccess.api.dao.UserPost;
+package com.rent.data.dataaccess.api.dao.listing;
 
-import dataaccess.api.entities.PriceCategory;
+import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package Services.UserPost;
 
-import dataaccess.api.dao.UserPost.PriceCategoryDAO;
-import dataaccess.api.entities.PriceCategory;
+import com.rent.data.dataaccess.api.dao.listing.PriceCategoryDAO;
+import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

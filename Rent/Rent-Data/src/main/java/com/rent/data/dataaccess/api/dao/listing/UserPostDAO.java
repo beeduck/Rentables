@@ -1,6 +1,6 @@
-package dataaccess.api.dao.UserPost;
+package com.rent.data.dataaccess.api.dao.listing;
 
-import dataaccess.api.entities.UserPost;
+import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import Utilities.Filters.UserPostFilter;
 
 import java.util.List;
