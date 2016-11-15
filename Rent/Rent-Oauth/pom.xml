@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Rent-Oauth</artifactId>
+    <artifactId>Rent-OAuth</artifactId>
 
     <properties>
         <!-- The main class to start by executing java -jar -->
