@@ -11,7 +11,7 @@ public class UserDTO implements java.io.Serializable {
 
     @NotNull
     @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
-            message = "User name must be a valid email address.")
+            message = "user name must be a valid email address.")
     private String username;
 
     @NotNull

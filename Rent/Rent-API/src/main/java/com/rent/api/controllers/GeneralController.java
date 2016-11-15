@@ -1,7 +1,6 @@
-package Controllers;
+package com.rent.api.controllers;
 
 import Utilities.Constants;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

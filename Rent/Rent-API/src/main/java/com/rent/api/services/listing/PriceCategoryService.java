@@ -1,4 +1,4 @@
-package Services.UserPost;
+package com.rent.api.services.listing;
 
 import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 

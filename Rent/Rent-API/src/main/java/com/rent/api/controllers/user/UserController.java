@@ -1,7 +1,6 @@
-package Controllers.User;
+package com.rent.api.controllers.user;
 
 import com.rent.data.dataaccess.api.entities.user.UserInfo;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

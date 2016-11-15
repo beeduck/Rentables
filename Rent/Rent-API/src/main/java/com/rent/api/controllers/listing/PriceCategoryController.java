@@ -1,9 +1,8 @@
-package Controllers.UserPost;
+package com.rent.api.controllers.listing;
 
-import Services.UserPost.PriceCategoryService;
+import com.rent.api.services.listing.PriceCategoryService;
 import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

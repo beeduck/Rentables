@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.api.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

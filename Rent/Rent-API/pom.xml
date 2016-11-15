@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Rent-Main</artifactId>
+    <artifactId>Rent-API</artifactId>
 
     <properties>
         <!-- The main class to start by executing java -jar -->
-        <start-class>ApiServer</start-class>
+        <start-class>com.rent.api.ApiServer</start-class>
     </properties>
 
     <build>
@@ -30,24 +30,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-         <!--   <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                          </plugin>-->
-
         </plugins>
     </build>
 

@@ -1,11 +1,10 @@
-package Controllers.UserPost;
+package com.rent.api.controllers.listing;
 
-import DTOEntities.UserPost.UserPostDTO;
-import Services.UserPost.UserPostService;
+import com.rent.api.dto.listing.UserPostDTO;
+import com.rent.api.services.listing.UserPostService;
 import Utilities.Filters.UserPostFilter;
 import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package DTOEntities.UserPost;
+package com.rent.api.dto.listing;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;

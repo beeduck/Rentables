@@ -1,4 +1,4 @@
-package DTOEntities.User;
+package com.rent.api.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

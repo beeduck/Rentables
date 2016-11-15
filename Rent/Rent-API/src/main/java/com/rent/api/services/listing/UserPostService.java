@@ -1,6 +1,6 @@
-package Services.UserPost;
+package com.rent.api.services.listing;
 
-import DTOEntities.UserPost.UserPostDTO;
+import com.rent.api.dto.listing.UserPostDTO;
 import Utilities.Filters.UserPostFilter;
 import com.rent.data.dataaccess.api.entities.listing.UserPost;
 

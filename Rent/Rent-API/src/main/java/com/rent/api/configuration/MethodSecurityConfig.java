@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.api.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;

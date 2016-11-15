@@ -1,4 +1,4 @@
-package Configuration;
+package com.rent.api.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan("Configuration")
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
