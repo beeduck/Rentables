@@ -47,24 +47,27 @@ public class UserPostServiceImpl implements UserPostService {
     //I know how extremely inefficient this looks and probably is...working on better solution
     public List<UserPost> getPosts(UserPostFilter filter) {
         List<UserPost> postList =  userPostDAO.getPosts(filter);
-        Map<UserPost,Integer> hashmap = new HashMap<>();
+        Map<UserPost,Double> hashmap = new HashMap<>();
         for(UserPost e : postList) {
             String[] postSplit = e.getTitle().split("\\s+");
-            int count = 0;
+            double score = 0;
             for(String s : postSplit) {
+                double count = 0;
                 for(int i=0; i<filter.getKeywords().length; i++) {
                     if(s.equalsIgnoreCase(filter.getKeywords()[i])) {
                         count++;
                     }
                 }
+                double relative = Math.sqrt(count);
+                score += relative;
             }
-            hashmap.put(e,count);
+            hashmap.put(e,score);
         }
-        Set<Map.Entry<UserPost, Integer>> set = hashmap.entrySet();
-        List<Map.Entry<UserPost, Integer>> list = new ArrayList<>(set);
-        list.sort((o1,o2)->o2.getValue()-o1.getValue());
+        Set<Map.Entry<UserPost, Double>> set = hashmap.entrySet();
+        List<Map.Entry<UserPost, Double>> list = new ArrayList<>(set);
+        list.sort((o1,o2)->(int)(o2.getValue()-o1.getValue()));
         postList = new ArrayList<>();
-        for(Map.Entry<UserPost, Integer> e : list) {
+        for(Map.Entry<UserPost, Double> e : list) {
             postList.add(e.getKey());
         }
         return postList;
