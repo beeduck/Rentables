@@ -18,7 +18,7 @@
         <module>Rent-Util</module>
         <module>Rent-Data</module>
         <module>Rent-API</module>
-        <module>Rent-OAuth</module>
+        <module>Rent-Oauth</module>
     </modules>
 
     <dependencyManagement>
