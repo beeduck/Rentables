@@ -2,6 +2,8 @@ package com.rent.data.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,8 @@ import java.util.Properties;
 public class DBConfiguration {
     @Autowired
     private DBPropertiesPlaceholder dbPropertiesPlaceholder;
+
+    private final Logger logger = LoggerFactory.getLogger(DBConfiguration.class);
 
     @Bean(name = "apiSessionFactory")
     public SessionFactory sessionFactory() {
@@ -56,7 +60,7 @@ public class DBConfiguration {
         try {
             comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getApiDriver());
         } catch (PropertyVetoException e) {
-            System.out.println(e);  // TODO: Log error
+            logger.error(e.getMessage());
         }
         comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getApiUrl());
         comboPooledDataSource.setUser(dbPropertiesPlaceholder.getApiUsername());

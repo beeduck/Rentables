@@ -1,5 +1,7 @@
 package com.rent.utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
@@ -21,10 +23,13 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String JavaException(Exception e) {
+        logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
         return e.getMessage();
     }
 
@@ -32,6 +37,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public String AuthorizationException(AccessDeniedException e) {
+        logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
         return e.getMessage();
     }
 
@@ -39,7 +45,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
     public String illegalArgumentException(IllegalArgumentException e) {
-
+        logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
         return e.getMessage();
     }
 
@@ -55,6 +61,7 @@ public class GlobalExceptionHandler {
 
         for(FieldError fieldError : fieldErrors) {
             errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            logger.error(String.valueOf(fieldError.getField()) + " -> " + fieldError.getDefaultMessage());
         }
 
         return errorMap;

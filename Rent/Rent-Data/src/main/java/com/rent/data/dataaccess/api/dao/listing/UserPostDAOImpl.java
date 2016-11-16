@@ -7,6 +7,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.List;
  */
 @Repository
 public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
+
+    Logger logger = LoggerFactory.getLogger(UserPostDAO.class);
 
     @Transactional(readOnly = true)
     public List<UserPost> getPosts(UserPostFilter filter) {
@@ -48,6 +52,7 @@ public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
             conjunction.add(disjunction);
         }
         criteria.add(conjunction);
+        logger.info("stuff");
         return criteria.list();
     }
 
