@@ -44,10 +44,10 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
         if(filter.getKeywords() != null) {
             Disjunction disjunction = Restrictions.disjunction();
             for (String e : filter.getKeywords()) {
-                disjunction.add(Restrictions.like("title", e + "%"));
+                disjunction.add(Restrictions.like("title", e + " " + "%"));
                 disjunction.add(Restrictions.like("title", e));
-                disjunction.add(Restrictions.like("title", "%" + e));
-                disjunction.add(Restrictions.like("title", "%" + e + "%"));
+                disjunction.add(Restrictions.like("title", "%" + " " + e));
+                disjunction.add(Restrictions.like("title", "%" + " " + e + " " + "%"));
             }
             conjunction.add(disjunction);
         }
