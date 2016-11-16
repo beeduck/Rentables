@@ -20,8 +20,6 @@ import java.util.List;
 @Repository
 public class ListingDAOImpl extends ApiDAO implements ListingDAO {
 
-    Logger logger = LoggerFactory.getLogger(ListingDAO.class);
-
     @Transactional(readOnly = true)
     public List<Listing> getPosts(ListingFilter filter) {
         Criteria criteria = getSession().createCriteria(Listing.class);
@@ -44,15 +42,14 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
         if(filter.getKeywords() != null) {
             Disjunction disjunction = Restrictions.disjunction();
             for (String e : filter.getKeywords()) {
-                disjunction.add(Restrictions.like("title", e + " " + "%"));
+                disjunction.add(Restrictions.like("title", e + "%"));
                 disjunction.add(Restrictions.like("title", e));
-                disjunction.add(Restrictions.like("title", "%" + " " + e));
-                disjunction.add(Restrictions.like("title", "%" + " " + e + " " + "%"));
+                disjunction.add(Restrictions.like("title", "%" + e));
+                disjunction.add(Restrictions.like("title", "%" + e + "%"));
             }
             conjunction.add(disjunction);
         }
         criteria.add(conjunction);
-        logger.info("stuff");
         return criteria.list();
     }
 
