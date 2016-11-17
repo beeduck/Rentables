@@ -49,9 +49,20 @@ public class UserPostServiceImpl implements UserPostService {
         List<UserPost> postList =  userPostDAO.getPosts(filter);
         Map<UserPost,Double> hashmap = new HashMap<>();
         for(UserPost e : postList) {
-            String[] postSplit = e.getTitle().split("\\s+");
+            String[] titleSplit = e.getTitle().split("[\\s@&.?$+-,]+");
+            String[] descriptionSplit = e.getDescription().split("[\\s@&.?$+-,]+");
             double score = 0;
-            for(String s : postSplit) {
+            for(String s : titleSplit) {
+                double count = 0;
+                for(int i=0; i<filter.getKeywords().length; i++) {
+                    if(s.equalsIgnoreCase(filter.getKeywords()[i])) {
+                        count++;
+                    }
+                }
+                double relative = Math.sqrt(count);
+                score += relative;
+            }
+            for(String s : descriptionSplit) {
                 double count = 0;
                 for(int i=0; i<filter.getKeywords().length; i++) {
                     if(s.equalsIgnoreCase(filter.getKeywords()[i])) {
@@ -65,7 +76,7 @@ public class UserPostServiceImpl implements UserPostService {
         }
         Set<Map.Entry<UserPost, Double>> set = hashmap.entrySet();
         List<Map.Entry<UserPost, Double>> list = new ArrayList<>(set);
-        list.sort((o1,o2)->(int)(o2.getValue()-o1.getValue()));
+        Collections.sort(list,(o1,o2)->Double.compare(o1.getValue(),o2.getValue()));
         postList = new ArrayList<>();
         for(Map.Entry<UserPost, Double> e : list) {
             postList.add(e.getKey());

@@ -46,6 +46,10 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
                 disjunction.add(Restrictions.like("title", e));
                 disjunction.add(Restrictions.like("title", "%" + e));
                 disjunction.add(Restrictions.like("title", "%" + e + "%"));
+                disjunction.add(Restrictions.like("description", e + "%"));
+                disjunction.add(Restrictions.like("description", e));
+                disjunction.add(Restrictions.like("description", "%" + e));
+                disjunction.add(Restrictions.like("description", "%" + e + "%"));
             }
             conjunction.add(disjunction);
         }
