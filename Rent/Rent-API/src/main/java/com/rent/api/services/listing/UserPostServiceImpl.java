@@ -52,9 +52,9 @@ public class UserPostServiceImpl implements UserPostService {
             String[] titleSplit = e.getTitle().split("[\\s@&.?$+-,]+");
             String[] descriptionSplit = e.getDescription().split("[\\s@&.?$+-,]+");
             double score = 0;
-            for(String s : titleSplit) {
+            for(int i=0; i<filter.getKeywords().length; i++) {
                 double count = 0;
-                for(int i=0; i<filter.getKeywords().length; i++) {
+                for(String s : titleSplit) {
                     if(s.equalsIgnoreCase(filter.getKeywords()[i])) {
                         count++;
                     }
@@ -62,9 +62,9 @@ public class UserPostServiceImpl implements UserPostService {
                 double relative = Math.sqrt(count);
                 score += relative;
             }
-            for(String s : descriptionSplit) {
+            for(int i=0; i<filter.getKeywords().length; i++) {
                 double count = 0;
-                for(int i=0; i<filter.getKeywords().length; i++) {
+                for(String s : descriptionSplit) {
                     if(s.equalsIgnoreCase(filter.getKeywords()[i])) {
                         count++;
                     }
@@ -76,7 +76,7 @@ public class UserPostServiceImpl implements UserPostService {
         }
         Set<Map.Entry<UserPost, Double>> set = hashmap.entrySet();
         List<Map.Entry<UserPost, Double>> list = new ArrayList<>(set);
-        Collections.sort(list,(o1,o2)->Double.compare(o1.getValue(),o2.getValue()));
+        Collections.sort(list,(o1,o2)->Double.compare(o2.getValue(),o1.getValue()));
         postList = new ArrayList<>();
         for(Map.Entry<UserPost, Double> e : list) {
             postList.add(e.getKey());
