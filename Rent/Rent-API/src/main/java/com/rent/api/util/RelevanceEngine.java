@@ -19,6 +19,11 @@ public class RelevanceEngine {
             double score = 0;
             score += relevanceRank(filter, titleSplit, score);
             score += relevanceRank(filter, descriptionSplit, score);
+            for(String s : idfScores.keySet()) {
+                if(titleSplit.contains(s) || descriptionSplit.contains(s)) {
+                    score += idfScores.get(s);
+                }
+            }
             hashmap.put(e,score);
         }
         return sortByRelevanceRank(hashmap);
@@ -57,8 +62,18 @@ public class RelevanceEngine {
         return idfScoreMap;
     }
 
-    private static double numTermsInString(UserPost userPost, String[] keywords) {
-        return 0;
+    //determine coordination factor
+    private static double calculateCoordinationFactor(UserPost userPost, String[] keywords) {
+        List<String> titleSplit = Arrays.asList(userPost.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
+        List<String> descriptionSplit = Arrays.asList(userPost.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+        double count = 0;
+        for(String s : keywords) {
+            if(titleSplit.contains(s.toLowerCase()) || descriptionSplit.contains(s.toLowerCase())) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     private static List<UserPost> sortByRelevanceRank(Map<UserPost,Double> hashmap) {
@@ -67,6 +82,7 @@ public class RelevanceEngine {
         Collections.sort(list,(o1,o2)->Double.compare(o2.getValue(),o1.getValue()));
         List<UserPost> postList = new ArrayList<>();
         for(Map.Entry<UserPost, Double> e : list) {
+            System.out.println(e.getValue());
             postList.add(e.getKey());
         }
         return postList;
