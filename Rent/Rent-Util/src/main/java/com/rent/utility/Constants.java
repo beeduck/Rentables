@@ -14,11 +14,16 @@ public class Constants {
 
 
     // OAUTH2 AUTHORIZATION
-    public static final String OAUTH2_AUTH_USER = "#oauth2.hasScope('user')";
+    public static final String OAUTH2_AUTH_USER =   "#oauth2.hasScope('user')";
+    public static final String OAUTH2_AUTH_MODULE = "#oauth2.hasScope('module')";
 
 
     // ROLE AUTHORIZATION
     public static final String AUTH_ROLE_USER = "hasAuthority('ROLE_USER')";
     public static final String AUTH_ROLE_ADMIN = "hasAuthority('ROLE_ADMIN')";
     public static final String AUTH_ROLE_MODULE = "hasAuthority('ROLE_MODULE')";
+
+
+    // SHARED PATHS
+    public static final String PATH_COMPLETE_USER_REGISTRATION = "/registerUser";
 }

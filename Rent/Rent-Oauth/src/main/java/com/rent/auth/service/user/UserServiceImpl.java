@@ -1,14 +1,16 @@
 package com.rent.auth.service.user;
 
-import com.rent.utility.Constants;
-import com.rent.utility.DateUtils;
 import com.rent.auth.configuration.GeneralProperties;
 import com.rent.auth.dto.user.UserDTO;
+import com.rent.auth.proxy.RentAPIProxy;
 import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
 import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import com.rent.utility.Constants;
+import com.rent.utility.DateUtils;
+import com.rent.utility.dto.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,6 +33,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    RentAPIProxy rentAPIProxy;
+
+    @Autowired
     UserDetailsDAO userDetailsDAO;
 
     @Autowired
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private GeneralProperties generalProperties;
 
+    // TODO: Add rollback for failed email send and fail from feign request
     @Transactional
     public UserDetails createUser(UserDTO userDTO, Locale locale) {
 
@@ -62,7 +68,9 @@ public class UserServiceImpl implements UserService {
         user.setLastEditDate(timestamp);
 
         userDetailsDAO.createUser(user);
-        userInfoDAO.addUser(user.getId(), user.getUsername());
+
+        NewUserDTO newUserDTO = new NewUserDTO(user.getUsername(), user.getId());
+        rentAPIProxy.registerUser(newUserDTO);
 
         String token = UUID.randomUUID().toString();
         createRegistrationToken(user, token);
@@ -71,6 +79,12 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Transactional
+    public void createUserInfoFallback(NewUserDTO newUserDTO) {
+        userInfoDAO.addUser(newUserDTO.getUserId(), newUserDTO.getUsername());
+    }
+
 
     private void registrationEmail(UserDetails user, Locale locale, String token) {
 

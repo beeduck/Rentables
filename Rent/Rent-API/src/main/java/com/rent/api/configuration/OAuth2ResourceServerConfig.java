@@ -1,6 +1,7 @@
 package com.rent.api.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -10,6 +11,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Duck on 11/9/2016.
@@ -21,8 +25,16 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Autowired
     GeneralProperties generalProperties;
 
+    @Autowired
+    EurekaClientConfigBean eurekaClientConfigBean;
+
     @Override
     public void configure(final HttpSecurity http) throws Exception {
+
+        Map<String, String> eurekaServiceUrlMap = new HashMap<String, String>();
+        eurekaServiceUrlMap.put("defaultZone", System.getProperty("CLOUD_CONNECTION"));
+        eurekaClientConfigBean.setServiceUrl(eurekaServiceUrlMap);
+
         http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -40,8 +52,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Bean
     public RemoteTokenServices tokenServices() {
         RemoteTokenServices tokenServices = new RemoteTokenServices();
-        tokenServices.setCheckTokenEndpointUrl(generalProperties.getAuthServerEndpoint());
-//        tokenServices.setCheckTokenEndpointUrl(System.getProperty("OAUTH_CONNECTION"));
+        tokenServices.setCheckTokenEndpointUrl(System.getProperty("OAUTH_CONNECTION"));
         tokenServices.setClientId(generalProperties.getAuthClient());
         tokenServices.setClientSecret(generalProperties.getAuthSecret());
         return tokenServices;

@@ -1,9 +1,9 @@
 package com.rent.auth.controller.user;
 
-import com.rent.utility.Constants;
 import com.rent.auth.dto.user.UserDTO;
 import com.rent.auth.service.user.UserService;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import com.rent.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
