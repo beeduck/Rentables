@@ -18,12 +18,12 @@ public class PriceCategoryController {
     @Autowired
     PriceCategoryService priceCategoryService;
 
-    @RequestMapping(value = "/getAllPriceCategories", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<PriceCategory> getAllPriceCategories() {
         return priceCategoryService.getAllPriceCategories();
     }
 
-    @RequestMapping(value = "/getPriceCategoryById/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public PriceCategory getPriceCategoryById(@PathVariable("id") int id) {
         return priceCategoryService.getPriceCategoryById(id);
     }

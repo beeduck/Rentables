@@ -1,8 +1,8 @@
 package com.rent.data.dataaccess.api.dao.listing;
 
-import com.rent.utility.filters.UserPostFilter;
+import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.utility.filters.ListingFilter;
 import com.rent.data.dataaccess.api.dao.ApiDAO;
-import com.rent.data.dataaccess.api.entities.listing.UserPost;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
@@ -23,8 +23,8 @@ public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
     Logger logger = LoggerFactory.getLogger(UserPostDAO.class);
 
     @Transactional(readOnly = true)
-    public List<UserPost> getPosts(UserPostFilter filter) {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
+    public List<Listing> getPosts(ListingFilter filter) {
+        Criteria criteria = getSession().createCriteria(Listing.class);
         Conjunction conjunction = Restrictions.conjunction();
         if(filter.getId() > 0) {
             conjunction.add(Restrictions.eq("id", filter.getId()));
@@ -57,22 +57,22 @@ public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
     }
 
     @Transactional(readOnly = true)
-    public UserPost getPostById(int id) {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
+    public Listing getPostById(int id) {
+        Criteria criteria = getSession().createCriteria(Listing.class);
         criteria.add(Restrictions.eq("id",id));
-        return (UserPost)criteria.uniqueResult();
+        return (Listing)criteria.uniqueResult();
     }
 
     @Transactional
-    public UserPost createPost(UserPost userPost) {
-        if(this.save(userPost)) {
-            return userPost;
+    public Listing createPost(Listing listing) {
+        if(this.save(listing)) {
+            return listing;
         }
         return null;
     }
 
     @Transactional
-    public boolean updatePost(UserPost userPost) {
-        return this.update(userPost);
+    public boolean updatePost(Listing listing) {
+        return this.update(listing);
     }
 }

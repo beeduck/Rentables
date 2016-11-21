@@ -5,7 +5,7 @@ import javax.validation.Valid;
 /**
  * Created by Asad on 11/9/2016.
  */
-public class UserPostFilter {
+public class ListingFilter {
 
     @Valid
     private String[] keywords = null;

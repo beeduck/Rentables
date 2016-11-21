@@ -1,7 +1,7 @@
 package com.rent.data.dataaccess.api.dao.listing;
 
-import com.rent.data.dataaccess.api.entities.listing.UserPost;
-import com.rent.utility.filters.UserPostFilter;
+import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.utility.filters.ListingFilter;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface UserPostDAO {
 
-    List<UserPost> getPosts(UserPostFilter filter);
+    List<Listing> getPosts(ListingFilter filter);
 
-    UserPost getPostById(int id);
+    Listing getPostById(int id);
 
-    UserPost createPost(UserPost userPost);
+    Listing createPost(Listing listing);
 
-    boolean updatePost(UserPost userPost);
+    boolean updatePost(Listing listing);
 }

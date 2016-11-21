@@ -12,6 +12,8 @@ public class UserInfo {
     private int id;
     private String username;
 
+    public UserInfo() { }
+
     public UserInfo(int userId, String username) {
         this.id = userId;
         this.username = username;
