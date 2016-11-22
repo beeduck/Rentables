@@ -36,8 +36,8 @@ public class ListingController {
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.POST,
                     headers = "content-type=application/json")
-    public void createListing(@Valid @RequestBody final ListingDTO listingDTO) {
-        listingService.createListing(listingDTO);
+    public Listing createListing(@Valid @RequestBody final ListingDTO listingDTO) {
+        return listingService.createListing(listingDTO);
     }
 
     @PreAuthorize(Constants.AUTH_ROLE_USER)

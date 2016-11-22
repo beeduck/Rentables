@@ -29,22 +29,23 @@ public class ListingServiceImpl implements ListingService {
     private UserInfoDAO userInfoDAO;
 
     @Transactional
-    public void createListing(ListingDTO listingDTO) {
-        Listing post = new Listing();
+    public Listing createListing(ListingDTO listingDTO) {
+        Listing listing = new Listing();
 
-        post.setTitle(listingDTO.getTitle());
-        post.setDescription(listingDTO.getDescription());
-        post.setPrice(listingDTO.getPrice());
-        post.setPriceCategoryId(listingDTO.getPriceCategoryId());
+        listing.setTitle(listingDTO.getTitle());
+        listing.setDescription(listingDTO.getDescription());
+        listing.setPrice(listingDTO.getPrice());
+        listing.setPriceCategoryId(listingDTO.getPriceCategoryId());
 
         UserInfo userInfo = userInfoDAO.getUserByUsername(Security.getUsername());
-        post.setUserId(userInfo.getId());
+        listing.setUserId(userInfo.getId());
 
         Timestamp timeStamp = DateUtils.getCurrentUtcTimestamp();
-        post.setCreateDate(timeStamp);
-        post.setLastEditDate(timeStamp);
+        listing.setCreateDate(timeStamp);
+        listing.setLastEditDate(timeStamp);
 
-        userPostDAO.createPost(post);
+        userPostDAO.createPost(listing);
+        return listing;
     }
 
     public void updateListing(Listing listing) {

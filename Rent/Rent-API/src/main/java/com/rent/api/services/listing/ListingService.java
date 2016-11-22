@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ListingService {
 
-    void createListing(ListingDTO listingDTO);
+    Listing createListing(ListingDTO listingDTO);
 
     void updateListing(Listing listing);
 
