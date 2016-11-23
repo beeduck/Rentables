@@ -18,9 +18,9 @@ import java.util.List;
  * Created by Asad on 10/31/2016.
  */
 @Repository
-public class UserPostDAOImpl extends ApiDAO implements UserPostDAO {
+public class ListingDAOImpl extends ApiDAO implements ListingDAO {
 
-    Logger logger = LoggerFactory.getLogger(UserPostDAO.class);
+    Logger logger = LoggerFactory.getLogger(ListingDAO.class);
 
     @Transactional(readOnly = true)
     public List<Listing> getPosts(ListingFilter filter) {

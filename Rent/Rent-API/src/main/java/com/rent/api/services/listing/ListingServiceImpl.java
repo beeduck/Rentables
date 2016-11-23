@@ -6,7 +6,7 @@ import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.data.dataaccess.api.entities.user.UserInfo;
 import com.rent.utility.DateUtils;
 import com.rent.utility.filters.ListingFilter;
-import com.rent.data.dataaccess.api.dao.listing.UserPostDAO;
+import com.rent.data.dataaccess.api.dao.listing.ListingDAO;
 import com.rent.api.utility.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ListingServiceImpl implements ListingService {
 
     @Autowired
-    private UserPostDAO userPostDAO;
+    private ListingDAO listingDAO;
 
     @Autowired
     private UserInfoDAO userInfoDAO;
@@ -44,21 +44,21 @@ public class ListingServiceImpl implements ListingService {
         listing.setCreateDate(timeStamp);
         listing.setLastEditDate(timeStamp);
 
-        userPostDAO.createPost(listing);
+        listingDAO.createPost(listing);
         return listing;
     }
 
     public void updateListing(Listing listing) {
         Timestamp timestamp = DateUtils.getCurrentUtcTimestamp();
         listing.setLastEditDate(timestamp);
-        userPostDAO.updatePost(listing);
+        listingDAO.updatePost(listing);
     }
 
     public Listing getListingById(int id) {
-        return userPostDAO.getPostById(id);
+        return listingDAO.getPostById(id);
     }
 
     public List<Listing> getListings(ListingFilter filter) {
-        return userPostDAO.getPosts(filter);
+        return listingDAO.getPosts(filter);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Asad on 10/31/2016.
  */
-public interface UserPostDAO {
+public interface ListingDAO {
 
     List<Listing> getPosts(ListingFilter filter);
 
