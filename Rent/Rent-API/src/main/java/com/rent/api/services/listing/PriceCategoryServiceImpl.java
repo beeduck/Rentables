@@ -1,7 +1,7 @@
 package com.rent.api.services.listing;
 
-import com.rent.data.dataaccess.api.dao.listing.PriceCategoryDAO;
-import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
+import com.rent.api.dataaccess.api.dao.listing.PriceCategoryDAO;
+import com.rent.api.dataaccess.api.entities.listing.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

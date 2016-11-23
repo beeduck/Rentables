@@ -1,7 +1,7 @@
 package com.rent.api.controllers.listing;
 
+import com.rent.api.dataaccess.api.entities.listing.PriceCategory;
 import com.rent.api.services.listing.PriceCategoryService;
-import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
