@@ -14,11 +14,14 @@ public class RelevanceEngine {
         Map<UserPost,Double> hashmap = new HashMap<>();
         Map<String,Double> idfScores = calculateIDFScore(filter.getKeywords(),postList);
         for(UserPost e : postList) {
-            List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
-            List<String> descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
             double score = 0;
-            score += relevanceRank(filter, titleSplit, score);
-            score += relevanceRank(filter, descriptionSplit, score);
+            List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
+            List<String> descriptionSplit = new ArrayList<>();
+            if(e.getDescription() != null) {
+                descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+            }
+            score += calculateTermFrequencyScore(filter, descriptionSplit);
+            score += calculateTermFrequencyScore(filter, titleSplit);
             for(String s : idfScores.keySet()) {
                 if(titleSplit.contains(s) || descriptionSplit.contains(s)) {
                     score += idfScores.get(s);
@@ -30,7 +33,8 @@ public class RelevanceEngine {
     }
 
     //this calculates the term frequency scores
-    private static double relevanceRank(UserPostFilter filter, List<String> splitStr, double score) {
+    private static double calculateTermFrequencyScore(UserPostFilter filter, List<String> splitStr) {
+        double score = 0;
         for(int i=0; i<filter.getKeywords().length; i++) {
             double count = 0;
             for(String s : splitStr) {
@@ -51,8 +55,13 @@ public class RelevanceEngine {
             double docCount = 0;
             for(UserPost e : postList) {
                 List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
-                List<String> descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
-                if(titleSplit.contains(s.toLowerCase()) || descriptionSplit.contains(s.toLowerCase())) {
+                if(e.getDescription() != null) {
+                    List<String> descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+                    if(descriptionSplit.contains(s.toLowerCase())) {
+                        docCount++;
+                    }
+                }
+                if(titleSplit.contains(s.toLowerCase())) {
                     docCount++;
                 }
             }
@@ -65,10 +74,13 @@ public class RelevanceEngine {
     //determine coordination factor
     private static double calculateCoordinationFactor(UserPost userPost, String[] keywords) {
         List<String> titleSplit = Arrays.asList(userPost.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
-        List<String> descriptionSplit = Arrays.asList(userPost.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+        List<String> descriptionSplit = new ArrayList<>();
+        if(userPost.getDescription() != null) {
+            descriptionSplit = Arrays.asList(userPost.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+        }
         double count = 0;
         for(String s : keywords) {
-            if(titleSplit.contains(s.toLowerCase()) || descriptionSplit.contains(s.toLowerCase())) {
+            if(titleSplit.contains(s.toLowerCase()) ||  descriptionSplit.contains(s.toLowerCase())) {
                 count++;
             }
         }

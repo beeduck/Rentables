@@ -6,6 +6,7 @@ import com.rent.data.dataaccess.api.dao.ApiDAO;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,14 +43,8 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
         if(filter.getKeywords() != null) {
             Disjunction disjunction = Restrictions.disjunction();
             for (String e : filter.getKeywords()) {
-                disjunction.add(Restrictions.like("title", e + "%"));
-                disjunction.add(Restrictions.like("title", e));
-                disjunction.add(Restrictions.like("title", "%" + e));
-                disjunction.add(Restrictions.like("title", "%" + e + "%"));
-                disjunction.add(Restrictions.like("description", e + "%"));
-                disjunction.add(Restrictions.like("description", e));
-                disjunction.add(Restrictions.like("description", "%" + e));
-                disjunction.add(Restrictions.like("description", "%" + e + "%"));
+                disjunction.add(Restrictions.like("title", e, MatchMode.ANYWHERE));
+                disjunction.add(Restrictions.like("description", e, MatchMode.ANYWHERE));
             }
             conjunction.add(disjunction);
         }

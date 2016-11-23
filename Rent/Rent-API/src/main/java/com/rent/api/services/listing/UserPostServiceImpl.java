@@ -48,6 +48,9 @@ public class UserPostServiceImpl implements UserPostService {
     //I know how extremely inefficient this looks and probably is...working on better solution
     public List<UserPost> getPosts(UserPostFilter filter) {
         List<UserPost> postList =  userPostDAO.getPosts(filter);
-        return RelevanceEngine.sortByRelevance(postList,filter);
+        if(filter.getKeywords() != null) {
+            return RelevanceEngine.sortByRelevance(postList,filter);
+        }
+        return postList;
     }
 }
