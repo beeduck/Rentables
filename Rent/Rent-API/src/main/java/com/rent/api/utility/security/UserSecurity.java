@@ -1,4 +1,4 @@
-package com.rent.utility.security;
+package com.rent.api.utility.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by duck on 11/21/16.
  */
-public class Security {
+public class UserSecurity {
 
     public static String getUsername() {
         return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

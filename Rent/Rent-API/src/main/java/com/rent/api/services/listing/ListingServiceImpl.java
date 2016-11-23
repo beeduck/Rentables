@@ -7,7 +7,7 @@ import com.rent.data.dataaccess.api.entities.user.UserInfo;
 import com.rent.utility.DateUtils;
 import com.rent.utility.filters.ListingFilter;
 import com.rent.data.dataaccess.api.dao.listing.UserPostDAO;
-import com.rent.utility.security.Security;
+import com.rent.api.utility.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setPrice(listingDTO.getPrice());
         listing.setPriceCategoryId(listingDTO.getPriceCategoryId());
 
-        UserInfo userInfo = userInfoDAO.getUserByUsername(Security.getUsername());
+        UserInfo userInfo = userInfoDAO.getUserByUsername(UserSecurity.getUsername());
         listing.setUserId(userInfo.getId());
 
         Timestamp timeStamp = DateUtils.getCurrentUtcTimestamp();
