@@ -67,6 +67,4 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
-
-
 }

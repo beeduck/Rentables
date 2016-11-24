@@ -15,4 +15,10 @@ public class Constants {
 
     // OAUTH2 AUTHORIZATION
     public static final String OAUTH2_AUTH_USER = "#oauth2.hasScope('user')";
+
+
+    // ROLE AUTHORIZATION
+    public static final String AUTH_ROLE_USER = "hasAuthority('ROLE_USER')";
+    public static final String AUTH_ROLE_ADMIN = "hasAuthority('ROLE_ADMIN')";
+    public static final String AUTH_ROLE_MODULE = "hasAuthority('ROLE_MODULE')";
 }

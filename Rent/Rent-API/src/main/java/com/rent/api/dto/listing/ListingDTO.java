@@ -1,30 +1,30 @@
 package com.rent.api.dto.listing;
 
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * Created by Asad on 11/1/2016.
  */
-public class UserPostDTO implements Serializable {
+public class ListingDTO implements Serializable {
 
-    @Size(min = 1, message = "title required")
+    @NotNull(message = "Title required")
     private String title;
 
     private String description;
 
-    private int userId;
+    // TODO: Implement custom validator for price category ID based on DB options
+    @NotNull(message = "Payment interval required")
+    private Integer priceCategoryId;
 
-    private int priceCategoryId;
+    @NotNull(message = "Price required")
+    private Double price;
 
-    private double price;
+    public ListingDTO(){}
 
-    public UserPostDTO(){}
-
-    public UserPostDTO(String title, String description, int userId, int priceCategoryId, double price) {
+    public ListingDTO(String title, String description, int priceCategoryId, double price) {
         this.title = title;
         this.description = description;
-        this.userId = userId;
         this.priceCategoryId = priceCategoryId;
         this.price = price;
     }
@@ -43,14 +43,6 @@ public class UserPostDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getPriceCategoryId() {

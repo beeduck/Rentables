@@ -4,8 +4,10 @@ import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,12 +39,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found in DB.");
         }
 
-        return new User(user.getUsername(), user.getPassword(), user.isActive(), true, true, true, buildUserAuthority());
-    }
-
-    private List<GrantedAuthority> buildUserAuthority() {
-        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-        setAuths.add(new SimpleGrantedAuthority("ROLE_USER"));  // TODO: Adjust for additional roles in the future
-        return new ArrayList<GrantedAuthority>(setAuths);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new User(user.getUsername(), user.getPassword(), user.isActive(),
+                        true, true, true, authentication.getAuthorities());
     }
 }

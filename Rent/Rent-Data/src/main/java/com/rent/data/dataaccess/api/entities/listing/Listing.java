@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "UserPosts")
-public class UserPost implements Serializable {
+public class Listing implements Serializable {
     private int id;
     private String title;
     private String description;

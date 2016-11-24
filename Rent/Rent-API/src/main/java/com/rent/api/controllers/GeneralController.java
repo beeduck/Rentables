@@ -10,7 +10,8 @@ import java.util.List;
 @RestController
 public class GeneralController {
 
-    @PreAuthorize(Constants.OAUTH2_AUTH_USER)
+//    @PreAuthorize(Constants.OAUTH2_AUTH_USER)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping("/")
     public List<Integer> index() {
         return null;
