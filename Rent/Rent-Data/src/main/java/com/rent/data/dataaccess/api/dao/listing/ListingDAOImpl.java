@@ -4,10 +4,7 @@ import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.utility.filters.ListingFilter;
 import com.rent.data.dataaccess.api.dao.ApiDAO;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -70,5 +67,12 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
     @Transactional
     public boolean updatePost(Listing listing) {
         return this.update(listing);
+    }
+
+    @Transactional(readOnly = true)
+    public int getPostCount() {
+        Criteria criteria = getSession().createCriteria(UserPost.class);
+        criteria.setProjection(Projections.rowCount());
+        return (Integer)criteria.uniqueResult();
     }
 }

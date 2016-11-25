@@ -32,6 +32,14 @@ public class RelevanceEngine {
         return sortByRelevanceRank(hashmap);
     }
 
+    private static double calculateBMScore(UserPost post, UserPostFilter filter, Map<String, Double> idfMap) {
+        double score = 0;
+        for(String s : filter.getKeywords()) {
+
+        }
+        return score;
+    }
+
     //this calculates the term frequency scores
     private static double calculateTermFrequencyScore(UserPostFilter filter, List<String> splitStr) {
         double score = 0;
@@ -48,23 +56,28 @@ public class RelevanceEngine {
         return score;
     }
 
+    private static double numOfDocumentsWithTerm(String term, List<UserPost> postList) {
+        double docCount = 0;
+        for(UserPost e : postList) {
+            List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
+            if(titleSplit.contains(term.toLowerCase())) {
+                docCount++;
+            }
+            else if(e.getDescription() != null) {
+                List<String> descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
+                if(descriptionSplit.contains(term.toLowerCase())) {
+                    docCount++;
+                }
+            }
+        }
+        return docCount;
+    }
+
     //calculates idf scores for all the terms in the query
     private static Map<String,Double> calculateIDFScore(String[] keywords, List<UserPost> postList) {
         Map<String,Double> idfScoreMap = new HashMap<>();
         for(String s : keywords) {
-            double docCount = 0;
-            for(UserPost e : postList) {
-                List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
-                if(e.getDescription() != null) {
-                    List<String> descriptionSplit = Arrays.asList(e.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
-                    if(descriptionSplit.contains(s.toLowerCase())) {
-                        docCount++;
-                    }
-                }
-                if(titleSplit.contains(s.toLowerCase())) {
-                    docCount++;
-                }
-            }
+            double docCount = numOfDocumentsWithTerm(s, postList);
             double score = 1 + Math.log(postList.size()/(docCount+1));
             idfScoreMap.put(s,score);
         }

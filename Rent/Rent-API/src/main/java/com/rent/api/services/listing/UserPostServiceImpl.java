@@ -53,4 +53,8 @@ public class UserPostServiceImpl implements UserPostService {
         }
         return postList;
     }
+
+    public int getPostCount() {
+        return userPostDAO.getPostCount();
+    }
 }
