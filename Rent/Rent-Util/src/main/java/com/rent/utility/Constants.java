@@ -21,4 +21,6 @@ public class Constants {
     public static final String AUTH_ROLE_USER = "hasAuthority('ROLE_USER')";
     public static final String AUTH_ROLE_ADMIN = "hasAuthority('ROLE_ADMIN')";
     public static final String AUTH_ROLE_MODULE = "hasAuthority('ROLE_MODULE')";
+
+    public static final String ROOT_FILE_UPLOAD_PATH = "uploads-dir";
 }
