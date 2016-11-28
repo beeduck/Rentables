@@ -1,6 +1,8 @@
 package com.rent.api.services.listing;
 
 import com.rent.api.dto.listing.ListingDTO;
+
+import com.rent.api.utility.RelevanceEngine;
 import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
 import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.data.dataaccess.api.entities.user.UserInfo;

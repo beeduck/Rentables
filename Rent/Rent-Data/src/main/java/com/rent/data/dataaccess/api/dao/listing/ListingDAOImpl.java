@@ -71,7 +71,7 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
 
     @Transactional(readOnly = true)
     public int getPostCount() {
-        Criteria criteria = getSession().createCriteria(UserPost.class);
+        Criteria criteria = getSession().createCriteria(Listing.class);
         criteria.setProjection(Projections.rowCount());
         return (Integer)criteria.uniqueResult();
     }

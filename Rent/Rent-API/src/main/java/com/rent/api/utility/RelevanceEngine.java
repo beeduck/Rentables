@@ -1,7 +1,9 @@
-package com.rent.api.util;
+package com.rent.api.utility;
 
-import com.rent.data.dataaccess.api.entities.listing.UserPost;
-import com.rent.utility.filters.UserPostFilter;
+import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.utility.filters.ListingFilter;
+import com.rent.utility.filters.ListingFilter;
 
 import java.util.*;
 
@@ -9,11 +11,10 @@ import java.util.*;
  * Created by Asad on 11/17/2016.
  */
 public class RelevanceEngine {
-
-    public static List<UserPost> sortByRelevance(List<UserPost> postList, UserPostFilter filter) {
-        Map<UserPost,Double> hashmap = new HashMap<>();
-        Map<String,Double> idfScores = calculateIDFScore(filter.getKeywords(),postList);
-        for(UserPost e : postList) {
+    public static List<Listing> sortByRelevance(List<Listing> listingList, ListingFilter filter) {
+        Map<Listing,Double> hashmap = new HashMap<>();
+        Map<String,Double> idfScores = calculateIDFScore(filter.getKeywords(),listingList);
+        for(Listing e : listingList) {
             double score = 0;
             List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
             List<String> descriptionSplit = new ArrayList<>();
@@ -32,7 +33,7 @@ public class RelevanceEngine {
         return sortByRelevanceRank(hashmap);
     }
 
-    private static double calculateBMScore(UserPost post, UserPostFilter filter, Map<String, Double> idfMap) {
+    private static double calculateBMScore(Listing post, ListingFilter filter, Map<String, Double> idfMap) {
         double score = 0;
         for(String s : filter.getKeywords()) {
 
@@ -41,7 +42,7 @@ public class RelevanceEngine {
     }
 
     //this calculates the term frequency scores
-    private static double calculateTermFrequencyScore(UserPostFilter filter, List<String> splitStr) {
+    private static double calculateTermFrequencyScore(ListingFilter filter, List<String> splitStr) {
         double score = 0;
         for(int i=0; i<filter.getKeywords().length; i++) {
             double count = 0;
@@ -55,10 +56,10 @@ public class RelevanceEngine {
         }
         return score;
     }
-
-    private static double numOfDocumentsWithTerm(String term, List<UserPost> postList) {
+    
+    private static double numOfDocumentsWithTerm(String term, List<Listing> listingList) {
         double docCount = 0;
-        for(UserPost e : postList) {
+        for(Listing e : listingList) {
             List<String> titleSplit = Arrays.asList(e.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
             if(titleSplit.contains(term.toLowerCase())) {
                 docCount++;
@@ -74,42 +75,27 @@ public class RelevanceEngine {
     }
 
     //calculates idf scores for all the terms in the query
-    private static Map<String,Double> calculateIDFScore(String[] keywords, List<UserPost> postList) {
+    private static Map<String,Double> calculateIDFScore(String[] keywords, List<Listing> listingList) {
         Map<String,Double> idfScoreMap = new HashMap<>();
         for(String s : keywords) {
-            double docCount = numOfDocumentsWithTerm(s, postList);
-            double score = 1 + Math.log(postList.size()/(docCount+1));
+            double docCount = numOfDocumentsWithTerm(s, listingList);
+            double score = 1 + Math.log(listingList.size()/(docCount+1));
             idfScoreMap.put(s,score);
         }
         return idfScoreMap;
     }
 
     //determine coordination factor
-    private static double calculateCoordinationFactor(UserPost userPost, String[] keywords) {
-        List<String> titleSplit = Arrays.asList(userPost.getTitle().toLowerCase().split("[\\s@&.?$+-,]+"));
-        List<String> descriptionSplit = new ArrayList<>();
-        if(userPost.getDescription() != null) {
-            descriptionSplit = Arrays.asList(userPost.getDescription().toLowerCase().split("[\\s@&.?$+-,]+"));
-        }
-        double count = 0;
-        for(String s : keywords) {
-            if(titleSplit.contains(s.toLowerCase()) ||  descriptionSplit.contains(s.toLowerCase())) {
-                count++;
-            }
-        }
 
-        return count;
-    }
-
-    private static List<UserPost> sortByRelevanceRank(Map<UserPost,Double> hashmap) {
-        Set<Map.Entry<UserPost, Double>> set = hashmap.entrySet();
-        List<Map.Entry<UserPost, Double>> list = new ArrayList<>(set);
+    private static List<Listing> sortByRelevanceRank(Map<Listing,Double> hashmap) {
+        Set<Map.Entry<Listing, Double>> set = hashmap.entrySet();
+        List<Map.Entry<Listing, Double>> list = new ArrayList<>(set);
         Collections.sort(list,(o1,o2)->Double.compare(o2.getValue(),o1.getValue()));
-        List<UserPost> postList = new ArrayList<>();
-        for(Map.Entry<UserPost, Double> e : list) {
+        List<Listing> listingList = new ArrayList<>();
+        for(Map.Entry<Listing, Double> e : list) {
             System.out.println(e.getValue());
-            postList.add(e.getKey());
+            listingList.add(e.getKey());
         }
-        return postList;
+        return listingList;
     }
 }
