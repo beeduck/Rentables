@@ -1,7 +1,9 @@
 package com.rent.api.services.listing;
 
 import com.rent.utility.Constants;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +31,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 if(!dir.exists()) {
                     dir.mkdirs();
                 }
-                File storedFile = new File(dir.getAbsolutePath() + File.separator + name);
+                File storedFile = new File(dir.getAbsolutePath() + File.separator + name + ".jpg");
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
                 stream.write(bytes);
                 stream.close();
@@ -44,19 +46,12 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
-    public Stream<Path> loadAll() {
-        return null;
+    public Resource loadAsResource(String filename) {
+        Resource resource = new FileSystemResource(Constants.ROOT_FILE_UPLOAD_PATH + File.separator + "tmpFiles" + File.separator + filename);
+        return resource;
     }
 
-    public Path load(String fileName) {
-        return null;
-    }
-
-    public Resource loadAsResource(String fileName) {
-        return null;
-    }
-
-    public void deleteAll() {
+    public void delete(String filename) {
 
     }
 }
