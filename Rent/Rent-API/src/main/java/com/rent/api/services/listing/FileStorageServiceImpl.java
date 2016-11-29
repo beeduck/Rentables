@@ -3,7 +3,6 @@ package com.rent.api.services.listing;
 import com.rent.utility.Constants;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,10 +10,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 /**
  * Created by Asad on 11/27/2016.
@@ -31,7 +26,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 if(!dir.exists()) {
                     dir.mkdirs();
                 }
-                File storedFile = new File(dir.getAbsolutePath() + File.separator + name + ".jpg");
+                File storedFile = new File(dir.getAbsolutePath() + File.separator + name);
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
                 stream.write(bytes);
                 stream.close();
