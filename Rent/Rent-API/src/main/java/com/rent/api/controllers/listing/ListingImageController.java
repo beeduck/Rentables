@@ -35,7 +35,10 @@ public class ListingImageController {
     @RequestMapping(value = "/byListing/{listingId}", method = RequestMethod.GET, produces = "application/zip")
     public byte[] serveFileByListing(HttpServletResponse response, @PathVariable("listingId") int listingId) throws IOException {
         return listingImageService.getImageByListingId(response, listingId);
-
     }
 
+    @RequestMapping(value = "/delete/{uuid}", method = RequestMethod.DELETE)
+    public void deleteFile(@PathVariable("uuid") String uuid) {
+        listingImageService.deleteImage(uuid);
+    }
 }

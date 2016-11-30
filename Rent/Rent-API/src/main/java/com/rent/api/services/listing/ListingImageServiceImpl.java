@@ -97,6 +97,12 @@ public class ListingImageServiceImpl implements ListingImageService {
         return byteArrayOutputStream.toByteArray();
     }
 
+    public void deleteImage(String uuid) {
+        ListingImage listingImage = listingImageDAO.deleteImage(uuid);
+        File file = new File(listingImage.getPath());
+        file.delete();
+    }
+
     private String getFileExtension(MultipartFile file) {
         int check = file.getOriginalFilename().lastIndexOf('.');
         return file.getOriginalFilename().substring(check);

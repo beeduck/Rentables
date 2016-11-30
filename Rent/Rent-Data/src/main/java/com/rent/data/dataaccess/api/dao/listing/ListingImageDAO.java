@@ -16,4 +16,6 @@ public interface ListingImageDAO {
     ListingImage getImageById(String uuid);
 
     List<ListingImage> getImageByListingId(int listingId);
+
+    ListingImage deleteImage(String uuid);
 }

@@ -1,8 +1,10 @@
 package com.rent.data.dataaccess.api.dao.listing;
 
 import com.rent.data.dataaccess.api.dao.ApiDAO;
+import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.data.dataaccess.api.entities.listing.ListingImage;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
@@ -38,5 +40,14 @@ public class ListingImageDAOImpl extends ApiDAO implements ListingImageDAO {
         Criteria criteria = getSession().createCriteria(ListingImage.class);
         criteria.add(Restrictions.eq("listingId",listingId));
         return criteria.list();
+    }
+
+    @Transactional
+    public ListingImage deleteImage(String uuid) {
+        Criteria criteria = getSession().createCriteria(ListingImage.class);
+        criteria.add(Restrictions.eq("imageUUID",uuid));
+        ListingImage listingImage = (ListingImage)criteria.uniqueResult();
+        getSession().delete(listingImage);
+        return listingImage;
     }
 }
