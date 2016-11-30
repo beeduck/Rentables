@@ -1,8 +1,10 @@
 package com.rent.api.services.listing;
 
-import com.rent.api.dto.listing.ListingImageDTO;
-import com.rent.data.dataaccess.api.entities.listing.ListingImage;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,9 +12,9 @@ import java.util.List;
  */
 public interface ListingImageService {
 
-    ListingImage uploadImage(ListingImageDTO listingImageDTO);
+    String uploadImage(int listingId, MultipartFile file) throws IOException;
 
-    ListingImage getImageById(int id);
+    ResponseEntity<Resource> getImageById(String uuid) throws IOException;
 
-    List<ListingImage> getImageByListingId(int listingId);
+    byte[] getImageByListingId(int listingId) throws IOException;
 }

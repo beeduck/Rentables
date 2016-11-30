@@ -27,9 +27,9 @@ public class ListingImageDAOImpl extends ApiDAO implements ListingImageDAO {
     }
 
     @Transactional(readOnly = true)
-    public ListingImage getImageById(int id) {
+    public ListingImage getImageById(String uuid) {
         Criteria criteria = getSession().createCriteria(ListingImage.class);
-        criteria.add(Restrictions.eq("id",id));
+        criteria.add(Restrictions.eq("imageUUID",uuid));
         return (ListingImage)criteria.uniqueResult();
     }
 

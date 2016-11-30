@@ -13,6 +13,7 @@ public class ListingImage implements Serializable {
     private int id;
     private String path;
     private int listingId;
+    private String imageUUID;
 
     @Id
     @Column(name = "id")
@@ -43,5 +44,15 @@ public class ListingImage implements Serializable {
 
     public void setListingId(int listingId) {
         this.listingId = listingId;
+    }
+
+    @Basic
+    @Column(name = "imageUUID")
+    public String getImageUUID() {
+        return imageUUID;
+    }
+
+    public void setImageUUID(String imageUUID) {
+        this.imageUUID = imageUUID;
     }
 }

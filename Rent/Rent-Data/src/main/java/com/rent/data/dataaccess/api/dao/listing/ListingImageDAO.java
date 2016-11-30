@@ -13,7 +13,7 @@ public interface ListingImageDAO {
 
     ListingImage uploadImage(ListingImage listingImage);
 
-    ListingImage getImageById(int id);
+    ListingImage getImageById(String uuid);
 
     List<ListingImage> getImageByListingId(int listingId);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public String illegalArgumentException(IllegalArgumentException e) {
         logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String IOException(IOException e) {
+        logger.error(String.valueOf(e.getClass() + "->" + e.getMessage()));
         return e.getMessage();
     }
 
