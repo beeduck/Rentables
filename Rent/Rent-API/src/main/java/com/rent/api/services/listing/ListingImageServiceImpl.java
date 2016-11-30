@@ -1,12 +1,10 @@
 package com.rent.api.services.listing;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rent.data.dataaccess.api.dao.listing.ListingImageDAO;
 import com.rent.data.dataaccess.api.entities.listing.ListingImage;
 import com.rent.utility.Constants;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -69,31 +67,26 @@ public class ListingImageServiceImpl implements ListingImageService {
                 .body(file);
     }
 
-    public byte[] getImageByListingId(int listingId) throws IOException {
+    public byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException {
         List<ListingImage> list = listingImageDAO.getImageByListingId(listingId);
+        List<File> files = new ArrayList<>();
+        for(ListingImage e : list) {
+            File file = new File(e.getPath());
+            files.add(file);
+        }
+        response.setContentType("application/zip");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
         ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
-
-        for(ListingImage e : list) {
-            File file = new File(e.getPath());
+        for(File file : files) {
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);
             IOUtils.copy(fileInputStream, zipOutputStream);
-
             fileInputStream.close();
             zipOutputStream.closeEntry();
         }
-//        List<ResponseEntity<Resource>> resultList = new ArrayList<>();
-//        for(ListingImage e : list) {
-//            Resource file = new FileSystemResource(e.getPath());
-//            String type = Files.probeContentType(file.getFile().toPath());
-//            ResponseEntity<Resource> response = ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
-//                    .header(HttpHeaders.CONTENT_TYPE, type)
-//                    .body(file);
-//            resultList.add(response);
-//        }
         if (zipOutputStream != null) {
             zipOutputStream.finish();
             zipOutputStream.flush();

@@ -4,8 +4,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Asad on 11/29/2016.
@@ -16,5 +16,5 @@ public interface ListingImageService {
 
     ResponseEntity<Resource> getImageById(String uuid) throws IOException;
 
-    byte[] getImageByListingId(int listingId) throws IOException;
+    byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException;
 }

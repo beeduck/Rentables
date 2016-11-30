@@ -3,15 +3,12 @@ package com.rent.api.controllers.listing;
 import com.rent.api.services.listing.ListingImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
 
 /**
  * Created by Asad on 11/29/2016.
@@ -36,8 +33,8 @@ public class ListingImageController {
     }
 
     @RequestMapping(value = "/byListing/{listingId}", method = RequestMethod.GET, produces = "application/zip")
-    public byte[] serveFileByListing(@PathVariable("listingId") int listingId) throws IOException {
-        return listingImageService.getImageByListingId(listingId);
+    public byte[] serveFileByListing(HttpServletResponse response, @PathVariable("listingId") int listingId) throws IOException {
+        return listingImageService.getImageByListingId(response, listingId);
 
     }
 
