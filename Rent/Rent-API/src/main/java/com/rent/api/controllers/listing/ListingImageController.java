@@ -41,4 +41,9 @@ public class ListingImageController {
     public void deleteFile(@PathVariable("uuid") String uuid) {
         listingImageService.deleteImage(uuid);
     }
+
+    @RequestMapping(value = "/deleteByListingId/{id}", method = RequestMethod.DELETE)
+    public String deleteFilesByListing(@PathVariable("id") int id) {
+        return listingImageService.deleteImagesByListing(id);
+    }
 }

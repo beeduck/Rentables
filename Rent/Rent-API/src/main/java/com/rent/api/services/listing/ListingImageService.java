@@ -19,4 +19,6 @@ public interface ListingImageService {
     byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException;
 
     void deleteImage(String uuid);
+
+    String deleteImagesByListing(int id);
 }

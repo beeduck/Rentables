@@ -105,6 +105,16 @@ public class ListingImageServiceImpl implements ListingImageService {
         file.delete();
     }
 
+    public String deleteImagesByListing(int id) {
+        List<ListingImage> list = listingImageDAO.getImageByListingId(id);
+        for(ListingImage e : list) {
+            listingImageDAO.deleteImage(e.getImageUUID());
+            File file = new File(e.getPath());
+            file.delete();
+        }
+        return "files were deleted";
+    }
+
     private String getFileExtension(MultipartFile file) {
         int check = file.getOriginalFilename().lastIndexOf('.');
         return file.getOriginalFilename().substring(check);
