@@ -31,30 +31,32 @@ public class ListingImageServiceImpl implements ListingImageService {
     @Autowired
     ListingImageDAO listingImageDAO;
 
-    public String uploadImage(int listingId, MultipartFile file) throws IOException {
-        if(!file.isEmpty()) {
-            ListingImage listingImage = new ListingImage();
-            listingImage.setListingId(listingId);
-            String uuid = UUID.randomUUID().toString();
-            listingImage.setImageUUID(uuid);
-            String ext = getFileExtension(file);
-            File dir = new File(Constants.ROOT_FILE_UPLOAD_PATH + File.separator + Integer.toString(listingId));
-            if (!dir.exists()) {
-                dir.mkdirs();
+    public String uploadImage(int listingId, MultipartFile[] files) throws IOException {
+        for(MultipartFile file : files) {
+            if(!file.isEmpty()) {
+                ListingImage listingImage = new ListingImage();
+                listingImage.setListingId(listingId);
+                String uuid = UUID.randomUUID().toString();
+                listingImage.setImageUUID(uuid);
+                String ext = getFileExtension(file);
+                File dir = new File(Constants.ROOT_FILE_UPLOAD_PATH + File.separator + Integer.toString(listingId));
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                String filePath = dir.getAbsolutePath() + File.separator + uuid + ext;
+                listingImage.setPath(filePath);
+                File storedFile = new File(filePath);
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
+                stream.write(bytes);
+                stream.close();
+                listingImageDAO.uploadImage(listingImage);
             }
-            String filePath = dir.getAbsolutePath() + File.separator + uuid + ext;
-            listingImage.setPath(filePath);
-            File storedFile = new File(filePath);
-            byte[] bytes = file.getBytes();
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
-            stream.write(bytes);
-            stream.close();
-            listingImageDAO.uploadImage(listingImage);
-            return "Success";
+            else {
+                return "failed";
+            }
         }
-        else {
-            return "failed";
-        }
+        return "Success";
     }
 
     public ResponseEntity<Resource> getImageById(String uuid) throws IOException {

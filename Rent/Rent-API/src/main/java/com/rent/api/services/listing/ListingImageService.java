@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public interface ListingImageService {
 
-    String uploadImage(int listingId, MultipartFile file) throws IOException;
+    String uploadImage(int listingId, MultipartFile[] files) throws IOException;
 
     ResponseEntity<Resource> getImageById(String uuid) throws IOException;
 

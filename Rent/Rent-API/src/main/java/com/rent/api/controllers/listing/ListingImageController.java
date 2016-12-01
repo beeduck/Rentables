@@ -23,8 +23,8 @@ public class ListingImageController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("listingId") int listingId,
-                                   @RequestParam("file") MultipartFile file) throws IOException {
-        return listingImageService.uploadImage(listingId,file);
+                                   @RequestParam("files") MultipartFile[] files) throws IOException {
+        return listingImageService.uploadImage(listingId,files);
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class ListingImageController {
         return listingImageService.getImageById(uuid);
     }
 
-    @RequestMapping(value = "/byListing/{listingId}", method = RequestMethod.GET, produces = "application/zip")
+    @RequestMapping(value = "/byListingId/{listingId}", method = RequestMethod.GET, produces = "application/zip")
     public byte[] serveFileByListing(HttpServletResponse response, @PathVariable("listingId") int listingId) throws IOException {
         return listingImageService.getImageByListingId(response, listingId);
     }
