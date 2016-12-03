@@ -24,8 +24,10 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbarMain);
         getSupportActionBar().setTitle("Rentables");
 
-
-
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_place, new HomeFragment());
+        transaction.commit();
         Toolbar toolbarNavigate = (Toolbar) findViewById(R.id.toolbar_navigate);
 
         setSupportActionBar(toolbarNavigate);

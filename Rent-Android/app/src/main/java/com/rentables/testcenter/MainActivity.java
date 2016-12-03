@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import dataobject.Listings;
 import dataobject.LoginUser;
 import server.NotifyingThread;
 import server.ServerConnection;

@@ -6,4 +6,10 @@
     <color name="white">#FFFFFF</color>
     <color name="whiteSmoke">#ECECEC</color>
     <color name="black">#000000</color>
+
+    <!-- Extra Colors?
+    <color name="colorPrimary">#72eae4</color>
+    <color name="colorPrimaryDark">#4a9b97</color>
+    -->
+
 </resources>
