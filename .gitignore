@@ -1,12 +1,30 @@
 # Eclipse
+
 .classpath
+
 .project
+
 .settings/
 
+
+
 # Intellij
-.idea/
+
+.idea/*
+.iml*
+.iws
 *.iml
-*.iws
+Rent-Android/.gradle
+Rent-Android/local.properties
+Rent-Android/.idea/workspace.xml
+Rent-Android/.idea/libraries
+Rent-Android/.DS_Store
+Rent-Android/build
+Rent-Android/captures
+Rent-Android/.externalNativeBuild
+
+
+
 
 # Mac
 .DS_Store

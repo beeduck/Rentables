@@ -4,21 +4,29 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import dataobject.*;
 
 public class ServerConnection<DataObject> extends NotifyingThread {
 
-    //Generic calls to the server if needed for whatever reason
+    //Generic calls to the authentication server if needed for whatever reason.
     private final static String USER_LOGIN = "http://rentoauth.us-west-2.elasticbeanstalk.com/oauth/token";
     private final static String CREATE_USER = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/createUser";
     private final static String USER_INFO = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/userInfo/";
+    //Generic calls to the api server if needed.
+    private final static String GET_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/getPosts";
 
     //The object in question
     private DataObject dataObject;
@@ -52,6 +60,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             loginUser();
 
+        }else if(dataObject.getClass() == dataobject.Listings.class){
+
+            getSpecifiedListings();
+
         }else if(dataObject.getClass() == Integer.class){
 
             System.out.println("You put in an integer?");
@@ -62,20 +74,98 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
     }
 
+    private void getSpecifiedListings(){
+
+        //The Listings object fields should be completed before ever getting to this step.
+
+        Listings listings = (Listings) dataObject;
+        String customURL = createListingsURL(listings);
+
+        try{
+
+            URL url = new URL(customURL);
+            HttpURLConnection connect  = (HttpURLConnection) url.openConnection();
+
+            connect.setRequestMethod("GET");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+
+            if(connect.getResponseCode() != 200){
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+            }
+
+            BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+            Gson gson = new Gson();
+            List<Listing> list = new ArrayList<>();
+
+            String readLine;
+            while((readLine = buffReader.readLine()) != null){
+
+                list = gson.fromJson(readLine, new TypeToken<List<Listing>>(){}.getType());
+            }
+
+            Iterator<Listing> iterator = list.iterator();
+
+            while(iterator.hasNext()){
+
+                iterator.next().printProperties();
+            }
+
+        }catch(MalformedURLException malform){
+
+            malform.printStackTrace();
+
+        }catch(IOException IO){
+
+            IO.printStackTrace();
+
+        }catch(RuntimeException runtime){
+
+            runtime.printStackTrace();
+
+        }
+    }
+
+    private String createListingsURL(Listings listings){
+
+        String customURL = GET_LISTING + "?";
+        String[] theKeys = {"keywords", "minPrice", "maxPrice", "priceCategoryId"};
+        HashMap<String, String> fields = listings.getAllFields();
+
+        if(!fields.isEmpty()){
+
+            for(int i = 0; i < theKeys.length; i++){
+
+                if(fields.containsKey(theKeys[i])){
+
+                    customURL = customURL + theKeys[i] + "=" + fields.get(theKeys[i]);
+
+                    if(i != (theKeys.length - 1)){
+
+                        customURL += "&";
+                    }
+                }
+            }
+        }
+
+        return customURL;
+    }
+
     private void loginUser(){
 
         LoginUser loginUser = (LoginUser) dataObject;
 
-        String data = URLEncoder.encode("username") + "="
-                + URLEncoder.encode(loginUser.getUsername()) + "&"
-                + URLEncoder.encode("password") + "="
-                + URLEncoder.encode(loginUser.getPassword()) + "&"
-                + URLEncoder.encode("grant_type") + "="
-                + URLEncoder.encode("password");
+        String data = encodeString("username") + "="
+                + encodeString(loginUser.getUsername()) + "&"
+                + encodeString("password") + "="
+                + encodeString(loginUser.getPassword()) + "&"
+                + encodeString("grant_type") + "="
+                + encodeString("password");
 
         try{
 
-            URL url = new URL(this.USER_LOGIN);
+            URL url = new URL(USER_LOGIN);
             HttpURLConnection connect = (HttpURLConnection) url.openConnection();
 
             connect.setRequestMethod("POST");
@@ -101,7 +191,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
                 buffReader.close();
                 throw new RuntimeException();
             }
-            
+
             connect.disconnect();
 
 
@@ -193,5 +283,21 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             run.printStackTrace();
 
         }
+    }
+
+    public String encodeString(String toEncode){
+
+        try{
+
+            return URLEncoder.encode(toEncode, "utf-8");
+
+        }catch(UnsupportedEncodingException e){
+
+            e.printStackTrace();
+            System.exit(1);
+
+        }
+
+        return toEncode;
     }
 }
