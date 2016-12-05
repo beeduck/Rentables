@@ -2,8 +2,8 @@ package com.rent.data.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -98,8 +98,13 @@ public class DBConfiguration {
         comboPooledDataSource.setNumHelperThreads(30);
     }
 
-    @Bean(name = "transactionManager")
+    @Bean//(name = "transactionManager")
     public HibernateTransactionManager transactionManager() {
         return new HibernateTransactionManager(sessionFactory());
+    }
+
+    @Bean(name = "transactionManagerAuth")
+    public HibernateTransactionManager transactionManagerAuth() {
+        return new HibernateTransactionManager(authSessionFactory());
     }
 }

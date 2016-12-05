@@ -1,7 +1,5 @@
 package com.rent.auth.service.user;
 
-import com.rent.utility.Constants;
-import com.rent.utility.DateUtils;
 import com.rent.auth.configuration.GeneralProperties;
 import com.rent.auth.dto.user.UserDTO;
 import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
@@ -9,8 +7,11 @@ import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
 import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import com.rent.utility.Constants;
+import com.rent.utility.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private GeneralProperties generalProperties;
 
-    @Transactional
+    @Transactional(value = "transactionManagerAuth", rollbackFor = MailException.class)
     public UserDetails createUser(UserDTO userDTO, Locale locale) {
 
         UserDetails user = new UserDetails();
@@ -62,17 +63,17 @@ public class UserServiceImpl implements UserService {
         user.setLastEditDate(timestamp);
 
         userDetailsDAO.createUser(user);
-        userInfoDAO.addUser(user.getId(), user.getUsername());
 
         String token = UUID.randomUUID().toString();
         createRegistrationToken(user, token);
         registrationEmail(user, locale, token);
 
+        userInfoDAO.addUser(user.getId(), user.getUsername());
 
         return user;
     }
 
-    private void registrationEmail(UserDetails user, Locale locale, String token) {
+    public void registrationEmail(UserDetails user, Locale locale, String token) {
 
         String recipientAddress = user.getUsername();
         String subject = "Registration Confirmation";

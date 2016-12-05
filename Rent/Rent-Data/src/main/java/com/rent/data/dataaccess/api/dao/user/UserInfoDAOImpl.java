@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("userInfoDao")
 public class UserInfoDAOImpl extends ApiDAO implements UserInfoDAO {
 
-    @Transactional
+//    @Transactional
     public boolean addUser(int userId, String username) {
         UserInfo userDetails = new UserInfo(userId, username);
 

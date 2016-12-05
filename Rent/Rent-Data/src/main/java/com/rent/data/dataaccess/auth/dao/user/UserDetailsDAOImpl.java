@@ -45,7 +45,7 @@ public class UserDetailsDAOImpl extends AuthDAO implements UserDetailsDAO {
         return this.update(user);
     }
 
-    @Transactional
+//    @Transactional
     public UserDetails createUser(UserDetails user) {
         if (this.save(user)) {
             return user;
