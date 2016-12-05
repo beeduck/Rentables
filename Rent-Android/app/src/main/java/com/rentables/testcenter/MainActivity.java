@@ -15,6 +15,8 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import dataobject.Listing;
+import dataobject.Listings;
 import dataobject.LoginUser;
 import server.NotifyingThread;
 import server.ServerConnection;
@@ -41,6 +43,20 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
         //Resetting weird password typeface
         resetPasswordTypeface();
+
+        testServerConnection();
+    }
+
+    public void testServerConnection(){
+
+        Listings listings = new Listings();
+        listings.setKeywords("test");
+
+        ServerConnection<Listings> test = new ServerConnection<>(listings);
+        test.addListener(this);
+
+        Thread thread = new Thread(test);
+        thread.start();
 
     }
 
