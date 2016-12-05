@@ -36,7 +36,17 @@ public class Listings {
 
     public void setMinPrice(String newMinPrice){
 
-        minPrice = newMinPrice;
+        int rep = Integer.parseInt(newMinPrice);
+
+        if(rep >= 0){
+
+            minPrice = String.valueOf(rep);
+
+        }else {
+
+            minPrice = "0";
+
+        }
     }
 
     public String getMinPrice(){
@@ -46,7 +56,17 @@ public class Listings {
 
     public void setMaxPrice(String newMaxPrice){
 
-        maxPrice = newMaxPrice;
+        int rep = Integer.parseInt(newMaxPrice);
+
+        if(rep >= 0){
+
+            maxPrice = String.valueOf(rep);
+
+        }else{
+
+            maxPrice = "0";
+
+        }
     }
 
     public String getMaxPrice(){
@@ -56,7 +76,7 @@ public class Listings {
 
     public void setPriceCategoryId(String newPriceCategoryId){
 
-        Integer rep = Integer.parseInt(newPriceCategoryId);
+        int rep = Integer.parseInt(newPriceCategoryId);
 
         if(rep >= 1 && rep <= 4){
 

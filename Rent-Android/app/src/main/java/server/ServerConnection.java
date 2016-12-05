@@ -285,7 +285,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
     }
 
-    public String encodeString(String toEncode){
+    private String encodeString(String toEncode){
 
         try{
 

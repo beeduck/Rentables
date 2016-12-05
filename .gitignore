@@ -16,8 +16,7 @@
 *.iml
 Rent-Android/.gradle
 Rent-Android/local.properties
-Rent-Android/.idea/workspace.xml
-Rent-Android/.idea/libraries
+Rent-Android/.idea
 Rent-Android/.DS_Store
 Rent-Android/build
 Rent-Android/captures
@@ -27,11 +26,18 @@ Rent-Android/.externalNativeBuild
 
 
 # Mac
+
 .DS_Store
 
+
+
 # Maven
+
 log/
 target/
 
+
+
 #Logs
+
 Rent/logs
