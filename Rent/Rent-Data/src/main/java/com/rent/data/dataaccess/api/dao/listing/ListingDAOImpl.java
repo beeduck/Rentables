@@ -4,9 +4,7 @@ import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.utility.filters.ListingFilter;
 import com.rent.data.dataaccess.api.dao.ApiDAO;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -19,8 +17,6 @@ import java.util.List;
  */
 @Repository
 public class ListingDAOImpl extends ApiDAO implements ListingDAO {
-
-    Logger logger = LoggerFactory.getLogger(ListingDAO.class);
 
     @Transactional(readOnly = true)
     public List<Listing> getPosts(ListingFilter filter) {
@@ -44,15 +40,12 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
         if(filter.getKeywords() != null) {
             Disjunction disjunction = Restrictions.disjunction();
             for (String e : filter.getKeywords()) {
-                disjunction.add(Restrictions.like("title", e + "%"));
-                disjunction.add(Restrictions.like("title", e));
-                disjunction.add(Restrictions.like("title", "%" + e));
-                disjunction.add(Restrictions.like("title", "%" + e + "%"));
+                disjunction.add(Restrictions.like("title", e, MatchMode.ANYWHERE));
+                disjunction.add(Restrictions.like("description", e, MatchMode.ANYWHERE));
             }
             conjunction.add(disjunction);
         }
         criteria.add(conjunction);
-        logger.info("stuff");
         return criteria.list();
     }
 
@@ -74,5 +67,12 @@ public class ListingDAOImpl extends ApiDAO implements ListingDAO {
     @Transactional
     public boolean updatePost(Listing listing) {
         return this.update(listing);
+    }
+
+    @Transactional(readOnly = true)
+    public int getPostCount() {
+        Criteria criteria = getSession().createCriteria(Listing.class);
+        criteria.setProjection(Projections.rowCount());
+        return (Integer)criteria.uniqueResult();
     }
 }

@@ -1,6 +1,8 @@
 package com.rent.api.services.listing;
 
 import com.rent.api.dto.listing.ListingDTO;
+
+import com.rent.api.utility.RelevanceEngine;
 import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
 import com.rent.data.dataaccess.api.entities.listing.Listing;
 import com.rent.data.dataaccess.api.entities.user.UserInfo;
@@ -59,6 +61,10 @@ public class ListingServiceImpl implements ListingService {
     }
 
     public List<Listing> getListings(ListingFilter filter) {
-        return listingDAO.getPosts(filter);
+        List<Listing> list = listingDAO.getPosts(filter);
+        if(filter.getKeywords().length > 0) {
+            list = RelevanceEngine.sortByRelevance(list,filter.getKeywords());
+        }
+        return list;
     }
 }
