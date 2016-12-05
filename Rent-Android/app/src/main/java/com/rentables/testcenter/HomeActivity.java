@@ -64,6 +64,8 @@ public class HomeActivity extends AppCompatActivity {
             fr = new MyPostsFragment();
         } else if (view == findViewById(R.id.button5)) {
             fr = new ButtonFiveFragment();
+        } else if (view == findViewById(R.id.create_post_button)) {
+            fr = new CreatePostFragment();
         } else
             fr = new HomeFragment();
         FragmentManager fm = getFragmentManager();
