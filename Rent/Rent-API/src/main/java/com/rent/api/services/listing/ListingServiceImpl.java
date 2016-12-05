@@ -63,7 +63,7 @@ public class ListingServiceImpl implements ListingService {
     public List<Listing> getListings(ListingFilter filter) {
         List<Listing> list = listingDAO.getPosts(filter);
         if(filter.getKeywords().length > 0) {
-            list = RelevanceEngine.sortByRelevance(list,filter);
+            list = RelevanceEngine.sortByRelevance(list,filter.getKeywords());
         }
         return list;
     }
