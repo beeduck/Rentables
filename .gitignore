@@ -10,9 +10,8 @@
 
 # Intellij
 
-.idea/*
-.iml*
-.iws
+.idea/
+*.iws
 *.iml
 Rent-Android/.gradle
 Rent-Android/local.properties
