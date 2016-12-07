@@ -6,16 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rentables.testcenter.HomeActivity">
-
-
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
-
+    <!-- This Fragment should eventually be replaced with a View that fragments will be placed inside -->
     <fragment android:name="com.rentables.testcenter.HomeFragment"
         android:id="@+id/fragment_place"
         android:layout_below="@+id/toolbar_main"
@@ -23,15 +19,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_home" />
-
-
     <include
         android:id="@+id/toolbar_navigate"
         layout="@layout/toolbar_navigate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-    </include>
-
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
