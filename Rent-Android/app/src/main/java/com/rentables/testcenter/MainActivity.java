@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import dataobject.CreateListing;
 import dataobject.Listing;
 import dataobject.Listings;
 import dataobject.LoginUser;
@@ -43,20 +44,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
         //Resetting weird password typeface
         resetPasswordTypeface();
-
-        testServerConnection();
-    }
-
-    public void testServerConnection(){
-
-        Listings listings = new Listings();
-        listings.setKeywords("test");
-
-        ServerConnection<Listings> test = new ServerConnection<>(listings);
-        test.addListener(this);
-
-        Thread thread = new Thread(test);
-        thread.start();
 
     }
 
@@ -113,33 +100,39 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
     public void userLogin(View view){
 
-        EditText userName = (EditText) findViewById(R.id.username_edit_text);
-        EditText password = (EditText) findViewById(R.id.password_edit_text);
-        boolean complete = true;
+        System.out.println("Reached");
 
-        if(userName.getText().toString().trim().equals("")){
+        if (loginThread == null) {
 
-            userName.setError("Username Required");
-            complete = false;
-        }
+            EditText userName = (EditText) findViewById(R.id.username_edit_text);
+            EditText password = (EditText) findViewById(R.id.password_edit_text);
+            boolean complete = true;
 
-        if(password.getText().toString().trim().equals("")){
+            if (userName.getText().toString().trim().equals("")) {
 
-            password.setError("Password Required");
-            complete = false;
-        }
+                userName.setError("Username Required");
+                complete = false;
+            }
 
-        if(complete){
+            if (password.getText().toString().trim().equals("")) {
 
-            LoginUser user = new LoginUser();
-            user.setUsername(userName.getText().toString().trim());
-            user.setPassword(password.getText().toString().trim());
+                password.setError("Password Required");
+                complete = false;
+            }
 
-            ServerConnection<LoginUser> connection = new ServerConnection<>(user);
-            connection.addListener(this);
+            if (complete) {
 
-            loginThread = new Thread(connection);
-            loginThread.start();
+                LoginUser user = new LoginUser();
+                user.setUsername(userName.getText().toString().trim());
+                user.setPassword(password.getText().toString().trim());
+
+                ServerConnection<LoginUser> connection = new ServerConnection<>(user);
+                connection.addListener(this);
+
+                loginThread = new Thread(connection);
+                loginThread.start();
+                System.out.println("Reached behind the wall");
+            }
         }
     }
 

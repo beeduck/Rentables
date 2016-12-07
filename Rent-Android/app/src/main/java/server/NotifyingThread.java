@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public abstract class NotifyingThread implements Runnable {
 
     private final Set<ThreadListener> listeners = new CopyOnWriteArraySet<>();
-    private ArrayList errors = new ArrayList();
+    private ArrayList<String> errors = new ArrayList();
     private ArrayList notifications = new ArrayList();
 
     public void addListener(ThreadListener listenerToAdd){
@@ -41,7 +41,7 @@ public abstract class NotifyingThread implements Runnable {
         return notifications.get(index);
     }
 
-    public ArrayList getErrors(){
+    public ArrayList<String> getErrors(){
 
         ArrayList copyList = null;
         Iterator errorsIterator = errors.iterator();
@@ -72,7 +72,7 @@ public abstract class NotifyingThread implements Runnable {
         return copyList;
     }
 
-    protected void addError(Object object){
+    protected void addError(String object){
 
         errors.add(object);
     }

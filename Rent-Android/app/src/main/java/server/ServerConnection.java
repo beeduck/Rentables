@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import com.rentables.testcenter.HomeActivity;
 
 import dataobject.*;
 
@@ -25,8 +26,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private final static String USER_LOGIN = "http://rentoauth.us-west-2.elasticbeanstalk.com/oauth/token";
     private final static String CREATE_USER = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/createUser";
     private final static String USER_INFO = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/userInfo/";
+
     //Generic calls to the api server if needed.
     private final static String GET_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/getPosts";
+    private final static String CREATE_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/createPost";
 
     //The object in question
     private DataObject dataObject;
@@ -64,6 +67,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             getSpecifiedListings();
 
+        }else if(dataObject.getClass() == dataobject.CreateListing.class){
+
+            createListing();
+
         }else if(dataObject.getClass() == Integer.class){
 
             System.out.println("You put in an integer?");
@@ -71,6 +78,58 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }else{
 
             throw new RuntimeException("Currently no implementation for the class: " + dataObject.getClass());
+        }
+    }
+
+    private void createListing(){
+
+        CreateListing theNewListing = (CreateListing) dataObject;
+
+        try{
+
+            URL url = new URL(CREATE_LISTING);
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+
+            connect.setRequestMethod("POST");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(theNewListing);
+
+            DataOutputStream outputStream = new DataOutputStream(connect.getOutputStream());
+
+            System.out.println(json);
+            outputStream.write(json.getBytes());
+            outputStream.flush();
+            outputStream.close();
+
+            if(connect.getResponseCode() != 200){
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connect.getErrorStream()));
+                String next;
+
+                while((next = reader.readLine()) != null){
+
+                    System.out.println(next);
+                }
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+            }
+
+            connect.disconnect();
+
+        }catch(MalformedURLException malform){
+
+            malform.printStackTrace();
+
+        }catch(IOException IO){
+
+            IO.printStackTrace();
+
+        }catch(RuntimeException runtime){
+
+            runtime.printStackTrace();
         }
     }
 
@@ -111,6 +170,8 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
                 iterator.next().printProperties();
             }
+
+            connect.disconnect();
 
         }catch(MalformedURLException malform){
 
