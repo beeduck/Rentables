@@ -12,13 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <!-- This Fragment should eventually be replaced with a View that fragments will be placed inside -->
-    <fragment android:name="com.rentables.testcenter.HomeFragment"
-        android:id="@+id/fragment_place"
-        android:layout_below="@+id/toolbar_main"
-        android:layout_above="@+id/toolbar_navigate"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_home" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar_main"
+        android:layout_above="@+id/toolbar_navigate">
+        <fragment android:name="com.rentables.testcenter.HomeFragment"
+            android:id="@+id/fragment_place"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_home" />
+    </ScrollView>
     <include
         android:id="@+id/toolbar_navigate"
         layout="@layout/toolbar_navigate"

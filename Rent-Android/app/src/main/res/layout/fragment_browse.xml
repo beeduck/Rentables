@@ -8,21 +8,11 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </SearchView>
-
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HELLLOOOO">
-    </TextView>
-
+        android:isScrollContainer="false">
+    </ListView>
 </LinearLayout>

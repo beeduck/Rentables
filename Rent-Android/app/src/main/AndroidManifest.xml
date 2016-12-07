@@ -14,7 +14,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegisterUserActivity"
             android:windowSoftInputMode="stateVisible"
             android:label="@string/Register"/>
