@@ -23,8 +23,8 @@ public class Constants {
     public static final String AUTH_ROLE_ADMIN = "hasAuthority('ROLE_ADMIN')";
     public static final String AUTH_ROLE_MODULE = "hasAuthority('ROLE_MODULE')";
 
-
     // SHARED PATHS
+
     public static final String SHARED_BASE_PATH = "/module";
     public static final String SHARED_COMPLETE_USER_REGISTRATION_PATH = "/register-user";
     public static final String SHARED_CHANGE_USER_EMAIL_PATH = "/update-user-email";
@@ -34,4 +34,8 @@ public class Constants {
     public static final String USER_BASE_PATH = "/user";
     public static final String USER_CONFIRM_REGISTRATION_PATH = "/register";
     public static final String USER_CONFIRM_EMAIL_PATH = "/confirm-email";
+
+    public static final String PATH_COMPLETE_USER_REGISTRATION = "/registerUser";
+    public static final String ROOT_FILE_UPLOAD_PATH = "uploads-dir";
+
 }
