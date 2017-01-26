@@ -19,6 +19,7 @@
         <module>Rent-Data</module>
         <module>Rent-API</module>
         <module>Rent-Oauth</module>
+        <module>Rent-Cloud</module>
     </modules>
 
     <dependencyManagement>
@@ -27,6 +28,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>1.4.1.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.SR5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -44,10 +53,10 @@
             <artifactId>spring-context</artifactId>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 

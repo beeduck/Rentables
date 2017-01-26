@@ -3,6 +3,7 @@ package com.rent.api;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,9 @@ import java.util.Arrays;
                "com.rent.utility," +
                "com.rent.data.configuration," +
                "com.rent.data.dataaccess.api")
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class/*, SecurityAutoConfiguration.class*/})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableDiscoveryClient
 public class ApiServer {
 
     public static void main(String[] args) {
