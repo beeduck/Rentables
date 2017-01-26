@@ -12,7 +12,5 @@ import java.util.Locale;
 public interface UserService {
     UserDetails createUser(UserDTO userDTO, Locale locale);
 
-    void createUserInfoFallback(NewUserDTO newUserDTO);
-
     void completeRegistration(String token) throws Exception;
 }

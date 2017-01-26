@@ -80,12 +80,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Transactional
-    public void createUserInfoFallback(NewUserDTO newUserDTO) {
-        userInfoDAO.addUser(newUserDTO.getUserId(), newUserDTO.getUsername());
-    }
-
-
     private void registrationEmail(UserDetails user, Locale locale, String token) {
 
         String recipientAddress = user.getUsername();
