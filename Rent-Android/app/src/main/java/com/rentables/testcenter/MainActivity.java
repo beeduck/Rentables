@@ -1,5 +1,6 @@
 package com.rentables.testcenter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ import server.ThreadListener;
 public class MainActivity extends AppCompatActivity implements ThreadListener {
 
     Thread loginThread = null;
+    private ProgressDialog loginProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +47,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
         //Resetting weird password typeface
         resetPasswordTypeface();
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-
-        getMenuInflater().inflate(R.menu.overflow_menu, menu);
-
-        return true;
     }
 
     @Override
@@ -89,12 +83,14 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
             } else if (errors == null) {
 
+                loginProgress.dismiss();
                 Intent loginIntent = new Intent();
                 loginIntent.setClass(this, HomeActivity.class);
                 startActivity(loginIntent);
             }
         }
 
+        loginProgress.dismiss();
         loginThread = null;
     }
 
@@ -122,6 +118,11 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
             if (complete) {
 
+                loginProgress = new ProgressDialog(MainActivity.this, ProgressDialog.STYLE_SPINNER);
+                loginProgress.setTitle("Logging In...");
+                loginProgress.setMessage("please wait");
+                loginProgress.show();
+
                 LoginUser user = new LoginUser();
                 user.setUsername(userName.getText().toString().trim());
                 user.setPassword(password.getText().toString().trim());
@@ -131,9 +132,16 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
                 loginThread = new Thread(connection);
                 loginThread.start();
-                System.out.println("Reached behind the wall");
+
             }
         }
+    }
+
+    public void loginProcessDialog(){
+
+        //Method for displaying a progress dialog while logging in.
+
+        ProgressDialog loginDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
     }
 
     public void forgotPassword(View view){

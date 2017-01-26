@@ -1,5 +1,6 @@
 package com.rentables.testcenter;
 
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ public class RegisterUserActivity extends AppCompatActivity implements ThreadLis
 
     private boolean passwordsMatch = false;
     private CreateUser newUser = new CreateUser();
+    private ProgressDialog registerProgress;
     Thread connectionThread;
 
     @Override
@@ -52,18 +54,12 @@ public class RegisterUserActivity extends AppCompatActivity implements ThreadLis
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-
-        getMenuInflater().inflate(R.menu.overflow_menu, menu);
-        return true;
-    }
-
-    @Override
     public void notifyOfThreadCompletion(NotifyingThread notifyThread) {
 
         //Thread completion!!
 
         finalizeRegistration(notifyThread);
+        registerProgress.dismiss();
 
         System.out.println("The connection has been made and the thread has finished.");
     }
@@ -98,15 +94,27 @@ public class RegisterUserActivity extends AppCompatActivity implements ThreadLis
                 });
             }else if(notifyThread.getErrorAt(0).equals("{\"username\":\"User name must be a valid email address.\"}")){
 
+                //TODO: This might be obsolete now...
                 this.runOnUiThread(new Runnable(){
                     @Override
                     public void run(){
                         username.setError("Not a valid email!");
                     }
                 });
+
+            }else if(errors.get(0).equals("Failed messages: javax.mail.SendFailedException: Invalid Addresses;")){
+
+                this.runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        username.setError("Email does not exist!");
+                    }
+                });
+
             }else{
 
                 Iterator<String> iterator = errors.iterator();
+                System.out.println("Reached");
 
                 while(iterator.hasNext()){
 
@@ -134,6 +142,12 @@ public class RegisterUserActivity extends AppCompatActivity implements ThreadLis
             return;
 
         }else{
+
+            //Setting up the ProgressDialog
+            registerProgress = new ProgressDialog(RegisterUserActivity.this, ProgressDialog.STYLE_SPINNER);
+            registerProgress.setTitle("Creating User...");
+            registerProgress.setMessage("please wait");
+            registerProgress.show();
 
             initializeNewUser();
 
@@ -275,7 +289,7 @@ public class RegisterUserActivity extends AppCompatActivity implements ThreadLis
         if(username.getText().toString().trim().equals("")){
 
             formCompleted = false;
-            username.setError("Username Required");
+            username.setError("Email Required");
         }
 
         if(firstName.getText().toString().trim().equals("")){
