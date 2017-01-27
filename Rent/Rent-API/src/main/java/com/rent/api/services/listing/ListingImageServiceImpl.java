@@ -2,6 +2,7 @@ package com.rent.api.services.listing;
 
 import com.rent.api.dao.listing.ListingImageRepository;
 import com.rent.api.entities.listing.ListingImage;
+import com.rent.api.utility.AWSConnector;
 import com.rent.utility.Constants;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,11 @@ public class ListingImageServiceImpl implements ListingImageService {
                 String uuid = UUID.randomUUID().toString();
                 listingImage.setImageUUID(uuid);
                 String ext = getFileExtension(file);
+                String filePath = AWSConnector.uploadImageToS3(file,listingId,uuid,ext);
                 File dir = new File(Constants.ROOT_FILE_UPLOAD_PATH + File.separator + Integer.toString(listingId));
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                String filePath = dir.getAbsolutePath() + File.separator + uuid + ext;
+//                if (!dir.exists()) {
+//                    dir.mkdirs();
+//                }
                 listingImage.setPath(filePath);
                 File storedFile = new File(filePath);
                 byte[] bytes = file.getBytes();
@@ -51,6 +52,11 @@ public class ListingImageServiceImpl implements ListingImageService {
                 stream.write(bytes);
                 stream.close();
                 listingImageRepository.save(listingImage);
+//                File storedFile = new File(filePath);
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
+//                stream.write(bytes);
+//                stream.close();
             }
             else {
                 return "failed";
