@@ -1,8 +1,6 @@
 package com.rent.api.services.listing;
 
-import com.rent.data.dataaccess.api.dao.listing.PriceCategoryDAO;
-import com.rent.data.dataaccess.api.entities.listing.PriceCategory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rent.api.entities.listing.PriceCategory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +12,16 @@ import java.util.List;
 @Service("priceCategoryService")
 public class PriceCategoryServiceImpl implements PriceCategoryService {
 
-    @Autowired
-    PriceCategoryDAO priceCategoryDAO;
+//    @Autowired
+//    PriceCategoryDAO priceCategoryDAO;
 
     public List<PriceCategory> getAllPriceCategories() {
-        return priceCategoryDAO.getAllPriceCategories();
+//        return priceCategoryDAO.getAllPriceCategories();
+        return null;
     }
 
     public PriceCategory getPriceCategoryById(int id) {
-        return priceCategoryDAO.getPriceCategoryById(id);
+//        return priceCategoryDAO.getPriceCategoryById(id);
+        return null;
     }
 }

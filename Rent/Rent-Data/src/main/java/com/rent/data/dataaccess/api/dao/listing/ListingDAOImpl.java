@@ -1,12 +1,10 @@
 package com.rent.data.dataaccess.api.dao.listing;
 
-import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.api.entities.listing.Listing;
 import com.rent.utility.filters.ListingFilter;
 import com.rent.data.dataaccess.api.dao.ApiDAO;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

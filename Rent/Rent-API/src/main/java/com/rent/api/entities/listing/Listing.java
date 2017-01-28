@@ -1,4 +1,4 @@
-package com.rent.data.dataaccess.api.entities.listing;
+package com.rent.api.entities.listing;
 
 import org.hibernate.annotations.Type;
 

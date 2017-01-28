@@ -1,7 +1,7 @@
 package com.rent.data.dataaccess.api.dao.user;
 
 import com.rent.data.dataaccess.api.dao.ApiDAO;
-import com.rent.data.dataaccess.api.entities.user.UserInfo;
+import com.rent.api.entities.user.UserInfo;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

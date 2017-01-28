@@ -1,6 +1,6 @@
 package com.rent.data.dataaccess.api.dao.listing;
 
-import com.rent.data.dataaccess.api.entities.listing.Listing;
+import com.rent.api.entities.listing.Listing;
 import com.rent.utility.filters.ListingFilter;
 
 import java.util.List;

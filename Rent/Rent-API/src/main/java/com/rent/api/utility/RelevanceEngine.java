@@ -1,9 +1,7 @@
 package com.rent.api.utility;
 
-import com.rent.data.dataaccess.api.entities.listing.Listing;
-import com.rent.data.dataaccess.api.entities.listing.Listing;
-import com.rent.utility.filters.ListingFilter;
-import com.rent.utility.filters.ListingFilter;
+import com.rent.api.entities.listing.Listing;
+import com.rent.api.entities.listing.Listing;
 
 import java.util.*;
 

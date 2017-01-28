@@ -1,6 +1,6 @@
 package com.rent.data.dataaccess.api.dao.user;
 
-import com.rent.data.dataaccess.api.entities.user.UserInfo;
+import com.rent.api.entities.user.UserInfo;
 
 /**
  * Created by Duck on 11/11/2016.

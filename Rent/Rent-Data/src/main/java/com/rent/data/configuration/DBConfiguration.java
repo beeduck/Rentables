@@ -1,6 +1,7 @@
 package com.rent.data.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.rent.utility.DBPropertiesPlaceholder;
 import org.hibernate.SessionFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;

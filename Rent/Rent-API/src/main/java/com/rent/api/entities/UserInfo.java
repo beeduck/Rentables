@@ -1,4 +1,4 @@
-package com.rent.data.dataaccess.api.entities.user;
+package com.rent.api.entities;
 
 import javax.persistence.*;
 
