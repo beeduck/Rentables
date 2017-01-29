@@ -1,10 +1,7 @@
 package com.rent.api.controllers;
 
-import com.rent.api.dao.UserInfoRepository;
-import com.rent.api.entities.UserInfo;
-import com.rent.utility.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.rent.api.dao.user.UserInfoRepository;
+import com.rent.api.entities.user.UserInfo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +24,17 @@ public class GeneralController {
 
     @RequestMapping("/test")
     public void test() {
-        List<UserInfo> userInfos = userInfoRepository.findByUsername("b33duck@gmail.com");
+        UserInfo userInfo = userInfoRepository.findByUsername("b33duck@gmail.com");
+        UserInfo userInfo2 = userInfoRepository.findById(483);
+
+        UserInfo userInfo3 = new UserInfo(4999, "Kris");
+        userInfoRepository.save(userInfo3);
+
+        userInfo3 = userInfoRepository.findById(4999);
+        userInfo3.setUsername("tony");
+
+        userInfoRepository.save(userInfo3);
+
         System.out.println("Wait");
     }
 }

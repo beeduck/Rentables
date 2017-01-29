@@ -1,5 +1,6 @@
 package com.rent.api.entities.listing;
 
+import com.rent.utility.DateUtils;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -115,6 +116,19 @@ public class Listing implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.lastEditDate = DateUtils.getCurrentUtcTimestamp();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        Timestamp currentTimestamp = DateUtils.getCurrentUtcTimestamp();
+
+        this.lastEditDate = currentTimestamp;
+        this.createDate = currentTimestamp;
     }
 }
 
