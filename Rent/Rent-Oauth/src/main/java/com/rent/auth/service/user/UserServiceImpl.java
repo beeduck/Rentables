@@ -3,7 +3,6 @@ package com.rent.auth.service.user;
 import com.rent.auth.configuration.GeneralProperties;
 import com.rent.auth.dto.user.UserDTO;
 import com.rent.auth.proxy.RentAPIProxy;
-import com.rent.data.dataaccess.api.dao.user.UserInfoDAO;
 import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
 import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
 import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
@@ -37,9 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDetailsDAO userDetailsDAO;
-
-    @Autowired
-    UserInfoDAO userInfoDAO;
 
     @Autowired
     RegistrationTokenDAO registrationTokenDAO;
