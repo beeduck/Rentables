@@ -41,10 +41,6 @@ public class ListingImageServiceImpl implements ListingImageService {
                 listingImage.setImageUUID(uuid);
                 String ext = getFileExtension(file);
                 String filePath = AWSConnector.uploadImageToS3(file,listingId,uuid,ext);
-                File dir = new File(Constants.ROOT_FILE_UPLOAD_PATH + File.separator + Integer.toString(listingId));
-//                if (!dir.exists()) {
-//                    dir.mkdirs();
-//                }
                 listingImage.setPath(filePath);
                 File storedFile = new File(filePath);
                 byte[] bytes = file.getBytes();

@@ -4,10 +4,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -28,6 +25,10 @@ public class AWSConnector {
         String fileName = folderName + "/" + uuid + ext;
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
         return fileName;
+    }
+
+    public static File getImageFromS3(String uuid) {
+        S3Object s3Object = s3Client.getObject(bucketName,)
     }
 
     private static void createFolder(int listingId) {
