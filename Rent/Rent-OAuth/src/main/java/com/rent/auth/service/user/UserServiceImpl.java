@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         userDetailsRepository.save(user);
 
         NewUserDTO newUserDTO = new NewUserDTO(user.getUsername(), user.getId());
-//        rentAPIProxy.registerUser(newUserDTO);
+        rentAPIProxy.registerUser(newUserDTO);
 
         String token = UUID.randomUUID().toString();
         createRegistrationToken(user, token);

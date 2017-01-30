@@ -120,15 +120,15 @@ public class Listing implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.lastEditDate = DateUtils.getCurrentUtcTimestamp();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
         Timestamp currentTimestamp = DateUtils.getCurrentUtcTimestamp();
 
         this.lastEditDate = currentTimestamp;
         this.createDate = currentTimestamp;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.lastEditDate = DateUtils.getCurrentUtcTimestamp();
     }
 }
 

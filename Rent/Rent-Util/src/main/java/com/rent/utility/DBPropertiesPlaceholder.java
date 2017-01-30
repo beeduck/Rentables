@@ -1,5 +1,6 @@
 package com.rent.utility;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,4 +76,15 @@ public class DBPropertiesPlaceholder {
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
+
+    public static void setDBPoolSettings(ComboPooledDataSource comboPooledDataSource) {
+        comboPooledDataSource.setInitialPoolSize(3);
+        comboPooledDataSource.setMinPoolSize(10);
+        comboPooledDataSource.setMaxPoolSize(100);
+        comboPooledDataSource.setIdleConnectionTestPeriod(150);
+        comboPooledDataSource.setAcquireIncrement(1);
+        comboPooledDataSource.setMaxStatements(0);
+        comboPooledDataSource.setNumHelperThreads(30);
+    }
+
 }

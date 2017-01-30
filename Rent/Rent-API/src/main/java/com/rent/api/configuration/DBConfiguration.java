@@ -39,19 +39,9 @@ public class DBConfiguration {
         comboPooledDataSource.setUser(dbPropertiesPlaceholder.getApiUsername());
         comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getApiPassword());
 
-        setDBPoolSettings(comboPooledDataSource);
+        DBPropertiesPlaceholder.setDBPoolSettings(comboPooledDataSource);
 
         return comboPooledDataSource;
-    }
-
-    private void setDBPoolSettings(ComboPooledDataSource comboPooledDataSource) {
-        comboPooledDataSource.setInitialPoolSize(3);
-        comboPooledDataSource.setMinPoolSize(10);
-        comboPooledDataSource.setMaxPoolSize(100);
-        comboPooledDataSource.setIdleConnectionTestPeriod(150);
-        comboPooledDataSource.setAcquireIncrement(1);
-        comboPooledDataSource.setMaxStatements(0);
-        comboPooledDataSource.setNumHelperThreads(30);
     }
 
     @Bean

@@ -16,9 +16,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Rent-Util</module>
-        <module>Rent-Data</module>
         <module>Rent-API</module>
-        <module>Rent-Oauth</module>
+        <module>Rent-OAuth</module>
         <module>Rent-Cloud</module>
     </modules>
 
