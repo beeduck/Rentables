@@ -1,8 +1,6 @@
-package com.rent.data.dataaccess.auth.entities.registration;
+package com.rent.auth.entities.registration;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 
 /**

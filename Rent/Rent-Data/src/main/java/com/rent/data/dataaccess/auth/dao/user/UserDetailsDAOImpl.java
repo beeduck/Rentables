@@ -1,7 +1,7 @@
 package com.rent.data.dataaccess.auth.dao.user;
 
 import com.rent.data.dataaccess.auth.dao.AuthDAO;
-import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import com.rent.auth.entities.user.UserDetails;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

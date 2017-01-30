@@ -1,7 +1,7 @@
 package com.rent.data.dataaccess.auth.dao.registration;
 
 import com.rent.data.dataaccess.auth.dao.AuthDAO;
-import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
+import com.rent.auth.entities.registration.RegistrationToken;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

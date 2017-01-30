@@ -1,8 +1,7 @@
 package com.rent.auth.service.user;
 
 import com.rent.auth.dto.user.UserDTO;
-import com.rent.data.dataaccess.auth.entities.user.UserDetails;
-import com.rent.utility.dto.NewUserDTO;
+import com.rent.auth.entities.user.UserDetails;
 
 import java.util.Locale;
 

@@ -1,17 +1,16 @@
 package com.rent.auth.service.user;
 
 import com.rent.auth.configuration.GeneralProperties;
+import com.rent.auth.dao.registration.RegistrationRepository;
+import com.rent.auth.dao.user.UserDetailsRepository;
 import com.rent.auth.dto.user.UserDTO;
+import com.rent.auth.entities.registration.RegistrationToken;
+import com.rent.auth.entities.user.UserDetails;
 import com.rent.auth.proxy.RentAPIProxy;
-import com.rent.data.dataaccess.auth.dao.registration.RegistrationTokenDAO;
-import com.rent.data.dataaccess.auth.dao.user.UserDetailsDAO;
-import com.rent.data.dataaccess.auth.entities.registration.RegistrationToken;
-import com.rent.data.dataaccess.auth.entities.user.UserDetails;
 import com.rent.utility.Constants;
 import com.rent.utility.DateUtils;
 import com.rent.utility.dto.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,20 +27,19 @@ import java.util.UUID;
  * Created by Duck on 11/11/2016.
  */
 @Service("userService")
-@ComponentScan("com.rent.data.dataaccess.api")
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    RentAPIProxy rentAPIProxy;
+    private RentAPIProxy rentAPIProxy;
 
     @Autowired
-    UserDetailsDAO userDetailsDAO;
+    private UserDetailsRepository userDetailsRepository;
 
     @Autowired
-    RegistrationTokenDAO registrationTokenDAO;
+    private RegistrationRepository registrationRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -63,10 +61,10 @@ public class UserServiceImpl implements UserService {
         user.setCreateDate(timestamp);
         user.setLastEditDate(timestamp);
 
-        userDetailsDAO.createUser(user);
+        userDetailsRepository.save(user);
 
         NewUserDTO newUserDTO = new NewUserDTO(user.getUsername(), user.getId());
-        rentAPIProxy.registerUser(newUserDTO);
+//        rentAPIProxy.registerUser(newUserDTO);
 
         String token = UUID.randomUUID().toString();
         createRegistrationToken(user, token);
@@ -101,21 +99,21 @@ public class UserServiceImpl implements UserService {
 
         RegistrationToken registrationToken = new RegistrationToken(token, user.getId(), expirationDate);
 
-        registrationTokenDAO.saveRegistrationToken(registrationToken);
+        registrationRepository.save(registrationToken);
 
         return true;
     }
 
     @Transactional
     public void completeRegistration(String token) throws Exception {
-        RegistrationToken registrationToken = registrationTokenDAO.getTokenByString(token);
+        RegistrationToken registrationToken = registrationRepository.findByToken(token);
 
         if(registrationToken == null) {
             // TODO: Create custom exception class
             throw new IllegalArgumentException("Invalid registration token: " + token);
         }
 
-        UserDetails user = userDetailsDAO.getUserById(registrationToken.getUserId());
+        UserDetails user = userDetailsRepository.findById(registrationToken.getUserId());
 
         if( !registrationToken.getExpirationDate().after(new Date()) ) {
             // TODO: Create custom exception class
@@ -123,7 +121,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setActive(true);
-        userDetailsDAO.toggleUserActivation(user);
-        registrationTokenDAO.removeToken(registrationToken);
+        userDetailsRepository.save(user);
+        registrationRepository.delete(registrationToken);
     }
 }

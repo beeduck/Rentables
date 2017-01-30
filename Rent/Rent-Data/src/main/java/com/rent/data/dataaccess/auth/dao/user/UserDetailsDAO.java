@@ -1,6 +1,6 @@
 package com.rent.data.dataaccess.auth.dao.user;
 
-import com.rent.data.dataaccess.auth.entities.user.UserDetails;
+import com.rent.auth.entities.user.UserDetails;
 
 import java.util.List;
 

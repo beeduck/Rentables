@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -21,6 +26,7 @@ public class DBConfiguration {
     @Autowired
     private DBPropertiesPlaceholder dbPropertiesPlaceholder;
 
+    @Primary
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
@@ -46,5 +52,27 @@ public class DBConfiguration {
         comboPooledDataSource.setAcquireIncrement(1);
         comboPooledDataSource.setMaxStatements(0);
         comboPooledDataSource.setNumHelperThreads(30);
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+
+        factoryBean.setPackagesToScan("com.rent.auth.entities");
+        factoryBean.setDataSource(dataSource());
+
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+
+        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+
+        return factoryBean;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        LocalContainerEntityManagerFactoryBean bean = entityManagerFactory();
+        return new JpaTransactionManager(bean.getObject());
     }
 }

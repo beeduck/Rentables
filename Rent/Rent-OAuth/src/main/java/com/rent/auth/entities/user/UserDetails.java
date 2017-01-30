@@ -1,6 +1,7 @@
-package com.rent.data.dataaccess.auth.entities.user;
+package com.rent.auth.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rent.utility.DateUtils;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -111,5 +112,19 @@ public class UserDetails implements java.io.Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+
+    @PrePersist
+    public void prePersist() {
+        this.lastEditDate = DateUtils.getCurrentUtcTimestamp();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        Timestamp currentTimestamp = DateUtils.getCurrentUtcTimestamp();
+
+        this.lastEditDate = currentTimestamp;
+        this.createDate = currentTimestamp;
     }
 }

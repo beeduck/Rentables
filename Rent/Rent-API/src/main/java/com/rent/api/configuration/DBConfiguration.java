@@ -13,7 +13,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
@@ -21,14 +20,14 @@ import java.beans.PropertyVetoException;
  * Created by Duck on 1/27/2017.
  */
 @Configuration
-public class DBConfigurationTest {
-    private final Logger logger = LoggerFactory.getLogger(DBConfigurationTest.class);
+public class DBConfiguration {
+    private final Logger logger = LoggerFactory.getLogger(DBConfiguration.class);
 
     @Autowired
     private DBPropertiesPlaceholder dbPropertiesPlaceholder;
 
     @Primary
-    @Bean(name = "dataSource", destroyMethod = "close")
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {
@@ -68,7 +67,7 @@ public class DBConfigurationTest {
 
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 
-        return factoryBean;//.getObject();
+        return factoryBean;
     }
 
     @Bean
