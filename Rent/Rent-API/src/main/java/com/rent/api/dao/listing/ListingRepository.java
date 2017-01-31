@@ -7,7 +7,9 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 /**
  * Created by Duck on 1/28/2017.
  */
-public interface ListingRepository extends JpaRepository<Listing, Long>, QueryDslPredicateExecutor {
+public interface ListingRepository extends JpaRepository<Listing, Long>,
+                                           ListingRepositoryCustom,
+                                           QueryDslPredicateExecutor {
 
     Listing findById(Integer id);
 }

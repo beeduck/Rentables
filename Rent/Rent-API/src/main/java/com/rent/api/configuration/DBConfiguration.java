@@ -24,40 +24,21 @@ public class DBConfiguration {
     private final Logger logger = LoggerFactory.getLogger(DBConfiguration.class);
 
     @Autowired
-    private DBPropertiesPlaceholder dbPropertiesPlaceholder;
+    private DBPropertiesPlaceholder dbProperties;
 
     @Primary
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
-        try {
-            comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getApiDriver());
-        } catch (PropertyVetoException e) {
-            logger.error(e.getMessage());
-        }
-        comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getApiUrl());
-        comboPooledDataSource.setUser(dbPropertiesPlaceholder.getApiUsername());
-        comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getApiPassword());
-
-        DBPropertiesPlaceholder.setDBPoolSettings(comboPooledDataSource);
-
-        return comboPooledDataSource;
+        return DBPropertiesPlaceholder.setComboPooledDataSource(
+                dbProperties.getApiDriver(), dbProperties.getApiUrl(),
+                dbProperties.getApiUsername(), dbProperties.getApiPassword(), logger
+        );
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-
-        factoryBean.setPackagesToScan("com.rent.api.entities");
-        factoryBean.setDataSource(dataSource());
-
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setGenerateDdl(true);
-        jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
-
-        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-
-        return factoryBean;
+        return DBPropertiesPlaceholder.setEntityManagerFactory(dataSource(), "com.rent.api.entities",
+                                                               "org.hibernate.dialect.MySQL5Dialect");
     }
 
     @Bean
