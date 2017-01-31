@@ -3,28 +3,28 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/rentColorPrimary</item>
+        <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
+        <item name="colorAccent">@color/rentColorAccent</item>
+        <item name="colorButtonNormal">@color/rentColorPrimary</item>
     </style>
 
     <!--style for action bar. -->
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/rentColorPrimary</item>
+        <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:colorButtonNormal">@color/rentColorPrimary</item>
     </style>
 
     <!--style for dialog fragments with titles -->
     <style name="DialogThemeWithTitle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/rentColorPrimary</item>
+        <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
+        <item name="colorAccent">@color/rentColorAccent</item>
+        <item name="colorButtonNormal">@color/rentColorPrimary</item>
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">true</item>
@@ -34,10 +34,10 @@
 
     <!--style for dialog fragments without titles -->
     <style name="DialogThemeNoTitle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/rentColorPrimary</item>
+        <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
+        <item name="colorAccent">@color/rentColorAccent</item>
+        <item name="colorButtonNormal">@color/rentColorPrimary</item>
         <item name="android:windowTitleSize">16dp</item>
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowFullscreen">false</item>

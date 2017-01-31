@@ -255,8 +255,6 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             connect.disconnect();
 
-
-
         }catch(MalformedURLException malform){
 
             malform.printStackTrace();
@@ -267,6 +265,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
         }catch(RuntimeException runtime){
 
+            //TODO This runtime exception should warn the user that there was an error with the server.
             runtime.printStackTrace();
         }
 
@@ -286,7 +285,6 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             //Converting the CreateUser object into json
             Gson converter = new Gson();
             String json = converter.toJson(createUser);
-            System.out.println(json);
 
             //Converting url
             URL url = new URL(this.CREATE_USER);
@@ -314,7 +312,6 @@ public class ServerConnection<DataObject> extends NotifyingThread {
                 while((error = buffReader.readLine()) != null){
 
                     this.addError(error);
-                    System.out.println(error);
                 }
 
                 throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());

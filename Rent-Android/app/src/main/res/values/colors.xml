@@ -6,4 +6,12 @@
     <color name="white">#FFFFFF</color>
     <color name="whiteSmoke">#ECECEC</color>
     <color name="black">#000000</color>
+    <color name="lighterBlack">#444444</color>
+    <color name="grey">#a8a8a8</color>
+
+    <!-- Testing for color ideas -->
+    <color name="rentColorPrimary">#66CC99</color>
+    <color name="rentColorPrimaryDark">#26A65B</color>
+    <color name="rentBackgroundColor">#FFFFFF</color>
+    <color name="rentColorAccent">#F39C12</color>
 </resources>

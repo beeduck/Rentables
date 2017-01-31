@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity implements ThreadListener {
             String description = descriptionText.getText().toString().trim();
             String price = priceText.getText().toString().trim();
             String priceCategoryId = priceCategoryIdText.getSelectedItem().toString();
-            int userId = 3; //A placeholder for now.
+            int userId = 4; //A placeholder for now.
 
             theListing.setTitle(title);
             theListing.setDescription(description);
