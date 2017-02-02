@@ -14,38 +14,23 @@ import java.io.*;
  */
 public class AWSConnector {
 
-    private static AWSCredentials credentials = new BasicAWSCredentials();
+    private static AWSCredentials credentials = new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"),
+            System.getProperty("AWS_SECRET_ACCESS_KEY"));
     private static AmazonS3 s3Client = new AmazonS3Client(credentials);
     private static String bucketName = "rentables-file-server";
     private static String folder = "uploads-dir";
 
     public static String uploadImageToS3(MultipartFile multipartFile, int listingId, String uuid, String ext) throws IOException {
-        File file = convertFile(multipartFile);
+        long size = multipartFile.getSize();
+        InputStream inputStream = multipartFile.getInputStream();
         String folderName = folder + "/" + Integer.toString(listingId);
         String fileName = folderName + "/" + uuid + ext;
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
+        s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+        inputStream.close();
         return fileName;
     }
 
     public static File getImageFromS3(String uuid) {
         S3Object s3Object = s3Client.getObject(bucketName,)
-    }
-
-    private static void createFolder(int listingId) {
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(0);
-        InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,
-                folder + "/" + Integer.toString(listingId), emptyContent, metadata);
-        s3Client.putObject(putObjectRequest);
-    }
-
-    private static File convertFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
     }
 }
