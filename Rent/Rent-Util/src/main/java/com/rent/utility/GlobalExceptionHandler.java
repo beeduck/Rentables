@@ -3,6 +3,7 @@ package com.rent.utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -48,6 +49,15 @@ public class GlobalExceptionHandler {
         logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
         return e.getMessage();
     }
+
+    @ExceptionHandler(MailSendException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String sendFailedException(MailSendException e) {
+        logger.error(String.valueOf(e.getClass()) + " -> " + e.getMessage());
+        return "Invalid email address.";
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
