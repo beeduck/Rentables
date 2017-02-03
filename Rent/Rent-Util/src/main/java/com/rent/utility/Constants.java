@@ -25,5 +25,13 @@ public class Constants {
 
 
     // SHARED PATHS
-    public static final String PATH_COMPLETE_USER_REGISTRATION = "/registerUser";
+    public static final String SHARED_BASE_PATH = "/module";
+    public static final String SHARED_COMPLETE_USER_REGISTRATION_PATH = "/register-user";
+    public static final String SHARED_CHANGE_USER_EMAIL_PATH = "/update-user-email";
+
+
+    // USER EMAIL PATHS
+    public static final String USER_BASE_PATH = "/user";
+    public static final String USER_CONFIRM_REGISTRATION_PATH = "/register";
+    public static final String USER_CONFIRM_EMAIL_PATH = "/confirm-email";
 }

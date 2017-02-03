@@ -23,4 +23,13 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfoRepository.save(userInfo);
     }
 
+    @Transactional
+    public void updateUserEmail(int userId, String newEmail) {
+        UserInfo userInfo = userInfoRepository.findById(userId);
+
+        userInfo.setUsername(newEmail);
+
+        userInfoRepository.save(userInfo);
+    }
+
 }
