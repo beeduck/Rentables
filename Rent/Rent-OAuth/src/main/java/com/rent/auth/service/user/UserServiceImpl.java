@@ -9,16 +9,19 @@ import com.rent.auth.entities.registration.RegistrationToken;
 import com.rent.auth.entities.user.EmailChangeToken;
 import com.rent.auth.entities.user.UserDetails;
 import com.rent.auth.proxy.RentAPIProxy;
+import com.rent.auth.utility.security.UserSecurity;
 import com.rent.utility.Constants;
 import com.rent.utility.DateUtils;
 import com.rent.utility.dto.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,11 +81,15 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public UserDetails updateUser(UserDTO userDTO) {
-        UserDetails userDetails = null;//userDetailsRepository.findById();
+        UserDetails userDetails = userDetailsRepository.findByUsername(UserSecurity.getUsername());
 
         boolean changed = false;
         if(!userDetails.getUsername().equalsIgnoreCase(userDTO.getUsername()) && (userDTO.getUsername() != null) ) {
-            // Send email to verify change of email address
+
+            if(userDetailsRepository.exists(userDTO.getUsername())) {
+                throw new IllegalArgumentException("Username is already in use.");
+            }
+
             String token = createEmailChangeToken(userDetails, userDTO.getUsername());
             usernameChangeEmail(userDetails, token);
         }

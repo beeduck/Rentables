@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Autowired
     TokenStore tokenStore;
 
+    @Autowired
+    AccessDeniedHandler accessDeniedHandler;
+
     @Override
     public void configure(final HttpSecurity http) throws Exception {
 
@@ -44,14 +48,12 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             .and()
                 .authorizeRequests()
-                .antMatchers("/user/**").hasAuthority("ROLE_MODULE")
                 .antMatchers("/**").permitAll();
     }
 
     @Override
     public void configure(final ResourceServerSecurityConfigurer config) {
-        // TODO: Add access denied handler
-        config.accessDeniedHandler();
+        config.accessDeniedHandler(accessDeniedHandler);
         config.tokenServices(defaultTokenServices());
     }
 
