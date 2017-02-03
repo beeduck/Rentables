@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public UserDetails updateUser(UserDTO userDTO) {
-        UserDetails userDetails = userDetailsRepository.findById();
+        UserDetails userDetails = null;//userDetailsRepository.findById();
 
         boolean changed = false;
         if(!userDetails.getUsername().equalsIgnoreCase(userDTO.getUsername()) && (userDTO.getUsername() != null) ) {
@@ -191,7 +191,8 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = userDetailsRepository.findById(emailChangeToken.getUserId());
 
         userDetails.setUsername(emailChangeToken.getNewEmail());
-        rentAPIProxy.updateUserEmail(userDetails.getId(), userDetails.getUsername());
+        NewUserDTO newUserDTO = new NewUserDTO(userDetails.getUsername(), userDetails.getId());
+        rentAPIProxy.updateUserEmail(newUserDTO);
 
         userDetailsRepository.save(userDetails);
         emailChangeTokenRepository.delete(emailChangeToken);

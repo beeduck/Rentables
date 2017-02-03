@@ -5,6 +5,8 @@ import com.rent.auth.service.user.UserService;
 import com.rent.auth.entities.user.UserDetails;
 import com.rent.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ public class UserController {
     public UserDetails createUser(@Valid @RequestBody final UserDTO userDTO,
                                   HttpServletRequest request) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.createUser(userDTO, request.getLocale());
     }
 

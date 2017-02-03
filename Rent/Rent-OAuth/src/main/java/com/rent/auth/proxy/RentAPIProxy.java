@@ -20,5 +20,5 @@ public interface RentAPIProxy {
     @RequestMapping(method = RequestMethod.PUT,
                     value = Constants.SHARED_BASE_PATH + Constants.SHARED_CHANGE_USER_EMAIL_PATH,
                     consumes = "application/json")
-    void updateUserEmail(int userId, String newEmail);
+    void updateUserEmail(NewUserDTO newUserDTO);
 }
