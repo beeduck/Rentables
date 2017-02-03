@@ -16,12 +16,12 @@ import com.rent.utility.dto.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -128,6 +128,15 @@ public class UserServiceImpl implements UserService {
         mailSender.send(simpleMailMessage);
     }
 
+    private void notifyEmailChange(UserDetails user) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(generalProperties.getEmailUsername());
+        simpleMailMessage.setTo(user.getUsername());
+        simpleMailMessage.setSubject("Notification of Email Change");
+        simpleMailMessage.setText("Your email has been changed for Rentables.");
+        mailSender.send(simpleMailMessage);
+    }
+
     private String createRegistrationToken(UserDetails user) {
         String token = UUID.randomUUID().toString();
 
@@ -198,6 +207,9 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = userDetailsRepository.findById(emailChangeToken.getUserId());
 
         userDetails.setUsername(emailChangeToken.getNewEmail());
+
+        notifyEmailChange(userDetails);
+
         NewUserDTO newUserDTO = new NewUserDTO(userDetails.getUsername(), userDetails.getId());
         rentAPIProxy.updateUserEmail(newUserDTO);
 

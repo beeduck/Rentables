@@ -8,5 +8,5 @@ import com.rent.utility.dto.NewUserDTO;
 public interface UserInfoService {
 
     void addNewUserInfo(NewUserDTO newUserDTO);
-    void updateUserEmail(int userId, String newEmail);
+    void updateUserEmail(NewUserDTO newUserDTO);
 }

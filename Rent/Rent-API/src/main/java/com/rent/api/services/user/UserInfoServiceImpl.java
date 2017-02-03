@@ -24,10 +24,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Transactional
-    public void updateUserEmail(int userId, String newEmail) {
-        UserInfo userInfo = userInfoRepository.findById(userId);
+    public void updateUserEmail(NewUserDTO newUserDTO) {
+        UserInfo userInfo = userInfoRepository.findById(newUserDTO.getUserId());
 
-        userInfo.setUsername(newEmail);
+        userInfo.setUsername(newUserDTO.getUsername());
 
         userInfoRepository.save(userInfo);
     }

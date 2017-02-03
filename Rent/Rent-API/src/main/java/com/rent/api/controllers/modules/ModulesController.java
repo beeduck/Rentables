@@ -27,8 +27,7 @@ public class ModulesController {
 
     @RequestMapping(value = Constants.SHARED_CHANGE_USER_EMAIL_PATH, method = RequestMethod.PUT,
             headers = Constants.CONTENT_TYPE_JSON)
-    public void updateUserEmail(@RequestParam("user-id") final int userId,
-                                @RequestParam("new-email") final String newEmail) {
-        userInfoService.updateUserEmail(userId, newEmail);
+    public void updateUserEmail(@RequestBody final NewUserDTO newUserDTO) {
+        userInfoService.updateUserEmail(newUserDTO);
     }
 }
