@@ -1,12 +1,15 @@
 package com.rent.api.controllers.listing;
 
 import com.rent.api.dto.listing.ListingDTO;
+import com.rent.api.oauth.CustomOAuth2Authentication;
 import com.rent.api.services.listing.ListingService;
 import com.rent.api.entities.listing.Listing;
 import com.rent.utility.Constants;
 import com.rent.utility.filters.ListingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -34,6 +35,13 @@ public class TokenStoreConfig {
         tokenService.setAccessTokenValiditySeconds(Constants.OAUTH_TOKEN_DURATION);
         tokenService.setTokenStore(tokenStore());
         tokenService.setSupportRefreshToken(true);
+        tokenService.setTokenEnhancer(tokenEnhancer());
         return tokenService;
+    }
+
+
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new CustomTokenEnhancer();
     }
 }

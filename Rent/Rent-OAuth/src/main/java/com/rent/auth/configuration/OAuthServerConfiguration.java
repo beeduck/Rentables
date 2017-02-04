@@ -1,6 +1,7 @@
 package com.rent.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
 import javax.sql.DataSource;
 
@@ -25,6 +27,9 @@ public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapt
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private TokenEnhancer tokenEnhancer;
 
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
@@ -46,6 +51,7 @@ public class OAuthServerConfiguration extends AuthorizationServerConfigurerAdapt
             throws Exception {
 
         authorizationServerEndpointsConfigurer
+                .tokenEnhancer(tokenEnhancer)
                 .tokenServices(authorizationServerTokenServices)
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);

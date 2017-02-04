@@ -1,5 +1,6 @@
 package com.rent.api.configuration;
 
+import com.rent.api.oauth.CustomAccessTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
 import org.springframework.context.annotation.Bean;
@@ -55,6 +56,12 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         tokenServices.setCheckTokenEndpointUrl(System.getProperty("OAUTH_CONNECTION"));
         tokenServices.setClientId(generalProperties.getAuthClient());
         tokenServices.setClientSecret(generalProperties.getAuthSecret());
+        tokenServices.setAccessTokenConverter(accessTokenConverter());
         return tokenServices;
+    }
+
+    @Bean
+    public CustomAccessTokenConverter accessTokenConverter() {
+        return new CustomAccessTokenConverter();
     }
 }
