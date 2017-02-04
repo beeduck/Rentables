@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Duck on 10/28/2016.
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
-    @RequestMapping(value = "/userInfo/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public UserInfo getUserInfo(@PathVariable("userId") int userId) {
-//        user user = userService.getUserById(userId);
 
-//        return user;
         return null;
     }
 }

@@ -43,7 +43,7 @@ public class ListingController {
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.PUT,
                     headers = "content-type=application/json")
-    public void updateListing(@Valid @RequestBody final Listing post) {
-        listingService.updateListing(post);
+    public void updateListing(@Valid @RequestBody final Listing listing) {
+        listingService.updateListing(listing);
     }
 }

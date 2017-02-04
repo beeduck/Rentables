@@ -20,8 +20,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(method = RequestMethod.POST,
-            headers = Constants.CONTENT_TYPE_JSON)
+    @RequestMapping(method = RequestMethod.POST, headers = Constants.CONTENT_TYPE_JSON)
     public UserDetails createUser(@Valid @RequestBody final UserDTO userDTO,
                                   HttpServletRequest request) {
 
@@ -29,7 +28,7 @@ public class UserController {
     }
 
     @PreAuthorize(Constants.AUTH_ROLE_USER)
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, headers = Constants.CONTENT_TYPE_JSON)
     public UserDetails updateUser(@Valid @RequestBody final UserDTO userDTO) {
         return userService.updateUser(userDTO);
     }

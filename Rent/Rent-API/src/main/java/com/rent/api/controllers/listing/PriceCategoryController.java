@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/priceCategories")
+@RequestMapping("/price-categories")
 public class PriceCategoryController {
 
     @Autowired
