@@ -1,6 +1,6 @@
 package com.rent.api.configuration;
 
-import com.rent.api.oauth.CustomAccessTokenConverter;
+import com.rent.utility.oauth.CustomAccessTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
 import org.springframework.context.annotation.Bean;

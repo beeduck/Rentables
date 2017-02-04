@@ -1,5 +1,6 @@
 package com.rent.auth.utility.security;
 
+import com.rent.utility.oauth.CustomOAuth2Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,10 @@ public class UserSecurity {
     public static String getUsername() {
         return (String) ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                             .getUsername();
+    }
+
+    public static int getUserId() {
+        return ((CustomOAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getUserId();
     }
 
     public static List<GrantedAuthority> getRoles() {

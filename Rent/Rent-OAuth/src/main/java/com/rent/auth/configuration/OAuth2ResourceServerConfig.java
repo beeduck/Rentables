@@ -54,13 +54,19 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Override
     public void configure(final ResourceServerSecurityConfigurer config) {
         config.accessDeniedHandler(accessDeniedHandler);
-        config.tokenServices(defaultTokenServices());
+        config.tokenServices(customTokenServices());
     }
 
     private DefaultTokenServices defaultTokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore);
         return defaultTokenServices;
+    }
+
+    private CustomTokenServices customTokenServices() {
+        CustomTokenServices customTokenServices = new CustomTokenServices();
+        customTokenServices.setTokenStore(tokenStore);
+        return customTokenServices;
     }
 
     @Bean

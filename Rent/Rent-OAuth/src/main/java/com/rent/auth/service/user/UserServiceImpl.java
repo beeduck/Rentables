@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public UserDetails updateUser(UserDTO userDTO) {
-        UserDetails userDetails = userDetailsRepository.findByUsername(UserSecurity.getUsername());
+        UserDetails userDetails = userDetailsRepository.findById(UserSecurity.getUserId());
 
         boolean changed = false;
         if(!userDetails.getUsername().equalsIgnoreCase(userDTO.getUsername()) && (userDTO.getUsername() != null) ) {
