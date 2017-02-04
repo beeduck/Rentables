@@ -1,12 +1,11 @@
 package com.rent.auth.controller.user;
 
 import com.rent.auth.dto.user.UserDTO;
-import com.rent.auth.service.user.UserService;
 import com.rent.auth.entities.user.UserDetails;
+import com.rent.auth.service.user.UserService;
 import com.rent.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +25,10 @@ public class UserController {
     public UserDetails createUser(@Valid @RequestBody final UserDTO userDTO,
                                   HttpServletRequest request) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.createUser(userDTO, request.getLocale());
     }
 
+    @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.PUT)
     public UserDetails updateUser(@Valid @RequestBody final UserDTO userDTO) {
         return userService.updateUser(userDTO);
