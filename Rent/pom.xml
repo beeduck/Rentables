@@ -19,6 +19,7 @@
         <module>Rent-API</module>
         <module>Rent-OAuth</module>
         <module>Rent-Cloud</module>
+        <module>Rent-Chat</module>
     </modules>
 
     <dependencyManagement>
