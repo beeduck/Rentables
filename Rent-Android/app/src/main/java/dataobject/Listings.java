@@ -1,5 +1,6 @@
 package dataobject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Listings {
@@ -8,7 +9,8 @@ public class Listings {
     private String minPrice = null;
     private String maxPrice = null;
     private String priceCategoryId = null;
-    private static final int MAX_FIELDS = 4;
+    private int userId = -1;
+    private ArrayList<Listing> listings = new ArrayList<>();
 
     public Listings(){
 
@@ -22,6 +24,26 @@ public class Listings {
         setMaxPrice(newMaxPrice);
         setPriceCategoryId(newPriceCategoryId);
 
+    }
+
+    public Listings(String newKeywords, String newMinPrice, String newMaxPrice, String newPriceCategoryId, int newUserId){
+
+        setKeywords(newKeywords);
+        setMinPrice(newMinPrice);
+        setMaxPrice(newMaxPrice);
+        setPriceCategoryId(newPriceCategoryId);
+        setUserId(newUserId);
+
+    }
+
+    public void setListings(ArrayList<Listing> currentListings){
+
+        listings = currentListings;
+    }
+
+    public ArrayList<Listing> getListings(){
+
+        return listings;
     }
 
     public void setKeywords(String newKeywords){
@@ -93,6 +115,23 @@ public class Listings {
         return priceCategoryId;
     }
 
+    public void setUserId(int newUserId){
+
+        if(newUserId >= 0){
+
+            userId = newUserId;
+        }else{
+
+            userId = 0;
+            throw new RuntimeException("ERROR: userId in listings has been set to an invalid value!");
+        }
+    }
+
+    public int getUserId(){
+
+        return userId;
+    }
+
     public HashMap<String, String> getAllFields(){
 
         HashMap<String, String> theFields = new HashMap<String, String>();
@@ -115,6 +154,11 @@ public class Listings {
         if(this.getPriceCategoryId() != null){
 
             theFields.put("priceCategoryId", this.getPriceCategoryId());
+        }
+
+        if(this.getUserId() != -1){
+
+            theFields.put("userId", String.valueOf(this.getUserId()));
         }
 
         return theFields;
