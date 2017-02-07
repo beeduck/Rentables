@@ -14,4 +14,6 @@
     <color name="rentColorPrimaryDark">#26A65B</color>
     <color name="rentBackgroundColor">#FFFFFF</color>
     <color name="rentColorAccent">#F39C12</color>
+    <color name="rentCapeHoney">#FDE3A7</color>
+    <color name="rentEcstasy">#F9690E</color>
 </resources>

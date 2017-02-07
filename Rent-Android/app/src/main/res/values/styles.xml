@@ -49,4 +49,13 @@
         <item name="android:windowMinWidthMinor">0dip</item>
         <item name="android:windowMinWidthMajor">0dip</item>
     </style>
+
+    <style name="EditTextCommonBackground">
+        <item name="colorPrimary">@color/rentBackgroundColor</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
 </resources>

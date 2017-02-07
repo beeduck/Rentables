@@ -8,18 +8,19 @@
     tools:context="com.rentables.testcenter.MyPostsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Posts" />
-
-
-    <Button
-        android:id="@+id/create_post_button"
-        android:text="CREATE POST"
-        android:textColor="@color/white"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="selectFrag"/>
-
+        android:layout_margin="6dp"
+        android:background="@color/whiteSmoke">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_posts_title" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

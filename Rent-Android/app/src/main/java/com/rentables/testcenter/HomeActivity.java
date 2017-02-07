@@ -21,15 +21,14 @@ import server.NotifyingThread;
 import server.ServerConnection;
 import server.ThreadListener;
 
-public class HomeActivity extends AppCompatActivity implements ThreadListener {
+public class HomeActivity extends AppCompatActivity {
 
     //Only want to be able to run one thread at a time for creating posts.
-    private Thread runningThread = null;
 
     @Override
-    protected void onCreate(Bundle savedInstance){
+    protected void onCreate(Bundle savedInstanceState){
 
-        super.onCreate(savedInstance);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         Toolbar toolbarMain = (Toolbar) findViewById(R.id.toolbar_main);
@@ -37,11 +36,11 @@ public class HomeActivity extends AppCompatActivity implements ThreadListener {
         setSupportActionBar(toolbarMain);
         getSupportActionBar().setTitle("Rentables");
 
-
-
         Toolbar toolbarNavigate = (Toolbar) findViewById(R.id.toolbar_navigate);
 
         setSupportActionBar(toolbarNavigate);
+
+        selectFrag(null);
 
     }
 
@@ -64,16 +63,25 @@ public class HomeActivity extends AppCompatActivity implements ThreadListener {
     }
 
     @Override
-    public void notifyOfThreadCompletion(NotifyingThread notifyThread) {
+    public void onBackPressed(){
 
-        runOnUiThread(new Runnable(){
-            @Override
-            public void run(){
-                showPostCreatedDialog();
-            }
-        });
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
 
-        System.out.println("Should only reach this once");
+            getSupportFragmentManager().popBackStack();
+
+        }else{
+
+            super.onBackPressed();
+        }
+    }
+
+    public void toListingCreationActivity(View view){
+
+        System.out.println("Reached");
+        Intent listingCreationIntent = new Intent();
+        listingCreationIntent.setClass(this, CreateListingActivity.class);
+
+        startActivity(listingCreationIntent);
     }
 
     public void selectFrag(View view) {
@@ -81,21 +89,18 @@ public class HomeActivity extends AppCompatActivity implements ThreadListener {
 
         if (view == findViewById(R.id.button1)) {
             fr = new HomeFragment();
-        } /*else if (view == findViewById(R.id.button2)) {
-            fr = new ButtonTwoFragment();
-        }*/ else if (view == findViewById(R.id.button3)) {
+        } else if (view == findViewById(R.id.button3)) {
             fr = new BrowseFragment();
         } else if (view == findViewById(R.id.button4)) {
             fr = new MyPostsFragment();
-        }/* else if (view == findViewById(R.id.button5)) {
-            fr = new ButtonFiveFragment();
-        }*/ else if (view == findViewById(R.id.create_post_button)) {
-            fr = new CreatePostFragment();
-        } else
+        } else {
             fr = new HomeFragment();
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
+        fragmentTransaction.replace(R.id.home_fragment_holder, fr);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
@@ -104,87 +109,7 @@ public class HomeActivity extends AppCompatActivity implements ThreadListener {
 
         Intent intent = new Intent();
         intent.setClass(this, com.rentables.testcenter.MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    public void createListing(View view){
-
-        //Method for creating a post.
-        //TODO UserId needs to be fixed.
-
-        System.out.println("Reached");
-
-        if(runningThread == null) {
-
-            CreateListing theListing = new CreateListing();
-
-            EditText titleText = (EditText) findViewById(R.id.title_text);
-            EditText descriptionText = (EditText) findViewById(R.id.description_text);
-            EditText priceText = (EditText) findViewById(R.id.create_post_price);
-            Spinner priceCategoryIdText = (Spinner) findViewById(R.id.rental_time_spinner);
-
-            String title = titleText.getText().toString().trim();
-            String description = descriptionText.getText().toString().trim();
-            String price = priceText.getText().toString().trim();
-            String priceCategoryId = priceCategoryIdText.getSelectedItem().toString();
-            int userId = 4; //A placeholder for now.
-
-            theListing.setTitle(title);
-            theListing.setDescription(description);
-            theListing.setPrice(Double.parseDouble(price));
-            theListing.setPriceCategoryId(getCorrectPriceCategoryId(priceCategoryId));
-            theListing.setUserId(userId);
-
-            ServerConnection<CreateListing> connection = new ServerConnection<>(theListing);
-            connection.addListener(this);
-
-            runningThread = new Thread(connection);
-            runningThread.start();
-            System.out.println("Reached Behind the wall!");
-        }
-    }
-
-    public int getCorrectPriceCategoryId(String priceCategoryId){
-
-        switch (priceCategoryId.toLowerCase()){
-
-            case "hours":
-                return 1;
-            case "days":
-                return 2;
-            case "weeks":
-                return 3;
-            case "months":
-                return 4;
-            case "semester":
-                return 5;
-        }
-
-        return 1;
-    }
-
-    private void showPostCreatedDialog(){
-
-        FragmentManager manager = getSupportFragmentManager();
-        CreatePostDialog successDialog = new CreatePostDialog();
-        successDialog.show(manager, "dialog_create_post_successful");
-    }
-
-    public void onPostCreation(View view){
-
-        runningThread = null;
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fr = new HomeFragment();
-        DialogFragment up = (DialogFragment) fm.findFragmentByTag("dialog_create_post_successful");
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-        if(up != null){
-
-            fragmentTransaction.remove(up);
-        }
-
-        fragmentTransaction.replace(R.id.fragment_place, fr);
-        fragmentTransaction.commit();
-
     }
 }

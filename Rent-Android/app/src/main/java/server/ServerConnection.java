@@ -11,12 +11,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.rentables.testcenter.HomeActivity;
 
 import dataobject.*;
 
@@ -164,12 +162,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
                 list = gson.fromJson(readLine, new TypeToken<List<Listing>>(){}.getType());
             }
 
-            Iterator<Listing> iterator = list.iterator();
-
-            while(iterator.hasNext()){
-
-                iterator.next().printProperties();
-            }
+            listings.setListings((ArrayList)list);
 
             connect.disconnect();
 
@@ -191,7 +184,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private String createListingsURL(Listings listings){
 
         String customURL = GET_LISTING + "?";
-        String[] theKeys = {"keywords", "minPrice", "maxPrice", "priceCategoryId"};
+        String[] theKeys = {"keywords", "minPrice", "maxPrice", "priceCategoryId", "userId"};
         HashMap<String, String> fields = listings.getAllFields();
 
         if(!fields.isEmpty()){

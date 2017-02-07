@@ -7,8 +7,8 @@
         android:icon="@mipmap/for_rent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,6 +19,7 @@
         <activity android:name=".RegisterUserActivity"
             android:windowSoftInputMode="stateVisible"
             android:label="@string/Register"/>
+        <activity android:name=".CreateListingActivity" />
     </application>
     <uses-permission
         android:name = "android.permission.INTERNET" />

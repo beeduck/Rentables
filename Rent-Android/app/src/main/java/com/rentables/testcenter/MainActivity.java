@@ -9,15 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import dataobject.CreateListing;
-import dataobject.Listing;
 import dataobject.Listings;
 import dataobject.LoginUser;
 import server.NotifyingThread;
@@ -34,12 +31,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-         //Setting up toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Rentables");
 
         //Adding onKeyListener for password EditText
         onKeyListenerForPassword();
@@ -97,6 +88,23 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
     public void userLogin(View view){
 
         System.out.println("Reached");
+
+        //TODO Remove this eventually
+        //This is a side step of the login
+
+        EditText userAdmin = (EditText) findViewById(R.id.username_edit_text);
+        EditText passwordAdmin = (EditText) findViewById(R.id.password_edit_text);
+
+        if(userAdmin.getText().toString().trim().equals("1") && passwordAdmin.getText().toString().trim().equals("1")){
+
+            System.out.println("Reached");
+            Intent adminIntent = new Intent();
+            adminIntent.setClass(this, HomeActivity.class);
+            startActivity(adminIntent);
+            return;
+
+        }
+
 
         if (loginThread == null) {
 
