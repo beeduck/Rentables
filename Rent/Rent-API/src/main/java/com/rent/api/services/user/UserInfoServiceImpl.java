@@ -2,6 +2,7 @@ package com.rent.api.services.user;
 
 import com.rent.api.dao.user.UserInfoRepository;
 import com.rent.api.entities.user.UserInfo;
+import com.rent.api.utility.security.UserSecurity;
 import com.rent.utility.dto.NewUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfo.setUsername(newUserDTO.getUsername());
 
         userInfoRepository.save(userInfo);
+    }
+
+    public UserInfo getCurrentUserInfo() {
+        return userInfoRepository.findById(UserSecurity.getUserId());
     }
 
 }

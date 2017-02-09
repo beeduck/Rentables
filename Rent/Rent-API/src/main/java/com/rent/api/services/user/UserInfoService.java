@@ -1,5 +1,6 @@
 package com.rent.api.services.user;
 
+import com.rent.api.entities.user.UserInfo;
 import com.rent.utility.dto.NewUserDTO;
 
 /**
@@ -8,5 +9,8 @@ import com.rent.utility.dto.NewUserDTO;
 public interface UserInfoService {
 
     void addNewUserInfo(NewUserDTO newUserDTO);
+
     void updateUserEmail(NewUserDTO newUserDTO);
+
+    UserInfo getCurrentUserInfo();
 }
