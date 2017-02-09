@@ -36,7 +36,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setPrice(listingDTO.getPrice());
         listing.setPriceCategoryId(listingDTO.getPriceCategoryId());
 
-        UserInfo userInfo = userInfoRepository.findByUsername(UserSecurity.getUsername());
+        UserInfo userInfo = userInfoRepository.findById(UserSecurity.getUserId());
         listing.setUserId(userInfo.getId());
 
         listingRepository.save(listing);

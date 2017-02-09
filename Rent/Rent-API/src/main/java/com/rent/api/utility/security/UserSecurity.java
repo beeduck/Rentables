@@ -18,7 +18,7 @@ public class UserSecurity {
     }
 
     public static int getUserId() {
-        return ((CustomOAuth2Authentication)SecurityContextHolder.getContext()).getUserId();
+        return ((CustomOAuth2Authentication)SecurityContextHolder.getContext().getAuthentication()).getUserId();
     }
 
     public static List<GrantedAuthority> getRoles() {
