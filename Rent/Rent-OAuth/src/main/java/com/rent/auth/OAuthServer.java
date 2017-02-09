@@ -8,11 +8,13 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @Configuration
 @ComponentScan("com.rent.auth," +
                "com.rent.utility")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableDiscoveryClient
 @EnableFeignClients
 public class OAuthServer {

@@ -1,8 +1,8 @@
 package com.rent.api.controllers.listing;
 
 import com.rent.api.dto.listing.ListingDTO;
-import com.rent.api.services.listing.ListingService;
 import com.rent.api.entities.listing.Listing;
+import com.rent.api.services.listing.ListingService;
 import com.rent.utility.Constants;
 import com.rent.utility.filters.ListingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class ListingController {
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.PUT,
                     headers = "content-type=application/json")
-    public void updateListing(@Valid @RequestBody final Listing post) {
-        listingService.updateListing(post);
+    public void updateListing(@Valid @RequestBody final Listing listing) {
+        listingService.updateListing(listing);
     }
 }

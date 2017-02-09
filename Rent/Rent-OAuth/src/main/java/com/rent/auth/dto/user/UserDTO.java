@@ -9,22 +9,22 @@ import javax.validation.constraints.Size;
 
 public class UserDTO implements java.io.Serializable {
 
-    @NotNull
+    @NotNull(message = "Must enter a username.")
     @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
-            message = "User name must be a valid email address.")
+            message = "Username must be a valid email address.")
     private String username;
 
-    @NotNull
+    @NotNull(message = "Must enter a password.")
     @Pattern(regexp = "^(?=.*?[a-zA-Z])(?=.*?[0-9])[a-zA-Z0-9!@#$%&*]{7,}$",
             message = "Password must contain at least seven characters with one number and one letter.")
     @JsonIgnore
     private String password;
 
-    @NotNull
+    @NotNull(message = "Must enter a first name.")
     @Size(min = 1, message = "First name is required.")
     private String firstName;
 
-    @NotNull
+    @NotNull(message = "Must enter a last name.")
     @Size(min = 1, message = "Last name is required.")
     private String lastName;
 
