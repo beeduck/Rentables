@@ -21,7 +21,6 @@ public class AWSConnector {
     private static String folder = "uploads-dir";
 
     public static String uploadImageToS3(MultipartFile multipartFile, int listingId, String uuid, String ext) throws IOException {
-        long size = multipartFile.getSize();
         InputStream inputStream = multipartFile.getInputStream();
         String folderName = folder + "/" + Integer.toString(listingId);
         String fileName = folderName + "/" + uuid + ext;
@@ -29,8 +28,9 @@ public class AWSConnector {
         inputStream.close();
         return fileName;
     }
-
-    public static File getImageFromS3(String uuid) {
-        S3Object s3Object = s3Client.getObject(bucketName,)
+//
+    public static S3Object getImageFromS3(String path) {
+        S3Object s3Object = s3Client.getObject(new GetObjectRequest(bucketName,path));
+        return s3Object;
     }
 }

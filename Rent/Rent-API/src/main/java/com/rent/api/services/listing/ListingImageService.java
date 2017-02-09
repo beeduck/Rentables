@@ -16,5 +16,7 @@ public interface ListingImageService {
 
     ResponseEntity<Resource> getImageById(String uuid) throws IOException;
 
+    void getImageByIdS3(HttpServletResponse response, String uuid) throws IOException;
+
     byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException;
 }

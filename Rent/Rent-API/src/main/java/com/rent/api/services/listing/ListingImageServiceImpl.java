@@ -2,6 +2,8 @@ package com.rent.api.services.listing;
 
 import com.rent.api.dao.listing.ListingImageRepository;
 import com.rent.api.entities.listing.ListingImage;
+import com.amazonaws.services.cloudformation.model.Output;
+import com.amazonaws.services.s3.model.S3Object;
 import com.rent.api.utility.AWSConnector;
 import com.rent.utility.Constants;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -21,6 +23,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import static java.lang.System.out;
 
 /**
  * Created by Asad on 11/29/2016.
@@ -69,6 +73,24 @@ public class ListingImageServiceImpl implements ListingImageService {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
                 .header(HttpHeaders.CONTENT_TYPE, type)
                 .body(file);
+    }
+
+    public void getImageByIdS3(HttpServletResponse response, String uuid) throws IOException {
+        ListingImage listingImage = listingImageRepository.getImageById(uuid);
+        S3Object s3Object = AWSConnector.getImageFromS3(listingImage.getPath());
+        response.setContentType("image/jpeg");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition","attachment; filename=\"hello\"");
+        InputStream stream = s3Object.getObjectContent();
+        OutputStream os = response.getOutputStream();
+        int nRead;
+        byte[] data = new byte[16384];
+        while ((nRead = stream.read(data, 0, data.length)) != -1) {
+            os.write(data, 0, nRead);
+        }
+        os.flush();
+        stream.close();
+        os.close();
     }
 
     public byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException {

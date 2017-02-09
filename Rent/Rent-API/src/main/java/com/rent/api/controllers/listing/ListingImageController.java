@@ -1,5 +1,6 @@
 package com.rent.api.controllers.listing;
 
+import com.amazonaws.services.xray.model.Http;
 import com.rent.api.services.listing.ListingImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -27,9 +28,14 @@ public class ListingImageController {
         return listingImageService.uploadImage(listingId,files);
     }
 
+//    @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
+//    public ResponseEntity<Resource> serveFile(@PathVariable("uuid") String uuid) throws IOException {
+//        return listingImageService.getImageById(uuid);
+//    }
+
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-    public ResponseEntity<Resource> serveFile(@PathVariable("uuid") String uuid) throws IOException {
-        return listingImageService.getImageById(uuid);
+    public void serveFile(HttpServletResponse response, @PathVariable("uuid") String uuid) throws IOException {
+        listingImageService.getImageByIdS3(response,uuid);
     }
 
     @RequestMapping(value = "/byListingId/{listingId}", method = RequestMethod.GET, produces = "application/zip")
