@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,6 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static java.lang.System.out;
 
 /**
  * Created by Asad on 11/29/2016.
@@ -36,6 +36,7 @@ public class ListingImageServiceImpl implements ListingImageService {
     @Autowired
     ListingImageRepository listingImageRepository;
 
+    @Transactional
     public String uploadImage(int listingId, MultipartFile[] files) throws IOException {
         for(MultipartFile file : files) {
             if(!file.isEmpty()) {
@@ -46,17 +47,7 @@ public class ListingImageServiceImpl implements ListingImageService {
                 String ext = getFileExtension(file);
                 String filePath = AWSConnector.uploadImageToS3(file,listingId,uuid,ext);
                 listingImage.setPath(filePath);
-                File storedFile = new File(filePath);
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
-                stream.write(bytes);
-                stream.close();
                 listingImageRepository.save(listingImage);
-//                File storedFile = new File(filePath);
-//                byte[] bytes = file.getBytes();
-//                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(storedFile));
-//                stream.write(bytes);
-//                stream.close();
             }
             else {
                 return "failed";
@@ -65,18 +56,9 @@ public class ListingImageServiceImpl implements ListingImageService {
         return "Success";
     }
 
-    public ResponseEntity<Resource> getImageById(String uuid) throws IOException {
-        ListingImage listingImage = listingImageRepository.getImageById(uuid);
-        Resource file = new FileSystemResource(listingImage.getPath());
-        String type = Files.probeContentType(file.getFile().toPath());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
-                .header(HttpHeaders.CONTENT_TYPE, type)
-                .body(file);
-    }
-
+    @Transactional(readOnly = true)
     public void getImageByIdS3(HttpServletResponse response, String uuid) throws IOException {
-        ListingImage listingImage = listingImageRepository.getImageById(uuid);
+        ListingImage listingImage = listingImageRepository.findByImageUUID(uuid);
         S3Object s3Object = AWSConnector.getImageFromS3(listingImage.getPath());
         response.setContentType("image/jpeg");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -94,7 +76,7 @@ public class ListingImageServiceImpl implements ListingImageService {
     }
 
     public byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException {
-        List<ListingImage> list = listingImageRepository.getImageByListingId(listingId);
+        List<ListingImage> list = listingImageRepository.findAllByListingId(listingId);
         List<File> files = new ArrayList<>();
         for(ListingImage e : list) {
             File file = new File(e.getPath());
@@ -121,6 +103,22 @@ public class ListingImageServiceImpl implements ListingImageService {
         IOUtils.closeQuietly(bufferedOutputStream);
         IOUtils.closeQuietly(byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
+    }
+
+    @Transactional
+    public void deleteByImageUUID(String uuid) {
+        String path = listingImageRepository.findByImageUUID(uuid).getPath();
+        AWSConnector.deleteImageFromS3(path);
+        listingImageRepository.deleteByImageUUID(uuid);
+    }
+
+    @Transactional
+    public void deleteByListingId(int listingId) {
+        List<ListingImage> list = listingImageRepository.findAllByListingId(listingId);
+        for(ListingImage e : list) {
+            deleteByImageUUID(e.getImageUUID());
+        }
+        AWSConnector.deleteImageFromS3(Constants.ROOT_FILE_UPLOAD_PATH + "/" + Integer.toString(listingId));
     }
 
     private String getFileExtension(MultipartFile file) {

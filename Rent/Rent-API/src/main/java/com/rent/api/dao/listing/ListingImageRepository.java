@@ -10,7 +10,11 @@ import java.util.List;
  */
 public interface ListingImageRepository extends JpaRepository<ListingImage, Long> {
 
-    ListingImage getImageById(String uuid);
+    ListingImage findByImageUUID(String uuid);
 
-    List<ListingImage> getImageByListingId(int listingId);
+    List<ListingImage> findAllByListingId(int listingId);
+
+    void deleteByImageUUID(String uuid);
+
+    void deleteByListingId(int listingId);
 }

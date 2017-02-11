@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by duck on 1/30/17.
  */
-public interface ListingRepositoryCustom extends JpaRepository<>{
+public interface ListingRepositoryCustom {
 
     List<Listing> findListsByFilter(ListingFilter filter);
 }

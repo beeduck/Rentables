@@ -14,9 +14,11 @@ public interface ListingImageService {
 
     String uploadImage(int listingId, MultipartFile[] files) throws IOException;
 
-    ResponseEntity<Resource> getImageById(String uuid) throws IOException;
-
     void getImageByIdS3(HttpServletResponse response, String uuid) throws IOException;
 
     byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException;
+
+    void deleteByImageUUID(String uuid);
+
+    void deleteByListingId(int listingId);
 }

@@ -42,4 +42,14 @@ public class ListingImageController {
     public byte[] serveFileByListing(HttpServletResponse response, @PathVariable("listingId") int listingId) throws IOException {
         return listingImageService.getImageByListingId(response, listingId);
     }
+
+    @RequestMapping(value = "/deleteByUUID/{uuid}", method = RequestMethod.DELETE)
+    public void deleteByUUID(@PathVariable("uuid") String uuid) {
+        listingImageService.deleteByImageUUID(uuid);
+    }
+
+    @RequestMapping(value = "/deleteByListing/{listingId}", method = RequestMethod.DELETE)
+    public void deleteByListingId(@PathVariable("listingId") int listingId) {
+        listingImageService.deleteByListingId(listingId);
+    }
 }

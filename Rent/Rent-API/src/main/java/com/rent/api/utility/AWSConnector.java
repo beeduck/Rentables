@@ -28,9 +28,13 @@ public class AWSConnector {
         inputStream.close();
         return fileName;
     }
-//
+
     public static S3Object getImageFromS3(String path) {
         S3Object s3Object = s3Client.getObject(new GetObjectRequest(bucketName,path));
         return s3Object;
+    }
+
+    public static void deleteImageFromS3(String path) {
+        s3Client.deleteObject(new DeleteObjectRequest(bucketName,path));
     }
 }
