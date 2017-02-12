@@ -10,40 +10,36 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Asad on 11/29/2016.
  */
 
 @RestController
-@RequestMapping("/listingImages")
+@RequestMapping("/listing-images")
 public class ListingImageController {
 
     @Autowired
     ListingImageService listingImageService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("listingId") int listingId,
                                    @RequestParam("files") MultipartFile[] files) throws IOException {
         return listingImageService.uploadImage(listingId,files);
     }
-
-//    @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-//    public ResponseEntity<Resource> serveFile(@PathVariable("uuid") String uuid) throws IOException {
-//        return listingImageService.getImageById(uuid);
-//    }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
     public void serveFile(HttpServletResponse response, @PathVariable("uuid") String uuid) throws IOException {
         listingImageService.getImageByIdS3(response,uuid);
     }
 
-    @RequestMapping(value = "/byListingId/{listingId}", method = RequestMethod.GET, produces = "application/zip")
-    public byte[] serveFileByListing(HttpServletResponse response, @PathVariable("listingId") int listingId) throws IOException {
-        return listingImageService.getImageByListingId(response, listingId);
+    @RequestMapping(value = "/get-image-names/{listingId}", method = RequestMethod.GET)
+    public List<String> getImageNamesByListingId(@PathVariable("listingId") int listingId) {
+        return listingImageService.getImageNamesByListingId(listingId);
     }
 
-    @RequestMapping(value = "/deleteByUUID/{uuid}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public void deleteByUUID(@PathVariable("uuid") String uuid) {
         listingImageService.deleteByImageUUID(uuid);
     }

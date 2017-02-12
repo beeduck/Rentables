@@ -15,6 +15,4 @@ public interface ListingImageRepository extends JpaRepository<ListingImage, Long
     List<ListingImage> findAllByListingId(int listingId);
 
     void deleteByImageUUID(String uuid);
-
-    void deleteByListingId(int listingId);
 }

@@ -75,6 +75,16 @@ public class ListingImageServiceImpl implements ListingImageService {
         os.close();
     }
 
+    @Transactional(readOnly = true)
+    public List<String> getImageNamesByListingId(int listingId) {
+        List<ListingImage> imageList = listingImageRepository.findAllByListingId(listingId);
+        List<String> imageNameList = new ArrayList<>();
+        for(ListingImage e : imageList) {
+            imageNameList.add(e.getImageUUID());
+        }
+        return imageNameList;
+    }
+
     public byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException {
         List<ListingImage> list = listingImageRepository.findAllByListingId(listingId);
         List<File> files = new ArrayList<>();
