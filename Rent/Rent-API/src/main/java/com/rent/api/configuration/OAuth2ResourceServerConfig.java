@@ -33,7 +33,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(final HttpSecurity http) throws Exception {
 
         Map<String, String> eurekaServiceUrlMap = new HashMap<String, String>();
-        eurekaServiceUrlMap.put("defaultZone", System.getProperty("CLOUD_CONNECTION"));
+        eurekaServiceUrlMap.put("defaultZone", System.getenv("CLOUD_CONNECTION"));
         eurekaClientConfigBean.setServiceUrl(eurekaServiceUrlMap);
 
         http
@@ -53,7 +53,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Bean
     public RemoteTokenServices tokenServices() {
         RemoteTokenServices tokenServices = new RemoteTokenServices();
-        tokenServices.setCheckTokenEndpointUrl(System.getProperty("OAUTH_CONNECTION"));
+        tokenServices.setCheckTokenEndpointUrl(System.getenv("OAUTH_CONNECTION"));
         tokenServices.setClientId(generalProperties.getAuthClient());
         tokenServices.setClientSecret(generalProperties.getAuthSecret());
         tokenServices.setAccessTokenConverter(accessTokenConverter());

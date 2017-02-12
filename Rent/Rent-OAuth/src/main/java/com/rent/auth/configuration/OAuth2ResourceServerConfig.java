@@ -40,7 +40,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(final HttpSecurity http) throws Exception {
 
         Map<String, String> eurekaServiceUrlMap = new HashMap<String, String>();
-        eurekaServiceUrlMap.put("defaultZone", System.getProperty("CLOUD_CONNECTION"));
+        eurekaServiceUrlMap.put("defaultZone", System.getenv("CLOUD_CONNECTION"));
         eurekaClientConfigBean.setServiceUrl(eurekaServiceUrlMap);
 
         http

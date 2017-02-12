@@ -2,6 +2,7 @@ package com.rent.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -13,7 +14,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @Configuration
 @ComponentScan("com.rent.api," +
                "com.rent.utility")
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableDiscoveryClient
 @EnableZuulProxy
