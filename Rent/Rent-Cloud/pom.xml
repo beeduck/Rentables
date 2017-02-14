@@ -21,7 +21,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.4.1.RELEASE</version>
+                <version>1.5.1.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
@@ -34,34 +34,19 @@
     </build>
 
     <dependencies>
-   <!--             <dependency>
-                    <groupId>Rent</groupId>
-                    <artifactId>Rent-Data</artifactId>
-                    <version>1.0-SNAPSHOT</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>Rent</groupId>
-                    <artifactId>Rent-Util</artifactId>
-                    <version>1.0-SNAPSHOT</version>
-                </dependency>-->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka-server</artifactId>
+            <version>1.2.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
+            <version>1.2.2.RELEASE</version>
         </dependency>
 
-
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security.oauth</groupId>-->
-            <!--<artifactId>spring-security-oauth2</artifactId>-->
-            <!--<version>2.0.7.RELEASE</version>-->
-        <!--</dependency>-->
     </dependencies>
 
 </project>

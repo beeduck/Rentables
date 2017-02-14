@@ -14,7 +14,7 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
     public CustomOAuth2Authentication extractAuthentication(Map<String, ?> map) {
         OAuth2Authentication oAuth2Authentication = super.extractAuthentication(map);
 
-        Integer userId = (Integer)map.get("userId");
+        Integer userId = Integer.parseInt((String)map.get("userId"));
         CustomOAuth2Authentication customOAuth2Authentication = new CustomOAuth2Authentication(userId,
                 oAuth2Authentication.getOAuth2Request(), oAuth2Authentication.getUserAuthentication());
 
