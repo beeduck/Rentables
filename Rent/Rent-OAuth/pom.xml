@@ -78,11 +78,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>
+            <version>1.2.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
+            <version>1.2.2.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -102,6 +104,13 @@
             <version>Brixton.RELEASE</version>
             <type>pom</type>
             <scope>import</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.22</version>
         </dependency>
 
     </dependencies>
