@@ -42,7 +42,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="user_posts_title">This is a test Title</string>
+    <string name="user_posts_title">My Listings</string>
 
     <string-array name="RentalTime">
         <item>Hours</item>
