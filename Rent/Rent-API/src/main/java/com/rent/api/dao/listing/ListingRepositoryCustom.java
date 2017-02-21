@@ -2,6 +2,7 @@ package com.rent.api.dao.listing;
 
 import com.rent.api.entities.listing.Listing;
 import com.rent.utility.filters.ListingFilter;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
