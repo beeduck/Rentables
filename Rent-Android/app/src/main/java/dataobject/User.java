@@ -6,20 +6,16 @@ package dataobject;
 public class User {
 
     private int userId;
+    private String access_token;
+    private String token_type;
+    private String refresh_token;
+    private String expires_in;
     private String username = "";
     private String firstName = "";
     private String lastName = "";
     private String createDate = "";
     private String lastEditDate = "";
     private boolean active = false;
-
-    public User(int newUserId){
-
-        //A user ID is required for this class in order to get the information
-        //from the server.
-
-        userId = newUserId;
-    }
 
     public void setUsername(String newUsername){
 

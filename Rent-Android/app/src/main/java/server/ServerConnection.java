@@ -1,10 +1,13 @@
 package server;
 
+import android.util.Base64;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,20 +23,24 @@ import dataobject.*;
 
 public class ServerConnection<DataObject> extends NotifyingThread {
 
-    //Generic calls to the authentication server if needed for whatever reason.
-    private final static String USER_LOGIN = "http://rentoauth.us-west-2.elasticbeanstalk.com/oauth/token";
-    private final static String CREATE_USER = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/createUser";
-    private final static String USER_INFO = "http://rentoauth.us-west-2.elasticbeanstalk.com/users/userInfo/";
+    //User based api calls
+    private final static String USER_LOGIN = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/oauth/token";
+    private final static String CREATE_USER = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/user";
 
-    //Generic calls to the api server if needed.
-    private final static String GET_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/getPosts";
+    //Listing based api calls
+    private final static String GET_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/listing";
     private final static String CREATE_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/createPost";
 
     //The object in question
     private DataObject dataObject;
+    private User currentUser;
+    private String basicAuthUsername = "postmanApi";
+    private String basicAuthPassword = "";
+    private String basicAuth;
 
     public ServerConnection(DataObject data){
 
+        encodeAuthorization();
         dataObject = data;
     }
 
@@ -136,6 +143,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         //The Listings object fields should be completed before ever getting to this step.
 
         Listings listings = (Listings) dataObject;
+        removeSpacesInKeyWords(listings);
         String customURL = createListingsURL(listings);
 
         try{
@@ -181,6 +189,11 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
     }
 
+    private void removeSpacesInKeyWords(Listings listings){
+
+        listings.setKeywords(listings.getKeywords().replace(" ", "+"));
+    }
+
     private String createListingsURL(Listings listings){
 
         String customURL = GET_LISTING + "?";
@@ -209,6 +222,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private void loginUser(){
 
         LoginUser loginUser = (LoginUser) dataObject;
+        User currentUser = new User();
 
         String data = encodeString("username") + "="
                 + encodeString(loginUser.getUsername()) + "&"
@@ -223,7 +237,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             HttpURLConnection connect = (HttpURLConnection) url.openConnection();
 
             connect.setRequestMethod("POST");
-            connect.setRequestProperty("Authorization", "Basic cG9zdG1hbkFwaTo=");
+            connect.setRequestProperty("Authorization", "Basic " + basicAuth);
             connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connect.setRequestProperty("charset", "UTF-8");
 
@@ -239,12 +253,17 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
                 while((error = buffReader.readLine()) != null) {
 
+                    System.out.println(error);
                     this.addError(error);
                 }
 
                 buffReader.close();
                 throw new RuntimeException();
             }
+
+            BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+            Gson json = new Gson();
+            currentUser = json.fromJson(buffReader.readLine(), User.class);
 
             connect.disconnect();
 
@@ -334,6 +353,14 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             run.printStackTrace();
 
         }
+    }
+
+    private void encodeAuthorization(){
+
+        String combination = basicAuthUsername + ":" + basicAuthPassword;
+
+        basicAuth = Base64.encodeToString(combination.getBytes(), Base64.DEFAULT);
+
     }
 
     private String encodeString(String toEncode){

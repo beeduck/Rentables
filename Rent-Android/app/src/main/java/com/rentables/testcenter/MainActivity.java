@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import dataobject.Listings;
 import dataobject.LoginUser;
 import server.NotifyingThread;
 import server.ServerConnection;
@@ -87,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
     public void userLogin(View view){
 
-        System.out.println("Reached");
-
         //TODO Remove this eventually
         //This is a side step of the login
 
@@ -97,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
         if(userAdmin.getText().toString().trim().equals("1") && passwordAdmin.getText().toString().trim().equals("1")){
 
-            System.out.println("Reached");
             Intent adminIntent = new Intent();
             adminIntent.setClass(this, HomeActivity.class);
             startActivity(adminIntent);

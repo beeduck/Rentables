@@ -27,9 +27,14 @@
     <!-- Strings for the overflow menu -->
     <string name="overflow_settings_string">Settings</string>
     <string name="overflow_account_string">Account</string>
+    <string name="overflow_logout_string">Logout</string>
+    <string name="overflow_advanced_search_string">Advanced Search</string>
 
     <!-- String for home fragment -->
     <string name="create_post_button">CREATE POST</string>
+
+    <!-- String for browse fragment -->
+    <string name="toolbar_search_string">Search</string>
 
     <!-- Strings for createpost_fragment -->
     <string name="createpost_submit_button">SUBMIT</string>

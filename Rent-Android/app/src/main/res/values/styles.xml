@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
         <item name="colorAccent">@color/rentColorAccent</item>
         <item name="colorButtonNormal">@color/rentColorPrimary</item>
+        <item name="android:searchViewStyle">@style/AppTheme.SearchView</item>
     </style>
 
     <!--style for action bar. -->
@@ -17,6 +18,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:colorButtonNormal">@color/rentColorPrimary</item>
+        <item name="android:textColorHint">@color/white</item>
     </style>
 
     <!--style for dialog fragments with titles -->
@@ -58,4 +60,11 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+
+    <!-- style for SearchView -->
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorHintInverse">@color/white</item>
+    </style>
+
 </resources>
