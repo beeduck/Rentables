@@ -2,7 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overflow_menu"
     tools:context="com.rentables.testcenter.HomeActivity">
+    <item
+        android:id="@+id/search_for_browse_fragment"
+        android:title="@string/toolbar_search_string"
+        android:icon="@drawable/ic_search_white_48dp"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item
         android:id="@+id/overflow_settings_option"
         android:title="@string/overflow_settings_string"
@@ -13,6 +20,10 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/overflow_logout_option"
-        android:title="Logout"
+        android:title="@string/overflow_logout_string"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/overflow_advanced_search_option"
+        android:title="@string/overflow_advanced_search_string"
         app:showAsAction="never" />
 </menu>

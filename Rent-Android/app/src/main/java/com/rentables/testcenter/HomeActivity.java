@@ -1,30 +1,19 @@
 package com.rentables.testcenter;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
-
-import java.util.concurrent.locks.ReentrantLock;
-
-import dataobject.CreateListing;
-import server.NotifyingThread;
-import server.ServerConnection;
-import server.ThreadListener;
 
 public class HomeActivity extends AppCompatActivity {
 
     //Only want to be able to run one thread at a time for creating posts.
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
@@ -32,9 +21,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Toolbar toolbarMain = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbarMain.setTitle("Rentables");
         toolbarMain.inflateMenu(R.menu.overflow_menu);
+        toolbarMain.getMenu().findItem(R.id.search_for_browse_fragment).setVisible(false);
         setSupportActionBar(toolbarMain);
-        getSupportActionBar().setTitle("Rentables");
 
         Toolbar toolbarNavigate = (Toolbar) findViewById(R.id.toolbar_navigate);
 
@@ -45,10 +35,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+
+        System.out.println(menu);
+
+        return false;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.overflow_settings_option:
-                System.out.println("NICE");
+                toSettingsActivity();
                 return true;
             case R.id.overflow_account_option:
                 System.out.println("NICE");
@@ -77,11 +75,18 @@ public class HomeActivity extends AppCompatActivity {
 
     public void toListingCreationActivity(View view){
 
-        System.out.println("Reached");
         Intent listingCreationIntent = new Intent();
         listingCreationIntent.setClass(this, CreateListingActivity.class);
 
         startActivity(listingCreationIntent);
+    }
+
+    public void toSettingsActivity(){
+
+        Intent settingsIntent = new Intent();
+        settingsIntent.setClass(this, SettingsActivity.class);
+
+        startActivity(settingsIntent);
     }
 
     public void selectFrag(View view) {
@@ -108,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     public void userLogout(){
 
         Intent intent = new Intent();
-        intent.setClass(this, com.rentables.testcenter.MainActivity.class);
+        intent.setClass(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -7,34 +7,38 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:elevation="4dp"
-    android:theme="@style/ActionBarTheme"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:clipToPadding="false"
     tools:context="com.rentables.testcenter.HomeActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
+        android:paddingTop="7dp"
+        android:paddingBottom="2dp"
         android:gravity="center">
-        <ImageButton
+        <ImageView
             android:src="@drawable/ic_home_white_48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="selectFrag"
             android:id="@+id/button1"/>
-        <ImageButton
+        <ImageView
             android:src="@drawable/ic_search_white_48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="selectFrag"
             android:id="@+id/button3"/>
-        <ImageButton
+        <ImageView
             android:src="@drawable/ic_list_white_48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="selectFrag"
             android:id="@+id/button4"/>
     </LinearLayout>
