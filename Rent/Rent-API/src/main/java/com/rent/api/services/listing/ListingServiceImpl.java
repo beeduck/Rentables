@@ -53,7 +53,7 @@ public class ListingServiceImpl implements ListingService {
 
     public List<Listing> getListings(ListingFilter filter) {
         List<Listing> list = listingRepository.findListsByFilter(filter);
-        if(filter.getKeywords().length > 0) {
+        if(filter.getKeywords() != null) {
             list = RelevanceEngine.sortByRelevance(list,filter.getKeywords());
         }
         return list;
