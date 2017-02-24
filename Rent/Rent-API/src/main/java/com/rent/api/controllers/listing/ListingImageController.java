@@ -1,7 +1,9 @@
 package com.rent.api.controllers.listing;
 
 import com.rent.api.services.listing.ListingImageService;
+import com.rent.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,7 @@ public class ListingImageController {
     @Autowired
     ListingImageService listingImageService;
 
+    @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("listingId") int listingId,
                                    @RequestParam("files") MultipartFile[] files) throws IOException {
@@ -36,12 +39,14 @@ public class ListingImageController {
         return listingImageService.getImageNamesByListingId(listingId);
     }
 
+    @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public void deleteByUUID(@PathVariable("uuid") String uuid) {
         listingImageService.deleteByImageUUID(uuid);
     }
 
-    @RequestMapping(value = "/deleteByListing/{listingId}", method = RequestMethod.DELETE)
+    @PreAuthorize(Constants.AUTH_ROLE_USER)
+    @RequestMapping(value = "/delete-by-listing/{listingId}", method = RequestMethod.DELETE)
     public void deleteByListingId(@PathVariable("listingId") int listingId) {
         listingImageService.deleteByListingId(listingId);
     }
