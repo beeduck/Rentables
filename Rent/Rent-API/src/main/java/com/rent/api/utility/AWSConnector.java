@@ -14,8 +14,8 @@ import java.io.*;
  */
 public class AWSConnector {
 
-    private static AWSCredentials credentials = new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"),
-            System.getProperty("AWS_SECRET_ACCESS_KEY"));
+    private static AWSCredentials credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+            System.getenv("AWS_SECRET_ACCESS_KEY"));
     private static AmazonS3 s3Client = new AmazonS3Client(credentials);
     private static String bucketName = "rentables-file-server";
     private static String folder = "uploads-dir";
