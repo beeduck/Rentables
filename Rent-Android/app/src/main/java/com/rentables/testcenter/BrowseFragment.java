@@ -26,7 +26,6 @@ public class BrowseFragment extends Fragment implements ThreadListener{
     private Listings listings = new Listings();
     private ArrayList<Listing> theListings;
     private Thread queryThread;
-
     private ViewGroup parent;
 
     @Override

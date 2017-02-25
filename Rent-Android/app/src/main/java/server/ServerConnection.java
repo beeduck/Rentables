@@ -191,7 +191,9 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
     private void removeSpacesInKeyWords(Listings listings){
 
-        listings.setKeywords(listings.getKeywords().replace(" ", "+"));
+        if (listings.getKeywords() != null) {
+            listings.setKeywords(listings.getKeywords().replace(" ", "+"));
+        }
     }
 
     private String createListingsURL(Listings listings){
