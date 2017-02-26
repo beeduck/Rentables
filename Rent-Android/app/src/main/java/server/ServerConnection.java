@@ -221,6 +221,8 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         return customURL;
     }
 
+//    private void
+
     private void loginUser(){
 
         LoginUser loginUser = (LoginUser) dataObject;

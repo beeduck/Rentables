@@ -2,8 +2,9 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context="com.rentables.testcenter.HomeFragment">
     <Button
         android:id="@+id/home_fragment_create_post_button"
@@ -11,5 +12,12 @@
         android:layout_height="wrap_content"
         android:text="@string/create_post_button"
         android:onClick="toListingCreationActivity"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:textColor="@color/white"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        >
+    </ImageView>
 </LinearLayout>
