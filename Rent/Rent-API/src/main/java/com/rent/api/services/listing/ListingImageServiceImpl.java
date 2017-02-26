@@ -62,7 +62,7 @@ public class ListingImageServiceImpl implements ListingImageService {
         S3Object s3Object = AWSConnector.getImageFromS3(listingImage.getPath());
         response.setContentType("image/jpeg");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader("Content-Disposition","attachment; filename=\"hello\"");
+        response.addHeader("Content-Disposition","attachment; filename=\"" + uuid + "\"");
         InputStream stream = s3Object.getObjectContent();
         OutputStream os = response.getOutputStream();
         int nRead;
