@@ -36,7 +36,6 @@ public class RentCloud {
 
     public static void main(String[] args) {
         SpringApplication.run(RentCloud.class, args);
-        System.out.println("Done");
     }
 
 }
