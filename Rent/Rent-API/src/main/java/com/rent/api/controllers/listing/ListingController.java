@@ -3,6 +3,7 @@ package com.rent.api.controllers.listing;
 import com.rent.api.dto.listing.ListingDTO;
 import com.rent.api.entities.listing.Listing;
 import com.rent.api.services.listing.ListingService;
+import com.rent.api.utility.payment.PayPalConnector;
 import com.rent.utility.Constants;
 import com.rent.utility.filters.ListingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class ListingController {
 
     @Autowired
     ListingService listingService;
+
+    @RequestMapping(value = "/pay", method = RequestMethod.GET)
+    public String payWithPayPal() {
+        return PayPalConnector.processPayPalPayment();
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Listing getListingById(@PathVariable("id") @NotNull Integer id) {
