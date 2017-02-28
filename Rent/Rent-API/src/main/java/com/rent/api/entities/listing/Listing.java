@@ -6,6 +6,8 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -25,6 +27,7 @@ public class Listing implements Serializable {
     private int userId;
     private int priceCategoryId;
     private double price;
+    private List<String> images;
 
     @Id
     @Column(name = "id")
@@ -116,6 +119,17 @@ public class Listing implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @ElementCollection
+    @CollectionTable(name="ListingImages", joinColumns=@JoinColumn(name="listingId"))
+    @Column(name="ImageUUID")
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     @PrePersist

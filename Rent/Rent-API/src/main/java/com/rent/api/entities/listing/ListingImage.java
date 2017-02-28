@@ -1,5 +1,7 @@
 package com.rent.api.entities.listing;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,6 +20,7 @@ public class ListingImage implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     public int getId() {
         return id;
     }
@@ -28,6 +31,7 @@ public class ListingImage implements Serializable {
 
     @Basic
     @Column(name = "path", nullable = false)
+    @JsonIgnore
     public String getPath() {
         return path;
     }
@@ -38,6 +42,7 @@ public class ListingImage implements Serializable {
 
     @Basic
     @Column(name = "listingId")
+    @JsonIgnore
     public int getListingId() {
         return listingId;
     }
