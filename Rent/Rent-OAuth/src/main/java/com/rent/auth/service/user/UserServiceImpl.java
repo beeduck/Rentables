@@ -70,11 +70,11 @@ public class UserServiceImpl implements UserService {
 
         userDetailsRepository.save(user);
 
-        NewUserDTO newUserDTO = new NewUserDTO(user.getUsername(), user.getId());
-        rentAPIProxy.registerUser(newUserDTO);
-
         String token = createRegistrationToken(user);
         registrationEmail(user, locale, token);
+
+        NewUserDTO newUserDTO = new NewUserDTO(user.getUsername(), user.getId());
+        rentAPIProxy.registerUser(newUserDTO);
 
         return user;
     }
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
         simpleMailMessage.setFrom(generalProperties.getEmailUsername());
         simpleMailMessage.setTo(user.getUsername());
         simpleMailMessage.setSubject("Registration Confirmation");
-        simpleMailMessage.setText("Confirm registration: localhost:8081" +
+        simpleMailMessage.setText("Confirm registration: " + Constants.BASE_PATH + Constants.BASE_MODULE_OAUTH +
                         Constants.USER_BASE_PATH + Constants.USER_CONFIRM_REGISTRATION_PATH + "?token=" + token);
         mailSender.send(simpleMailMessage);
     }
@@ -123,8 +123,8 @@ public class UserServiceImpl implements UserService {
         simpleMailMessage.setFrom(generalProperties.getEmailUsername());
         simpleMailMessage.setTo(user.getUsername());
         simpleMailMessage.setSubject("Change of Email Confirmation");
-        simpleMailMessage.setText("Confirm change of email address: localhost:8081" +
-                                  Constants.USER_BASE_PATH + Constants.USER_CONFIRM_EMAIL_PATH + "?token=" + token);
+        simpleMailMessage.setText("Confirm email change: " + Constants.BASE_PATH + Constants.BASE_MODULE_OAUTH +
+                Constants.USER_BASE_PATH + Constants.USER_CONFIRM_EMAIL_PATH + "?token=" + token);
         mailSender.send(simpleMailMessage);
     }
 

@@ -31,11 +31,17 @@ public class Constants {
 
 
     // USER EMAIL PATHS
+    public static final String BASE_PATH = "http://rentapi.us-west-2.elasticbeanstalk.com";
+    public static final String BASE_MODULE_OAUTH = "/rent-oauth";
+
     public static final String USER_BASE_PATH = "/user";
     public static final String USER_CONFIRM_REGISTRATION_PATH = "/register";
     public static final String USER_CONFIRM_EMAIL_PATH = "/confirm-email";
 
     public static final String PATH_COMPLETE_USER_REGISTRATION = "/registerUser";
+
+
+    // IMAGES
     public static final String ROOT_FILE_UPLOAD_PATH = "uploads-dir";
 
 }
