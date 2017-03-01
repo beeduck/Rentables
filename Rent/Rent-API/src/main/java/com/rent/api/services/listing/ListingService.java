@@ -13,9 +13,13 @@ public interface ListingService {
 
     Listing createListing(ListingDTO listingDTO);
 
-    void updateListing(Listing listing);
+    void updateListing(Listing listing) throws Exception;
+
+    void toggleListingActive(boolean active, int id) throws Exception;
 
     Listing getListingById(int id);
+
+    void deleteListing(int id) throws Exception;
 
     List<Listing> getListings(ListingFilter filter);
 }

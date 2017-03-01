@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ConfirmedRentalsRepository extends JpaRepository<ConfirmedRentals, Long> {
-
+    ConfirmedRentals findByListingId(int listingId);
+    boolean existsByListingId(int listingId);
 }
