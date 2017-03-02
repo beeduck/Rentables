@@ -1,8 +1,10 @@
 package com.rent.api.entities.rent;
 
+import com.rent.utility.DateUtils;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by duck on 2/28/17.
@@ -14,6 +16,7 @@ public class RentRequests {
     private int listingId;
     private int requestingUser;
     private boolean isAccepted;
+    private Timestamp createDate;
 
     public RentRequests() { }
 
@@ -63,5 +66,20 @@ public class RentRequests {
 
     public void setAccepted(boolean accepted) {
         isAccepted = accepted;
+    }
+
+    @Basic
+    @Column(name = "createDate")
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createDate = DateUtils.getCurrentUtcTimestamp();
     }
 }
