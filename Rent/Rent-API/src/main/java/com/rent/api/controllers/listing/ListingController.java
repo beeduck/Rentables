@@ -25,11 +25,6 @@ public class ListingController {
     @Autowired
     ListingService listingService;
 
-    @RequestMapping(value = "/pay", method = RequestMethod.GET)
-    public String payWithPayPal() {
-        return PayPalConnector.processPayPalPayment();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Listing getListingById(@PathVariable("id") @NotNull Integer id) {
         return listingService.getListingById(id);

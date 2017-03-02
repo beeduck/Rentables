@@ -3,6 +3,7 @@ package com.rent.api.utility.payment;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import com.rent.api.dto.payment.PaymentDTO;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,7 +23,7 @@ public class PayPalConnector {
 
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("http://www.cnn.com");
-        redirectUrls.setReturnUrl("http://www.facebook.com");
+        redirectUrls.setReturnUrl("http://localhost:8080/payment/redirect");
 
         Details details = new Details();
         details.setSubtotal("1");
@@ -60,5 +61,18 @@ public class PayPalConnector {
             System.out.println(e.getDetails());
         }
         return "failed";
+    }
+
+    public static String executePayment(PaymentDTO paymentDTO) {
+        Payment payment = new Payment();
+        payment.setId(paymentDTO.getPaymentId());
+        PaymentExecution paymentExecution = new PaymentExecution();
+        paymentExecution.setPayerId(paymentDTO.getPayerID());
+        try {
+            Payment createdPayment = payment.execute(context, paymentExecution);
+            return createdPayment.toString();
+        } catch (PayPalRESTException e) {
+            return(e.getMessage());
+        }
     }
 }
