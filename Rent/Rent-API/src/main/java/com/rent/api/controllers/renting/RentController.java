@@ -1,5 +1,6 @@
 package com.rent.api.controllers.renting;
 
+import com.rent.api.entities.rent.ConfirmedRentals;
 import com.rent.api.entities.rent.RentRequests;
 import com.rent.api.services.rent.RentService;
 import com.rent.utility.Constants;
@@ -40,14 +41,40 @@ public class RentController {
         rentService.acceptRentRequest(listingId, requestId);
     }
 
-    @RequestMapping(value = "/request", method = RequestMethod.GET)
-    public List<RentRequests> getRentRequestsForUser() {
-        return rentService.getRentRequests();
+    @RequestMapping(value = "/request/{listing-id}/deny/{request-id}", method = RequestMethod.PUT)
+    public void denyRentRequest(@PathVariable("listing-id") @NotNull Integer listingId,
+                                  @PathVariable("request-id") @NotNull Integer requestId) throws Exception {
+//        rentService.denyRentRequest(listingId, requestId);
     }
 
-    @RequestMapping(value = "/request/{request-id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/requesting", method = RequestMethod.GET)
+    public List<RentRequests> getAllRequestsToRentForUser() {
+        return rentService.getRequestingRentals();
+    }
+
+    @RequestMapping(value = "/requested", method = RequestMethod.GET)
+    public List<RentRequests> getAllRequestsToRentFromUser() {
+        return rentService.getRequestedRentals();
+    }
+
+    @RequestMapping(value = "/request/{request-id}/confirm", method = RequestMethod.PUT)
     public void confirmRentRequest(@PathVariable("request-id") @NotNull Integer requestId) throws Exception {
         rentService.confirmRentRequest(requestId);
+    }
+
+    @RequestMapping(value = "/request/{request-id}/cancel", method = RequestMethod.PUT)
+    public void cancelRentRequest(@PathVariable("request-id") @NotNull Integer requestId) throws Exception {
+//        rentService.cancelRentRequest(requestId);
+    }
+
+    @RequestMapping(value = "/rentee", method = RequestMethod.GET)
+    public List<ConfirmedRentals> getRentedInListings() {
+        return rentService.getRentedInListings();
+    }
+
+    @RequestMapping(value = "/renter", method = RequestMethod.GET)
+    public List<ConfirmedRentals> getRentedOutListings() {
+        return rentService.getRentedOutListings();
     }
 
 }

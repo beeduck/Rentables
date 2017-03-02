@@ -47,8 +47,15 @@ public class RentServiceImpl implements RentService {
     }
 
     @Transactional(readOnly = true)
-    public List<RentRequests> getRentRequests() {
+    public List<RentRequests> getRequestingRentals() {
         return rentRequestsRepository.findByRequestingUser(UserSecurity.getUserId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RentRequests> getRequestedRentals() {
+        List<Integer> listingIds = listingRepository.findAllIdByUserId(UserSecurity.getUserId());
+
+        return rentRequestsRepository.findByListingIdIn(listingIds);
     }
 
     @Transactional
@@ -89,6 +96,18 @@ public class RentServiceImpl implements RentService {
         Listing listing = listingRepository.findById(listingId);
         if(listing.getUserId() != UserSecurity.getUserId())
             throw new Exception("User does not own listing.");
+    }
+
+    @Transactional(readOnly = true)
+    public List<ConfirmedRentals> getRentedInListings() {
+        return confirmedRentalsRepository.findByRentingUser(UserSecurity.getUserId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ConfirmedRentals> getRentedOutListings() {
+        List<Integer> listingIds = listingRepository.findAllIdByUserId(UserSecurity.getUserId());
+
+        return confirmedRentalsRepository.findByListingIdIn(listingIds);
     }
 
 }
