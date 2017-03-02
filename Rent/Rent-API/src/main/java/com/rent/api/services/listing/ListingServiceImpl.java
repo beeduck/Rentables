@@ -92,7 +92,7 @@ public class ListingServiceImpl implements ListingService {
         listingRepository.delete(listing);
     }
 
-
+    @Transactional(readOnly = true)
     public List<Listing> getListings(ListingFilter filter) {
         List<Listing> list = listingRepository.findListsByFilter(filter);
         if(filter.getKeywords() != null) {
@@ -100,4 +100,10 @@ public class ListingServiceImpl implements ListingService {
         }
         return list;
     }
+
+    @Transactional(readOnly = true)
+    public List<Listing> getCurrentUsersListings() {
+        return listingRepository.findListsByUserId(UserSecurity.getUserId());
+    }
+
 }

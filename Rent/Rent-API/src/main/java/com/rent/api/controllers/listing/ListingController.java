@@ -35,6 +35,12 @@ public class ListingController {
     }
 
     @PreAuthorize(Constants.AUTH_ROLE_USER)
+    @RequestMapping(value = "/current-user", method = RequestMethod.GET)
+    public List<Listing> getCurrentUsersListings() {
+        return listingService.getCurrentUsersListings();
+    }
+
+    @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.POST,
                     headers = "content-type=application/json")
     public Listing createListing(@Valid @RequestBody final ListingDTO listingDTO) {

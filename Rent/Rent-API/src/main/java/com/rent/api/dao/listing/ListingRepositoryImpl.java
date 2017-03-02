@@ -46,6 +46,9 @@ public class ListingRepositoryImpl implements ListingRepositoryCustom {
             booleanBuilder.and(titleBuilder);
         }
 
+        // Return only active listings for searching
+        booleanBuilder.and(qListing.active.eq(true));
+
         Iterable<Listing> lists = listingRepository.findAll(booleanBuilder);
         return Lists.newArrayList(lists);
     }

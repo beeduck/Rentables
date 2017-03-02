@@ -22,4 +22,6 @@ public interface ListingService {
     void deleteListing(int id) throws Exception;
 
     List<Listing> getListings(ListingFilter filter);
+
+    List<Listing> getCurrentUsersListings();
 }
