@@ -16,4 +16,8 @@ public interface ConfirmedRentalsRepository extends JpaRepository<ConfirmedRenta
     boolean existsByListingId(int listingId);
 
     List<ConfirmedRentals> findByRentingUser(int rentingUser);
+
+    ConfirmedRentals findById(int id);
+
+    void deleteByListingId(int listingId);
 }

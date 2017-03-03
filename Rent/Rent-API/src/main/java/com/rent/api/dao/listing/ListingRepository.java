@@ -21,4 +21,6 @@ public interface ListingRepository extends JpaRepository<Listing, Long>,
 
     @Query("SELECT l.id FROM Listing l where l.userId = :userId")
     List<Integer> findAllIdByUserId(@Param("userId") int userId);
+
+    boolean existsByUserIdAndId(int userId, int id);
 }

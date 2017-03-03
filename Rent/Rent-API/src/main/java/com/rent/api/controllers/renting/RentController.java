@@ -1,6 +1,7 @@
 package com.rent.api.controllers.renting;
 
 import com.rent.api.entities.rent.ConfirmedRentals;
+import com.rent.api.entities.rent.PendingReturn;
 import com.rent.api.entities.rent.RentRequests;
 import com.rent.api.services.rent.RentService;
 import com.rent.utility.Constants;
@@ -25,6 +26,9 @@ public class RentController {
     @Autowired
     private RentService rentService;
 
+
+    // Requests to rent listings
+
     @RequestMapping(value = "/request/{listing-id}", method = RequestMethod.POST)
     public void requestRent(@PathVariable("listing-id") @NotNull Integer listingId) throws Exception {
         rentService.requestRent(listingId);
@@ -44,7 +48,7 @@ public class RentController {
     @RequestMapping(value = "/request/{listing-id}/deny/{request-id}", method = RequestMethod.PUT)
     public void denyRentRequest(@PathVariable("listing-id") @NotNull Integer listingId,
                                   @PathVariable("request-id") @NotNull Integer requestId) throws Exception {
-//        rentService.denyRentRequest(listingId, requestId);
+        rentService.denyRentRequest(listingId, requestId);
     }
 
     @RequestMapping(value = "/requesting", method = RequestMethod.GET)
@@ -64,8 +68,39 @@ public class RentController {
 
     @RequestMapping(value = "/request/{request-id}/cancel", method = RequestMethod.PUT)
     public void cancelRentRequest(@PathVariable("request-id") @NotNull Integer requestId) throws Exception {
-//        rentService.cancelRentRequest(requestId);
+        rentService.cancelRentRequest(requestId);
     }
+
+
+    // Returning a rented listing
+
+    @RequestMapping(value = "/return/renter", method = RequestMethod.GET)
+    public List<PendingReturn> getPendingReturnRequestsForRenter() {
+        return rentService.getPendingReturnRequestsForRenter();
+    }
+
+    @RequestMapping(value = "/return/rentee", method = RequestMethod.GET)
+    public List<PendingReturn> getPendingReturnRequestForRentee() {
+        return rentService.getPendingReturnRequestForRentee();
+    }
+
+    @RequestMapping(value = "/return/{rental-id}", method = RequestMethod.POST)
+    public void returnRentedListing(@PathVariable("rental-id") @NotNull Integer rentalId) throws Exception {
+        rentService.returnRentedListing(rentalId);
+    }
+
+    @RequestMapping(value = "/return/{pending-return-id}/confirm", method = RequestMethod.PUT)
+    public void acceptRentedListingReturn(@PathVariable("pending-return-id") @NotNull Integer pendingReturnId) throws Exception {
+        rentService.acceptRentedListingReturn(pendingReturnId);
+    }
+
+    @RequestMapping(value = "/return/{pending-return-id}/deny", method = RequestMethod.PUT)
+    public void denyRentedListingReturn(@PathVariable("pending-return-id") @NotNull Integer pendingReturnId) throws Exception {
+        rentService.denyRentedListingReturn(pendingReturnId);
+    }
+
+
+    // Listings being rented
 
     @RequestMapping(value = "/rentee", method = RequestMethod.GET)
     public List<ConfirmedRentals> getRentedInListings() {
