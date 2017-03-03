@@ -23,4 +23,9 @@ public class PaymentController {
     public String executePayment(PaymentDTO paymentDTO) {
         return PayPalConnector.executePayment(paymentDTO);
     }
+
+    @RequestMapping(value = "/cancel", method = RequestMethod.GET)
+    public String cancelPayment() {
+        return "payment cancelled";
+    }
 }

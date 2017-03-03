@@ -22,7 +22,7 @@ public class PayPalConnector {
         payer.setPaymentMethod("paypal");
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://www.cnn.com");
+        redirectUrls.setCancelUrl("http://localhost:8080/payment/cancel");
         redirectUrls.setReturnUrl("http://localhost:8080/payment/redirect");
 
         Details details = new Details();
