@@ -35,7 +35,7 @@ public class RentController {
     }
 
     @RequestMapping(value = "/request/{listing-id}", method = RequestMethod.GET)
-    public List<RentRequests> getRentRequests(@PathVariable("listing-id") @NotNull Integer listingId) throws Exception {
+    public List<RentRequests> getRentRequestsForListing(@PathVariable("listing-id") @NotNull Integer listingId) throws Exception {
         return rentService.getRentRequests(listingId);
     }
 
