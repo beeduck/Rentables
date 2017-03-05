@@ -58,16 +58,22 @@ public class Listings {
 
     public void setMinPrice(String newMinPrice){
 
-        int rep = Integer.parseInt(newMinPrice);
+        if(newMinPrice.length() == 0){
 
-        if(rep >= 0){
+            minPrice = null;
+        }else{
 
-            minPrice = String.valueOf(rep);
+            double min = Double.parseDouble(newMinPrice);
 
-        }else {
+            if(min >= 0){
 
-            minPrice = "0";
+                minPrice = String.valueOf(min);
 
+            }else {
+
+                minPrice = null;
+
+            }
         }
     }
 
@@ -78,16 +84,20 @@ public class Listings {
 
     public void setMaxPrice(String newMaxPrice){
 
-        int rep = Integer.parseInt(newMaxPrice);
+        if(newMaxPrice.length() == 0){
 
-        if(rep >= 0){
-
-            maxPrice = String.valueOf(rep);
-
+            maxPrice = null;
         }else{
 
-            maxPrice = "0";
+            double max = Double.parseDouble(newMaxPrice);
 
+            if(max > 0){
+
+                maxPrice = String.valueOf(max);
+            }else{
+
+                maxPrice = null;
+            }
         }
     }
 
@@ -98,15 +108,18 @@ public class Listings {
 
     public void setPriceCategoryId(String newPriceCategoryId){
 
-        int rep = Integer.parseInt(newPriceCategoryId);
+        if(newPriceCategoryId.length() != 0){
 
-        if(rep >= 1 && rep <= 4){
+            int rep = Integer.parseInt(newPriceCategoryId);
 
-            priceCategoryId = String.valueOf(rep);
+            if(rep >= 1 && rep <= 4){
 
-        }else {
+                priceCategoryId = String.valueOf(rep);
 
-            priceCategoryId = "0";
+            }else {
+
+                priceCategoryId = "0";
+            }
         }
     }
 

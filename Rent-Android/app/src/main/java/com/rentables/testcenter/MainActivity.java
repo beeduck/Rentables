@@ -15,11 +15,14 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import dataobject.LoginUser;
+import dataobject.User;
 import server.NotifyingThread;
 import server.ServerConnection;
 import server.ThreadListener;
 
 public class MainActivity extends AppCompatActivity implements ThreadListener {
+
+    public static User CURRENT_USER;
 
     Thread loginThread = null;
     private ProgressDialog loginProgress;
@@ -138,13 +141,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
 
             }
         }
-    }
-
-    public void loginProcessDialog(){
-
-        //Method for displaying a progress dialog while logging in.
-
-        ProgressDialog loginDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
     }
 
     public void forgotPassword(View view){

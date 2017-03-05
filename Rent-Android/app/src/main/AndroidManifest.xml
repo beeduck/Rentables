@@ -21,6 +21,7 @@
             android:windowSoftInputMode="stateVisible"
             android:label="@string/Register"/>
         <activity android:name=".CreateListingActivity" />
+        <activity android:name=".ListingDetailsActivity"/>
     </application>
     <uses-permission
         android:name = "android.permission.INTERNET" />

@@ -46,7 +46,7 @@ public class MyPostsFragment extends Fragment implements ThreadListener {
         browseRecyclerView.setLayoutManager(browseLayoutManager);
 
         theListings = listings.getListings();
-        browseListingsAdapter = new ListingsAdapter(theListings, inflater);
+        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext());
         browseRecyclerView.setAdapter(browseListingsAdapter);
 
         return rootView;
@@ -58,7 +58,7 @@ public class MyPostsFragment extends Fragment implements ThreadListener {
 
         super.onViewCreated(view, savedInstanceState);
         listings.setKeywords("");
-        listings.setUserId(3);
+        listings.setUserId(MainActivity.CURRENT_USER.getUserId());
 
         ServerConnection<Listings> connection = new ServerConnection<>(listings);
         connection.addListener(this);

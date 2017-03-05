@@ -8,8 +8,9 @@
         android:id="@+id/search_for_browse_fragment"
         android:title="@string/toolbar_search_string"
         android:icon="@drawable/ic_search_white_48dp"
+        android:visible="false"
         app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/overflow_settings_option"
         android:title="@string/overflow_settings_string"
@@ -25,5 +26,6 @@
     <item
         android:id="@+id/overflow_advanced_search_option"
         android:title="@string/overflow_advanced_search_string"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>

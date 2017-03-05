@@ -5,23 +5,11 @@ public class LoginUser {
     private String username;
     private String password;
 
-    public void setUsername(String newUsername){
+    //Set methods
+    public void setUsername(String newUsername){username = newUsername;}
+    public void setPassword(String newPassword){password = newPassword;}
 
-        username = newUsername;
-    }
-
-    public String getUsername(){
-
-        return username;
-    }
-
-    public void setPassword(String newPassword){
-
-        password = newPassword;
-    }
-
-    public String getPassword(){
-
-        return password;
-    }
+    //Get methods
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 }

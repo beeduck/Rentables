@@ -34,15 +34,22 @@
     <string name="create_post_button">CREATE POST</string>
 
     <!-- String for browse fragment -->
-    <string name="toolbar_search_string">Search</string>
+    <string name="toolbar_search_string">Keywords</string>
+    <string name="advanced_search_submit_string">Search</string>
+
+    <!-- Strings for advanced search dialog fragment -->
+    <string name="advanced_search_minimum_string">Min</string>
+    <string name="advanced_search_maximum_string">Max</string>
+    <string name="advanced_search_hours">Hours</string>
+    <string name="advanced_search_days">Days</string>
+    <string name="advanced_search_weeks">Weeks</string>
+    <string name="advanced_search_months">Months</string>
 
     <!-- Strings for createpost_fragment -->
     <string name="createpost_submit_button">SUBMIT</string>
     <string name="createpost_dialog_button">CONTINUE</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="user_posts_title">My Listings</string>
+    <string name="user_posts_title">User Posts</string>
 
     <string-array name="RentalTime">
         <item>Hours</item>

@@ -16,4 +16,5 @@
     <color name="rentColorAccent">#F39C12</color>
     <color name="rentCapeHoney">#FDE3A7</color>
     <color name="rentEcstasy">#F9690E</color>
+    <color name="transparent">#00000000</color>
 </resources>

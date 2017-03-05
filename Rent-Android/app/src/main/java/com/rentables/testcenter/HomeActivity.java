@@ -1,11 +1,13 @@
 package com.rentables.testcenter;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -14,11 +16,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 
 public class HomeActivity extends AppCompatActivity {
 
     //Only want to be able to run one thread at a time for creating posts.
+    private Fragment currentFragment;
+    private AdvancedSearchDialog advancedSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
@@ -36,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbarNavigate);
 
         selectFrag(null);
-
     }
 
     @Override
@@ -59,6 +64,10 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.overflow_logout_option:
                 userLogout();
                 return true;
+            case R.id.overflow_advanced_search_option:
+                clearSearchText();
+                displayAdvancedSearchDialog();
+                return true;
             default:
                 return true;
 
@@ -78,6 +87,21 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void clearSearchText(){
+
+        SearchView searchView = (SearchView) findViewById(R.id.search_for_browse_fragment);
+        searchView.setQuery("", false);
+    }
+
+    private void displayAdvancedSearchDialog(){
+
+        advancedSearch = new AdvancedSearchDialog();
+        FragmentManager fm = getSupportFragmentManager();
+
+        advancedSearch.show(fm, "advanced_search");
+
+    }
+
     public void toListingCreationActivity(View view){
 
         Intent listingCreationIntent = new Intent();
@@ -95,21 +119,20 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void selectFrag(View view) {
-        Fragment fr;
 
         if (view == findViewById(R.id.button1)) {
-            fr = new HomeFragment();
+            currentFragment = new HomeFragment();
         } else if (view == findViewById(R.id.button3)) {
-            fr = new BrowseFragment();
+            currentFragment = new BrowseFragment();
         } else if (view == findViewById(R.id.button4)) {
-            fr = new MyPostsFragment();
+            currentFragment = new MyPostsFragment();
         } else {
-            fr = new HomeFragment();
+            currentFragment = new HomeFragment();
         }
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.home_fragment_holder, fr);
+        fragmentTransaction.replace(R.id.home_fragment_holder, currentFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -121,6 +144,83 @@ public class HomeActivity extends AppCompatActivity {
         intent.setClass(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public void callbackForBrowseFragment(View v){
+
+        //Callback method for Advanced Search dialog.
+
+        View parent = (View) v.getParent();
+        EditText queryEditText = (EditText) parent.findViewById(R.id.edit_text_advanced_search);
+        EditText minEditText = (EditText) parent.findViewById(R.id.edit_text_advanced_search_minimum);
+        EditText maxEditText = (EditText) parent.findViewById(R.id.edit_text_advanced_search_maximum);
+
+        String query = queryEditText.getText().toString();
+        String minimum = minEditText.getText().toString();
+        String maximum = maxEditText.getText().toString();
+        String rentFor = String.valueOf(findCheckedRadioButton(parent));
+
+        if(checkInputs(minimum, maximum)){
+
+            advancedSearch.dismiss();
+            BrowseFragment browseFragment = (BrowseFragment) currentFragment;
+
+            browseFragment.runAdvancedQueryOnDatabase(query, minimum, maximum, rentFor);
+        }else{
+
+            maxEditText.setError("Minimum must be less than maximum.");
+            maxEditText.setText("");
+            maxEditText.requestFocus();
+            return;
+        }
+
+        advancedSearch.dismiss();
+        BrowseFragment browseFragment = (BrowseFragment) currentFragment;
+
+        browseFragment.runAdvancedQueryOnDatabase(query, minimum, maximum, rentFor);
+    }
+
+    private int findCheckedRadioButton(View v){
+
+        //Method for finding which RadioButton was checked in the Advanced Search dialog.
+
+        RadioButton rHours = (RadioButton) v.findViewById(R.id.radio_button_hours);
+        RadioButton rDays = (RadioButton) v.findViewById(R.id.radio_button_days);
+        RadioButton rWeeks = (RadioButton) v.findViewById(R.id.radio_button_weeks);
+        RadioButton rMonths = (RadioButton) v.findViewById(R.id.radio_button_months);
+
+        if(rHours.isChecked()){
+
+            return 1;
+        }else if(rDays.isChecked()){
+
+            return 2;
+        }else if(rWeeks.isChecked()){
+
+            return 3;
+        }else if(rMonths.isChecked()){
+
+            return 4;
+        }
+
+        return 0;
+    }
+
+    private boolean checkInputs(String minimum, String maximum){
+
+        if(minimum.length() == 0 || maximum.length() == 0){
+
+            return true;
+        }
+
+        double min = Double.parseDouble(minimum);
+        double max = Double.parseDouble(maximum);
+
+        if(min < max){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

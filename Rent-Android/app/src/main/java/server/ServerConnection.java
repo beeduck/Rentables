@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import com.rentables.testcenter.MainActivity;
 
 import dataobject.*;
 
@@ -28,11 +29,12 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private final static String CREATE_USER = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/user";
 
     //Listing based api calls
-    private final static String GET_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/listing";
-    private final static String CREATE_LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/userPosts/createPost";
+    private final static String LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/listing";
 
     //The object in question
     private DataObject dataObject;
+
+
     private User currentUser;
     private String basicAuthUsername = "postmanApi";
     private String basicAuthPassword = "";
@@ -92,12 +94,13 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
         try{
 
-            URL url = new URL(CREATE_LISTING);
+            URL url = new URL(LISTING);
             HttpURLConnection connect = (HttpURLConnection) url.openConnection();
 
             connect.setRequestMethod("POST");
             connect.setRequestProperty("Content-Type", "application/json");
             connect.setRequestProperty("charset", "utf-8");
+            connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
 
             Gson gson = new Gson();
             String json = gson.toJson(theNewListing);
@@ -191,14 +194,16 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
     private void removeSpacesInKeyWords(Listings listings){
 
-        if (listings.getKeywords() != null) {
+        if(listings.getKeywords() != null) {
+
             listings.setKeywords(listings.getKeywords().replace(" ", "+"));
+
         }
     }
 
     private String createListingsURL(Listings listings){
 
-        String customURL = GET_LISTING + "?";
+        String customURL = LISTING + "?";
         String[] theKeys = {"keywords", "minPrice", "maxPrice", "priceCategoryId", "userId"};
         HashMap<String, String> fields = listings.getAllFields();
 
@@ -224,7 +229,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private void loginUser(){
 
         LoginUser loginUser = (LoginUser) dataObject;
-        User currentUser = new User();
+        MainActivity.CURRENT_USER = new User();
 
         String data = encodeString("username") + "="
                 + encodeString(loginUser.getUsername()) + "&"
@@ -265,7 +270,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
             Gson json = new Gson();
-            currentUser = json.fromJson(buffReader.readLine(), User.class);
+            MainActivity.CURRENT_USER = json.fromJson(buffReader.readLine(), User.class);
 
             connect.disconnect();
 
