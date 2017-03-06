@@ -1,10 +1,8 @@
 package com.rent.auth.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.rent.utility.DBPropertiesPlaceholder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -14,7 +12,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 
 /**
  * Created by Duck on 1/27/2017.
@@ -23,24 +20,13 @@ import java.beans.PropertyVetoException;
 public class DBConfiguration {
     private final Logger logger = LoggerFactory.getLogger(DBConfiguration.class);
 
-    @Autowired
-    private DBPropertiesPlaceholder dbPropertiesPlaceholder;
-
     @Primary
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
-        try {
-            comboPooledDataSource.setDriverClass(dbPropertiesPlaceholder.getAuthDriver());
-        } catch (PropertyVetoException e) {
-            logger.error(e.getMessage());
-        }
-        comboPooledDataSource.setJdbcUrl(dbPropertiesPlaceholder.getAuthUrl());
-        comboPooledDataSource.setUser(dbPropertiesPlaceholder.getAuthUsername());
-        comboPooledDataSource.setPassword(dbPropertiesPlaceholder.getAuthPassword());
-
-        DBPropertiesPlaceholder.setDBPoolSettings(comboPooledDataSource);
-
+        comboPooledDataSource.setJdbcUrl(System.getenv("JDBC_URL"));
+        comboPooledDataSource.setUser(System.getenv("JDBC_USER"));
+        comboPooledDataSource.setPassword(System.getenv("JDBC_PASSWORD"));
         return comboPooledDataSource;
     }
 
@@ -52,7 +38,7 @@ public class DBConfiguration {
         factoryBean.setDataSource(dataSource());
 
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setGenerateDdl(true);
+//        jpaVendorAdapter.setGenerateDdl(true);
         jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
 
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter);

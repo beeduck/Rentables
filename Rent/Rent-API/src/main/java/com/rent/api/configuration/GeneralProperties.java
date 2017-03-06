@@ -13,18 +13,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @PropertySource({"classpath:general.properties"})
 public class GeneralProperties {
 
-    @Value("${auth.server.endpoint}")
-    private String authServerEndpoint;
-
     @Value("${auth.server.client}")
     private String authClient;
 
     @Value("${auth.server.secret}")
     private String authSecret;
-
-    public String getAuthServerEndpoint() {
-        return authServerEndpoint;
-    }
 
     public String getAuthClient() {
         return authClient;

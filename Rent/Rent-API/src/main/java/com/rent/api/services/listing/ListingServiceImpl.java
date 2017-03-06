@@ -1,6 +1,7 @@
 package com.rent.api.services.listing;
 
 import com.rent.api.dao.listing.ListingRepository;
+import com.rent.api.dao.rent.ConfirmedRentalsRepository;
 import com.rent.api.dao.user.UserInfoRepository;
 import com.rent.api.dto.listing.ListingDTO;
 import com.rent.api.entities.listing.Listing;
@@ -27,6 +28,9 @@ public class ListingServiceImpl implements ListingService {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
+    @Autowired
+    private ConfirmedRentalsRepository confirmedRentalsRepository;
+
     @Transactional
     public Listing createListing(ListingDTO listingDTO) {
         Listing listing = new Listing();
@@ -43,7 +47,30 @@ public class ListingServiceImpl implements ListingService {
         return listing;
     }
 
-    public void updateListing(Listing listing) {
+    @Transactional
+    public void updateListing(Listing listing) throws Exception {
+        // Verify the listing being updated is owned by the user
+        Listing listingVerify = listingRepository.findById(listing.getId());
+
+        if(listingVerify.getUserId() != UserSecurity.getUserId())
+            throw new Exception("Cannot change another users listing.");
+
+        // TODO: Restrict active boolean if user is renting listing
+        // TODO: Move to a listingDTO? - probably...
+        listingRepository.save(listing);
+    }
+
+    @Transactional
+    public void toggleListingActive(boolean active, int id) throws Exception {
+        if(confirmedRentalsRepository.existsByListingId(id) && active)
+            throw new Exception("Cannot advertise a listing that is being rented.");
+
+        Listing listing = listingRepository.findById(id);
+
+        if(listing.getUserId() != UserSecurity.getUserId())
+            throw new Exception("Cannot change another users listing.");
+
+        listing.setActive(active);
         listingRepository.save(listing);
     }
 
@@ -51,6 +78,21 @@ public class ListingServiceImpl implements ListingService {
         return listingRepository.findById(id);
     }
 
+    @Transactional
+    public void deleteListing(int id) throws Exception {
+        // Verify the listing being deleted is owned by the user
+        Listing listing = listingRepository.findById(id);
+
+        if(listing.getUserId() != UserSecurity.getUserId())
+            throw new Exception("Cannot delete another users listing.");
+
+        if(confirmedRentalsRepository.existsByListingId(id))
+            throw new Exception("Cannot delete a listing that is being rented.");
+
+        listingRepository.delete(listing);
+    }
+
+    @Transactional(readOnly = true)
     public List<Listing> getListings(ListingFilter filter) {
         List<Listing> list = listingRepository.findListsByFilter(filter);
         if(filter.getKeywords() != null) {
@@ -58,4 +100,10 @@ public class ListingServiceImpl implements ListingService {
         }
         return list;
     }
+
+    @Transactional(readOnly = true)
+    public List<Listing> getCurrentUsersListings() {
+        return listingRepository.findListsByUserId(UserSecurity.getUserId());
+    }
+
 }
