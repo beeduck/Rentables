@@ -7,21 +7,22 @@
         android:icon="@mipmap/for_rent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"
+        <activity android:name=".activity.HomeActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".RegisterUserActivity"
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.RegisterUserActivity"
             android:windowSoftInputMode="stateVisible"
             android:label="@string/Register"/>
-        <activity android:name=".CreateListingActivity" />
-        <activity android:name=".ListingDetailsActivity"/>
+        <activity android:name=".activity.CreateListingActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".activity.ListingDetailsActivity"/>
     </application>
     <uses-permission
         android:name = "android.permission.INTERNET" />

@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.rentables.testcenter.activity.ListingDetailsActivity;
+
 import java.util.ArrayList;
 
 import dataobject.Listing;
-import dataobject.Listings;
 
 public class RecyclerViewListener implements View.OnClickListener {
 

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rentables.testcenter.HomeActivity">
+    tools:context="com.rentables.testcenter.activity.HomeActivity">
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main"

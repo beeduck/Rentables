@@ -1,6 +1,5 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.activity;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +16,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import com.rentables.testcenter.dialog.AdvancedSearchDialog;
+import com.rentables.testcenter.R;
+import com.rentables.testcenter.fragment.BrowseFragment;
+import com.rentables.testcenter.fragment.HomeFragment;
+import com.rentables.testcenter.fragment.MyPostsFragment;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -130,12 +135,43 @@ public class HomeActivity extends AppCompatActivity {
             currentFragment = new HomeFragment();
         }
 
+        addToBackStack();
+    }
+
+    private void addToBackStack(){
+
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.home_fragment_holder, currentFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
 
+        if(checkBackStack(fm)){
+
+            fragmentTransaction.replace(R.id.home_fragment_holder, currentFragment);
+            fragmentTransaction.addToBackStack(currentFragment.getClass().toString());
+            fragmentTransaction.commit();
+
+        }
+    }
+
+    private boolean checkBackStack(FragmentManager fm){
+
+        int position = fm.getBackStackEntryCount() - 1;
+
+        if(position >= 0){
+
+            String name = fm.getBackStackEntryAt(position).getName();
+            String name2 = currentFragment.getClass().toString();
+
+            if(name.equalsIgnoreCase(currentFragment.getClass().toString())){
+
+                return false;
+            }else{
+
+                return true;
+            }
+        }
+
+        return true;
     }
 
     public void userLogout(){

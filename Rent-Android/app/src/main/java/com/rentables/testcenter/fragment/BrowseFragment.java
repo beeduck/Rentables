@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,12 +8,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+
+import com.rentables.testcenter.ListingsAdapter;
+import com.rentables.testcenter.R;
 
 import java.util.ArrayList;
 
@@ -68,6 +71,17 @@ public class BrowseFragment extends Fragment implements ThreadListener{
         fragmentProgressDialog.setCancelable(false);
 
         onKeyListenerForSearch();
+    }
+
+    @Override
+    public void onResume(){
+
+        super.onResume();
+
+        Toolbar toolbar = (Toolbar) parent.findViewById(R.id.toolbar_main);
+        Menu menu = toolbar.getMenu();
+        menu.findItem(R.id.search_for_browse_fragment).setVisible(true).expandActionView();
+        menu.findItem(R.id.overflow_advanced_search_option).setVisible(true);
     }
 
     @Override

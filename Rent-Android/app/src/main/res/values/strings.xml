@@ -48,14 +48,26 @@
     <!-- Strings for createpost_fragment -->
     <string name="createpost_submit_button">SUBMIT</string>
     <string name="createpost_dialog_button">CONTINUE</string>
+    <string name="create_listing_activity_title_string">Create Your Listing</string>
+    <string name="create_listing_title_hint_string">Your Listing\'s Title…</string>
+    <string name="create_listing_title_string">Create a simple title for your listing.</string>
+    <string name="create_listing_description_hint_string">Description…</string>
+    <string name="create_listing_description_string">Add a description of the item you are selling.</string>
+    <string name="create_listing_price_hint_string">0.00</string>
+    <string name="create_listing_per">per</string>
+    <string name="create_listing_dollar">$</string>
+    <string name="create_listing_per_text_view_string">The amount you would like to rent your item for and for how long.</string>
+    <string name="create_listing_additional_details_hint">Additional Details…</string>
+    <string name="create_listing_additional_details_string">Add any additional details you would like to add put here.</string>
+    <string name="create_listing_button_string">Create Listing</string>
 
     <string name="user_posts_title">User Posts</string>
 
     <string-array name="RentalTime">
-        <item>Hours</item>
-        <item>Days</item>
-        <item>Weeks</item>
-        <item>Months</item>
+        <item>Hour</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
         <item>Semester</item>
     </string-array>
 </resources>

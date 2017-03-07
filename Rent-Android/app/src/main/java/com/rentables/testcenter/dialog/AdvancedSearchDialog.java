@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+
+import com.rentables.testcenter.R;
 
 public class AdvancedSearchDialog extends DialogFragment {
 

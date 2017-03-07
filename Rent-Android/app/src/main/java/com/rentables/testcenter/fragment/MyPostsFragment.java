@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
+import com.rentables.testcenter.ListingsAdapter;
+import com.rentables.testcenter.activity.MainActivity;
+import com.rentables.testcenter.R;
 
 import java.util.ArrayList;
 

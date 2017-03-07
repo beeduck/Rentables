@@ -21,7 +21,7 @@
         <item name="android:textColorHint">@color/white</item>
     </style>
 
-    <!--style for dialog fragments with titles -->
+    <!--style for dialog fragment with titles -->
     <style name="DialogThemeWithTitle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/rentColorPrimary</item>
         <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
@@ -34,7 +34,7 @@
         <item name="android:radius">0dp</item>
     </style>
 
-    <!--style for dialog fragments without titles -->
+    <!--style for dialog fragment without titles -->
     <style name="DialogThemeNoTitle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/rentColorPrimary</item>
         <item name="colorPrimaryDark">@color/rentColorPrimaryDark</item>
