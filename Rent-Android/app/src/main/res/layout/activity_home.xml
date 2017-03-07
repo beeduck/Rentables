@@ -22,7 +22,7 @@
         android:background="@color/whiteSmoke">
 
         <Button
-            android:text="Button"
+            android:text="to PayPal Screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button"

@@ -29,6 +29,7 @@
         <activity android:name=".activity.CreateListingActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.ListingDetailsActivity"/>
+        <activity android:name=".PayPalPaymentActivity"></activity>
     </application>
     <uses-permission android:name = "android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

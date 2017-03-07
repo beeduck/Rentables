@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.rentables.testcenter.PayPalPaymentActivity;
 import com.rentables.testcenter.PaymentActivity;
 import com.rentables.testcenter.dialog.AdvancedSearchDialog;
 import com.rentables.testcenter.R;
@@ -131,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void toPaymentActivity(View view) {
         Intent paymentIntent = new Intent();
-        paymentIntent.setClass(this, PaymentActivity.class);
+        paymentIntent.setClass(this, PayPalPaymentActivity.class);
         startActivity(paymentIntent);
     }
 
