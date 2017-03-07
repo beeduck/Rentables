@@ -20,6 +20,14 @@
         android:layout_below="@+id/toolbar_main"
         android:layout_above="@+id/toolbar_navigate"
         android:background="@color/whiteSmoke">
+
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:visibility="visible"
+            android:onClick="toPaymentActivity"/>
     </LinearLayout>
     <include
         android:id="@+id/toolbar_navigate"

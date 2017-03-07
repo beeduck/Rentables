@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.rentables.testcenter.PaymentActivity;
 import com.rentables.testcenter.dialog.AdvancedSearchDialog;
 import com.rentables.testcenter.R;
 import com.rentables.testcenter.fragment.BrowseFragment;
@@ -126,6 +127,12 @@ public class HomeActivity extends AppCompatActivity {
         settingsIntent.setClass(this, SettingsActivity.class);
 
         startActivity(settingsIntent);
+    }
+
+    public void toPaymentActivity(View view) {
+        Intent paymentIntent = new Intent();
+        paymentIntent.setClass(this, PaymentActivity.class);
+        startActivity(paymentIntent);
     }
 
     public void selectFrag(View view) {
