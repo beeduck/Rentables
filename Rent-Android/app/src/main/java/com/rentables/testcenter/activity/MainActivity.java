@@ -1,8 +1,9 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,17 +13,26 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 
+import com.rentables.testcenter.dialog.ErrorDialog;
+import com.rentables.testcenter.dialog.ForgotPasswordDialog;
+import com.rentables.testcenter.R;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import dataobject.LoginUser;
+import dataobject.User;
 import server.NotifyingThread;
 import server.ServerConnection;
 import server.ThreadListener;
 
 public class MainActivity extends AppCompatActivity implements ThreadListener {
 
+    public static User CURRENT_USER;
+
     Thread loginThread = null;
     private ProgressDialog loginProgress;
+    private DialogFragment currentDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
         //Adding onKeyListener for password EditText
         onKeyListenerForPassword();
 
-        //Resetting weird password typeface
+        //  Resetting weird password typeface
         resetPasswordTypeface();
 
     }
@@ -68,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
                             username.setError("Authentication required!");
                         }
                     });
+                } else if(errors.get(0).contains(java.net.UnknownHostException.class.toString())){
+
+                    this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showUnknownHostError();
+                        }
+                    });
                 }
 
             } else if (errors == null) {
@@ -99,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
             return;
 
         }
-
 
         if (loginThread == null) {
 
@@ -140,13 +157,6 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
         }
     }
 
-    public void loginProcessDialog(){
-
-        //Method for displaying a progress dialog while logging in.
-
-        ProgressDialog loginDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
-    }
-
     public void forgotPassword(View view){
 
         FragmentManager fm = getSupportFragmentManager();
@@ -154,6 +164,26 @@ public class MainActivity extends AppCompatActivity implements ThreadListener {
         forgotPass.show(fm, "forgot_password");
     }
 
+    public void showUnknownHostError(){
+
+        Bundle bundle = new Bundle();
+        bundle.putString("error", "Please try again. We were unable to connect to the server.");
+        currentDialog = new ErrorDialog();
+        currentDialog.setArguments(bundle);
+
+        FragmentManager fm = getSupportFragmentManager();
+        currentDialog.show(fm, "error_dialog");
+
+    }
+
+    public void dismissUnknownHostError(View view){
+
+        if(currentDialog != null){
+
+            currentDialog.dismiss();
+            currentDialog = null;
+        }
+    }
 
     public void startRegisterUserActivity(View view){
 

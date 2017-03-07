@@ -8,25 +8,13 @@ public class CreateListing {
     private int priceCategoryId;
     private int userId;
 
-    public void setTitle(String newTitle){
+    public void setTitle(String newTitle){title = newTitle;}
+    public void setDescription(String newDescription){description = newDescription;}
 
-        title = newTitle;
-    }
-
-    public String getTitle(){
-
-        return title;
-    }
-
-    public void setDescription(String newDescription){
-
-        description = newDescription;
-    }
-
-    public String getDescription(){
-
-        return description;
-    }
+    public String getTitle(){return title;}
+    public String getDescription(){return description;}
+    public double getPrice(){return price;}
+    public int getPriceCategoryId(){return priceCategoryId;}
 
     public void setPrice(double newPrice){
 
@@ -34,11 +22,6 @@ public class CreateListing {
 
             price = newPrice;
         }
-    }
-
-    public double getPrice(){
-
-        return price;
     }
 
     public void setPriceCategoryId(int newPriceCategoryId){
@@ -49,18 +32,10 @@ public class CreateListing {
         }
     }
 
-    public int getPriceCategoryId(){
-
-        return priceCategoryId;
-    }
-
     public void setUserId(int newUserId){
 
         userId = newUserId;
     }
 
-    public int getUserId(){
-
-        return userId;
-    }
+    public int getUserId(){return userId;}
 }

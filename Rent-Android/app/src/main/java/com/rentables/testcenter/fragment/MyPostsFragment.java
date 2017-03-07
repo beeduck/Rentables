@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
+import com.rentables.testcenter.ListingsAdapter;
+import com.rentables.testcenter.activity.MainActivity;
+import com.rentables.testcenter.R;
 
 import java.util.ArrayList;
 
@@ -46,7 +49,7 @@ public class MyPostsFragment extends Fragment implements ThreadListener {
         browseRecyclerView.setLayoutManager(browseLayoutManager);
 
         theListings = listings.getListings();
-        browseListingsAdapter = new ListingsAdapter(theListings, inflater);
+        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext());
         browseRecyclerView.setAdapter(browseListingsAdapter);
 
         return rootView;
@@ -58,7 +61,7 @@ public class MyPostsFragment extends Fragment implements ThreadListener {
 
         super.onViewCreated(view, savedInstanceState);
         listings.setKeywords("");
-        listings.setUserId(3);
+        listings.setUserId(MainActivity.CURRENT_USER.getUserId());
 
         ServerConnection<Listings> connection = new ServerConnection<>(listings);
         connection.addListener(this);

@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.activity;
 
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
@@ -11,9 +11,11 @@ import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View.OnKeyListener;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+
+import com.rentables.testcenter.R;
+import com.rentables.testcenter.dialog.RegistrationSuccessDialog;
 
 import java.util.ArrayList;
 import java.util.Iterator;

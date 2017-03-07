@@ -1,4 +1,4 @@
-package com.rentables.testcenter;
+package com.rentables.testcenter.dialog;
 
 
 import android.support.v4.app.DialogFragment;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rentables.testcenter.R;
 
 public class CreatePostDialog extends DialogFragment{
 

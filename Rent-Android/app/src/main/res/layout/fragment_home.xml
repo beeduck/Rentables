@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rentables.testcenter.HomeFragment">
+    tools:context="com.rentables.testcenter.fragment.HomeFragment">
     <Button
         android:id="@+id/home_fragment_create_post_button"
         android:layout_width="match_parent"
