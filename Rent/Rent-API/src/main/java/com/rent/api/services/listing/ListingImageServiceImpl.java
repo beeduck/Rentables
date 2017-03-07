@@ -1,10 +1,12 @@
 package com.rent.api.services.listing;
 
 import com.rent.api.dao.listing.ListingImageRepository;
+import com.rent.api.dao.listing.ListingRepository;
 import com.rent.api.entities.listing.ListingImage;
 import com.amazonaws.services.cloudformation.model.Output;
 import com.amazonaws.services.s3.model.S3Object;
 import com.rent.api.utility.AWSConnector;
+import com.rent.api.utility.security.UserSecurity;
 import com.rent.utility.Constants;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,22 +38,29 @@ public class ListingImageServiceImpl implements ListingImageService {
     @Autowired
     ListingImageRepository listingImageRepository;
 
+    @Autowired
+    ListingRepository listingRepository;
+
     @Transactional
-    public String uploadImage(int listingId, MultipartFile[] files) throws IOException {
-        for(MultipartFile file : files) {
-            if(!file.isEmpty()) {
-                ListingImage listingImage = new ListingImage();
-                listingImage.setListingId(listingId);
-                String uuid = UUID.randomUUID().toString();
-                listingImage.setImageUUID(uuid);
-                String ext = getFileExtension(file);
-                String filePath = AWSConnector.uploadImageToS3(file,listingId,uuid,ext);
-                listingImage.setPath(filePath);
-                listingImageRepository.save(listingImage);
+    public String uploadImage(int listingId, MultipartFile[] files) throws Exception {
+        if (listingRepository.existsByUserIdAndId(UserSecurity.getUserId(), listingId)) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    ListingImage listingImage = new ListingImage();
+                    listingImage.setListingId(listingId);
+                    String uuid = UUID.randomUUID().toString();
+                    listingImage.setImageUUID(uuid);
+                    String ext = getFileExtension(file);
+                    String filePath = AWSConnector.uploadImageToS3(file, listingId, uuid, ext);
+                    listingImage.setPath(filePath);
+                    listingImageRepository.save(listingImage);
+                } else {
+                    return "failed";
+                }
             }
-            else {
-                return "failed";
-            }
+        }
+        else {
+            throw new Exception("User did not make this listing");
         }
         return "Success";
     }
@@ -85,45 +94,21 @@ public class ListingImageServiceImpl implements ListingImageService {
         return imageNameList;
     }
 
-    public byte[] getImageByListingId(HttpServletResponse response, int listingId) throws IOException {
-        List<ListingImage> list = listingImageRepository.findAllByListingId(listingId);
-        List<File> files = new ArrayList<>();
-        for(ListingImage e : list) {
-            File file = new File(e.getPath());
-            files.add(file);
+    @Transactional
+    public void deleteByImageUUID(String uuid) throws Exception {
+        int listingId = listingImageRepository.findByImageUUID(uuid).getListingId();
+        if(listingRepository.existsByUserIdAndId(UserSecurity.getUserId(),listingId)) {
+            String path = listingImageRepository.findByImageUUID(uuid).getPath();
+            AWSConnector.deleteImageFromS3(path);
+            listingImageRepository.deleteByImageUUID(uuid);
         }
-        response.setContentType("application/zip");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
-        ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
-        for(File file : files) {
-            zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-            FileInputStream fileInputStream = new FileInputStream(file);
-            IOUtils.copy(fileInputStream, zipOutputStream);
-            fileInputStream.close();
-            zipOutputStream.closeEntry();
+        else {
+            throw new Exception("User did not make this listing");
         }
-        if (zipOutputStream != null) {
-            zipOutputStream.finish();
-            zipOutputStream.flush();
-            IOUtils.closeQuietly(zipOutputStream);
-        }
-        IOUtils.closeQuietly(bufferedOutputStream);
-        IOUtils.closeQuietly(byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
     }
 
     @Transactional
-    public void deleteByImageUUID(String uuid) {
-        String path = listingImageRepository.findByImageUUID(uuid).getPath();
-        AWSConnector.deleteImageFromS3(path);
-        listingImageRepository.deleteByImageUUID(uuid);
-    }
-
-    @Transactional
-    public void deleteByListingId(int listingId) {
+    public void deleteByListingId(int listingId) throws Exception {
         List<ListingImage> list = listingImageRepository.findAllByListingId(listingId);
         for(ListingImage e : list) {
             deleteByImageUUID(e.getImageUUID());

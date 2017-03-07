@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface ListingImageService {
 
-    String uploadImage(int listingId, MultipartFile[] files) throws IOException;
+    String uploadImage(int listingId, MultipartFile[] files) throws Exception;
 
     void getImageByIdS3(HttpServletResponse response, String uuid) throws IOException;
 
     List<String> getImageNamesByListingId(int listingId);
 
-    void deleteByImageUUID(String uuid);
+    void deleteByImageUUID(String uuid) throws Exception;
 
-    void deleteByListingId(int listingId);
+    void deleteByListingId(int listingId) throws Exception;
 }

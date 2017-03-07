@@ -25,7 +25,7 @@ public class ListingImageController {
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("listingId") int listingId,
-                                   @RequestParam("files") MultipartFile[] files) throws IOException {
+                                   @RequestParam("files") MultipartFile[] files) throws Exception {
         return listingImageService.uploadImage(listingId,files);
     }
 
@@ -41,13 +41,14 @@ public class ListingImageController {
 
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
-    public void deleteByUUID(@PathVariable("uuid") String uuid) {
+    public void deleteByUUID(@PathVariable("uuid") String uuid) throws Exception{
         listingImageService.deleteByImageUUID(uuid);
     }
 
     @PreAuthorize(Constants.AUTH_ROLE_USER)
     @RequestMapping(value = "/delete-by-listing/{listingId}", method = RequestMethod.DELETE)
-    public void deleteByListingId(@PathVariable("listingId") int listingId) {
+    public void deleteByListingId(@PathVariable("listingId") int listingId) throws Exception
+    {
         listingImageService.deleteByListingId(listingId);
     }
 }
