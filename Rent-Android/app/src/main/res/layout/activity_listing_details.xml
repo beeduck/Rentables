@@ -53,6 +53,12 @@
                     android:layout_marginTop="14dp"
                     android:textSize="18sp"
                     android:fontFamily="sans-serif-condensed"/>
+                <Button
+                    android:id="@+id/rent_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text = "Rent"
+                    android:onClick="toPayPalPaymentActivity"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

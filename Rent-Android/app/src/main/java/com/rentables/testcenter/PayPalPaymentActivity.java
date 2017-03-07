@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
@@ -26,6 +27,7 @@ public class PayPalPaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paypal_payment);
+        setText();
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
@@ -38,12 +40,21 @@ public class PayPalPaymentActivity extends AppCompatActivity {
     }
 
     public void onBuyPressed(View pressed) {
-        PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "hipster jeans",
+        Bundle listingBundle = this.getIntent().getExtras();
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(listingBundle.getString("price")),
+                "USD", listingBundle.getString("title"),
                 PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
         startActivityForResult(intent, 0);
+    }
+
+    private void setText() {
+        Bundle listingBundle = this.getIntent().getExtras();
+        TextView confirm = (TextView) findViewById(R.id.confirm_text);
+        confirm.setText("Are you sure you want to rent " + listingBundle.getString("title") +
+                " for $" + listingBundle.getString("price") + "?");
     }
 
     @Override

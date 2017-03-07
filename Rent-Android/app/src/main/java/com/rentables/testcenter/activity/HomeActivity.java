@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.rentables.testcenter.PayPalPaymentActivity;
-import com.rentables.testcenter.PaymentActivity;
 import com.rentables.testcenter.dialog.AdvancedSearchDialog;
 import com.rentables.testcenter.R;
 import com.rentables.testcenter.fragment.BrowseFragment;
