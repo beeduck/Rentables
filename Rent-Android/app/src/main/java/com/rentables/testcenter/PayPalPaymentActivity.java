@@ -13,13 +13,22 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.rentables.testcenter.activity.MainActivity;
 
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
-public class PayPalPaymentActivity extends AppCompatActivity {
+import dataobject.Listing;
+import dataobject.RentRequest;
+import server.NotifyingThread;
+import server.ServerConnection;
+import server.ThreadListener;
 
+public class PayPalPaymentActivity extends AppCompatActivity implements ThreadListener {
+
+    Thread requestThread = null;
     private static PayPalConfiguration config = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId("AXaDNQpEdrXJltQXlKuzkbbOb4_YNfEcYnlEN78TRYxXmkhsqxGReoihBNoXkyaA3iKfdK4I7o7HjOF6");
 
@@ -41,13 +50,13 @@ public class PayPalPaymentActivity extends AppCompatActivity {
 
     public void onBuyPressed(View pressed) {
         Bundle listingBundle = this.getIntent().getExtras();
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(listingBundle.getString("price")),
-                "USD", listingBundle.getString("title"),
-                PayPalPayment.PAYMENT_INTENT_SALE);
-        Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
-        startActivityForResult(intent, 0);
+        RentRequest rentRequest = new RentRequest();
+        rentRequest.setListingId(listingBundle.getInt("id"));
+        rentRequest.setRequestingUser(MainActivity.CURRENT_USER.getUserId());
+        ServerConnection<RentRequest> serverConnection = new ServerConnection<>(rentRequest);
+        serverConnection.addListener(this);
+        requestThread = new Thread(serverConnection);
+        requestThread.start();
     }
 
     private void setText() {
@@ -76,5 +85,33 @@ public class PayPalPaymentActivity extends AppCompatActivity {
         else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
             Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
         }
+    }
+
+    @Override
+    public void notifyOfThreadCompletion(final NotifyingThread notifyThread) {
+        if(requestThread != null) {
+            final TextView requestText = (TextView) findViewById(R.id.request_text);
+            runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    ArrayList<String> errors = notifyThread.getErrors();
+                    if (errors == null) {
+                        requestText.setText("Success");
+                    }
+                    else {
+                        requestText.setText(notifyThread.getErrors().get(0));
+                    }
+                }
+            });
+        }
+        requestThread = null;
+//        Bundle listingBundle = this.getIntent().getExtras();
+//        PayPalPayment payment = new PayPalPayment(new BigDecimal(listingBundle.getString("price")),
+//                "USD", listingBundle.getString("title"),
+//                PayPalPayment.PAYMENT_INTENT_SALE);
+//        Intent intent = new Intent(this, PaymentActivity.class);
+//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+//        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+//        startActivityForResult(intent, 0);
     }
 }

@@ -140,6 +140,7 @@ public class ListingDetailsActivity extends AppCompatActivity {
         listingBundle.putString("title",currentListing.getTitle());
         listingBundle.putString("price", String.valueOf(currentListing.getPrice()));
         listingBundle.putString("priceCategory",convertCategoryId(currentListing.getPriceCategoryId()));
+        listingBundle.putInt("id",currentListing.getId());
         paymentIntent.putExtras(listingBundle);
         startActivity(paymentIntent);
     }

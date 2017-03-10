@@ -19,7 +19,9 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+
 import java.net.URI;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -37,14 +39,21 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     //User based api calls
     public final static String PATH = "http://rentrent.ddns.net/";
 
-    public final static String USER_LOGIN = PATH + "rent-oauth/oauth/token";
-    public final static String CREATE_USER = PATH + "rent-oauth/user";
+    //Listing image based api calls
+    public final static String BASE_DEV_API = "http://10.0.2.2:8080";
+    public final static String BASE_DEV_AUTH = "http://10.0.2.2:8081";
+    public final static String BASE_DEPLOYMENT_API = "http://rentapi.us-west-2.elasticbeanstalk.com";
+    public final static String BASE_DEPLOYMENT_AUTH = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth";
+
+    public final static String USER_LOGIN = BASE_DEV_AUTH + "/oauth/token";
+    public final static String CREATE_USER = BASE_DEV_AUTH + "/user";
 
     //Listing based api calls
-    public final static String LISTING = PATH + "listing";
+    public final static String LISTING = BASE_DEV_API + "/listing";
 
     //Listing image based api calls
-    public final static String LISTING_IMAGES = PATH + "listing-images/";
+    public final static String LISTING_IMAGES = BASE_DEV_API + "/listing-images";
+    public final static String RENTING = BASE_DEV_API + "/rent";
 
     //The object in question
     private DataObject dataObject;
@@ -105,6 +114,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }else if(dataObject.getClass() == Integer.class){
 
             System.out.println("You put in an integer?");
+
+        }else if(dataObject.getClass() == dataobject.RentRequest.class) {
+
+            requestToRent();
 
         }else{
 
@@ -495,6 +508,37 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             System.out.println("Error(RuntimeException): " + run.toString());
             run.printStackTrace();
 
+        }
+    }
+
+    private void requestToRent() {
+        RentRequest rentRequest = (RentRequest)dataObject;
+        try {
+            URL url = new URL(RENTING + "/request/" + Integer.toString(rentRequest.getListingId()));
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("POST");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+            connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
+            if(connect.getResponseCode() != 200){
+
+                BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getErrorStream()));
+                String error;
+
+                while((error = buffReader.readLine()) != null){
+
+                    this.addError(error);
+                }
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+
+            }else{
+
+                System.out.println("Connection successful!");
+            }
+            connect.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

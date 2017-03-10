@@ -27,4 +27,12 @@
         android:layout_marginTop="110dp"
         android:onClick="onBuyPressed"
         android:text="PayPal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_text"
+        android:layout_marginTop="14dp"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed"/>
 </RelativeLayout>
