@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.rentables.testcenter.fragment.HomeFragment">
-    <Button
-        android:id="@+id/home_fragment_create_post_button"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_fragment_recycler_view"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/create_listing_floating_action_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_post_button"
+        android:src="@drawable/ic_add_white_48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:onClick="toListingCreationActivity"
-        android:textColor="@color/white"/>
-</LinearLayout>
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"/>
+</RelativeLayout>

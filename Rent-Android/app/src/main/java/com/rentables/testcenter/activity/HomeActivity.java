@@ -104,7 +104,6 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
 
         advancedSearch.show(fm, "advanced_search");
-
     }
 
     public void toListingCreationActivity(View view){

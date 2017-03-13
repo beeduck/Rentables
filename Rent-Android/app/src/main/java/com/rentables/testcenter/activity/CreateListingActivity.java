@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -29,11 +30,15 @@ import com.rentables.testcenter.dialog.CreatePostDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 
 import dataobject.CreateListing;
+import dataobject.ListingImage;
 import server.NotifyingThread;
 import server.ServerConnection;
 import server.ThreadListener;
@@ -41,8 +46,10 @@ import server.ThreadListener;
 public class CreateListingActivity extends AppCompatActivity implements ThreadListener {
 
     private Thread currentThread = null;
+    private CreateListing currentListing = new CreateListing();
     private ProgressDialog listingCreationProgress;
 
+    private boolean imageSet = false;
     private String task;
     private static final int REQUEST_CAMERA = 0;
     private static final int SELECT_FILE = 1;
@@ -157,7 +164,6 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             if(checkAllInputs(titleText, descriptionText, detailsText, priceText, priceCategoryId)){
 
                 //If the form checks out proceed with creating the Listing.
-                CreateListing currentListing = new CreateListing();
                 showListingCreationProgressDialog();
 
                 currentListing.setTitle(titleText);
@@ -185,6 +191,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
         EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
         EditText additionalDetails = (EditText) findViewById(R.id.create_listing_additional_details_edit_text);
+        TextView addImage = (TextView) findViewById(R.id.image_view_text_overlay);
         Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 
         boolean pass = true;
@@ -204,6 +211,13 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         if(currentPrice.length() == 0){
 
             price.setError("Please Enter a Price.");
+            pass = false;
+        }
+
+        if(!imageSet){
+
+            addImage.setText("Please select a photo.");
+            addImage.setTextColor(getResources().getColor(R.color.red));
             pass = false;
         }
 
@@ -245,8 +259,6 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
                 return 3;
             case "months":
                 return 4;
-            case "semester":
-                return 5;
         }
 
         return 1;
@@ -333,10 +345,26 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
 
-        Bitmap bm=null;
+        //Get input stream and then pass it to the output stream
+
+        try {
+
+            FileInputStream fileStream = (FileInputStream) getApplicationContext().getContentResolver().openInputStream(data.getData());
+            ListingImage image = currentListing.getListingImage();
+            image.setImageStream(fileStream);
+            image.setUri(data.getData());
+            imageSet = true;
+
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+        }
+
+
+        /*Bitmap bm=null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -345,7 +373,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             }
         }
         newText.setText("");
-        img.setImageBitmap(bm);
+        img.setImageBitmap(bm);*/
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -368,6 +396,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             e.printStackTrace();
         }
 
+        newText.setText("");
         img.setImageBitmap(thumbnail);
     }
 }

@@ -55,7 +55,7 @@ public class BrowseFragment extends Fragment implements ThreadListener{
         browseRecyclerView.setLayoutManager(browseLayoutManager);
 
         theListings = listings.getListings();
-        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext());
+        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext(), R.layout.recyclerview_listing);
         browseListingsAdapter.setCurrentContext(this.getContext());
         browseRecyclerView.setAdapter(browseListingsAdapter);
 
@@ -99,6 +99,8 @@ public class BrowseFragment extends Fragment implements ThreadListener{
 
         if(queryThread == null) {
 
+            clearFocusOnSearch();
+            hideKeyboard();
             fragmentProgressDialog.show();
 
             listings = new Listings();
@@ -117,6 +119,7 @@ public class BrowseFragment extends Fragment implements ThreadListener{
 
         if(queryThread == null){
 
+            clearFocusOnSearch();
             fragmentProgressDialog.show();
 
             listings = new Listings();

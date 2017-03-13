@@ -7,6 +7,7 @@ public class CreateListing {
     private double price;
     private int priceCategoryId;
     private int userId;
+    private ListingImage listingImage = new ListingImage();
 
     public void setTitle(String newTitle){title = newTitle;}
     public void setDescription(String newDescription){description = newDescription;}
@@ -38,4 +39,5 @@ public class CreateListing {
     }
 
     public int getUserId(){return userId;}
+    public ListingImage getListingImage(){return listingImage;}
 }
