@@ -117,7 +117,17 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
         }else if(dataObject.getClass() == dataobject.RentRequest.class) {
 
-            requestToRent();
+            RentRequest request = (RentRequest)dataObject;
+            switch (request.getOption()) {
+                case CREATE_REQUEST:
+                    requestToRent();
+                    break;
+                case REQUEST_FOR_USER:
+                    getRequestsForUser();
+                    break;
+                default:
+                    break;
+            }
 
         }else{
 
@@ -125,6 +135,54 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
     }
 
+    private void getRequestsForUser() {
+        RentRequest rentRequest = (RentRequest)dataObject;
+        try {
+            URL url = new URL(RENTING + "/requesting/");
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("GET");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+            connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
+            if(connect.getResponseCode() != 200){
+
+                BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getErrorStream()));
+                String error;
+
+                while((error = buffReader.readLine()) != null){
+
+                    this.addError(error);
+                }
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+
+            }else{
+                BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+                Gson gson = new Gson();
+                List<RentRequest> list = new ArrayList<>();
+
+                String readLine;
+                while((readLine = buffReader.readLine()) != null){
+
+                    list = gson.fromJson(readLine, new TypeToken<List<RentRequest>>(){}.getType());
+                }
+
+                rentRequest.setRentRequests(list);
+
+                connect.disconnect();
+                System.out.println("Connection successful!");
+            }
+            connect.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getSpecifiedImage(){
+
+        ListingImage specifiedListingImage = (ListingImage) dataObject;
+
+    }
     private void createListing(){
 
         CreateListing theNewListing = (CreateListing) dataObject;

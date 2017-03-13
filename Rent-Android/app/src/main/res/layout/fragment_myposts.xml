@@ -37,6 +37,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="IN"/>
+        <Button
+            android:id="@+id/RequestsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Requests"
+            android:onClick="onRequestButtonClick"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_listings_recycler_view"

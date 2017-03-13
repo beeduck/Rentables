@@ -23,6 +23,7 @@ import com.rentables.testcenter.R;
 import com.rentables.testcenter.fragment.BrowseFragment;
 import com.rentables.testcenter.fragment.HomeFragment;
 import com.rentables.testcenter.fragment.MyPostsFragment;
+import com.rentables.testcenter.fragment.RentRequestFragment;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -133,6 +134,11 @@ public class HomeActivity extends AppCompatActivity {
         Intent paymentIntent = new Intent();
         paymentIntent.setClass(this, PayPalPaymentActivity.class);
         startActivity(paymentIntent);
+    }
+
+    public void onRequestButtonClick(View view) {
+        currentFragment = new RentRequestFragment();
+        addToBackStack();
     }
 
     public void selectFrag(View view) {
