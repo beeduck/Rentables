@@ -216,7 +216,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
 
         if(!imageSet){
 
-            addImage.setText("Please select a photo.");
+            addImage.setText("Please Select a Photo.");
             addImage.setTextColor(getResources().getColor(R.color.red));
             pass = false;
         }
@@ -251,17 +251,17 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
 
         switch (priceCategoryId.toLowerCase()){
 
-            case "hours":
+            case "hour":
                 return 1;
-            case "days":
+            case "day":
                 return 2;
-            case "weeks":
+            case "week":
                 return 3;
-            case "months":
+            case "month":
                 return 4;
+            default:
+                return 1;
         }
-
-        return 1;
     }
 
     private void hideKeyboard(){

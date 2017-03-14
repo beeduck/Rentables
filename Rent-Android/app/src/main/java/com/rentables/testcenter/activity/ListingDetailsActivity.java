@@ -110,13 +110,13 @@ public class ListingDetailsActivity extends AppCompatActivity {
     private String convertCategoryId(String categoryId){
 
         switch(categoryId){
-            case "0":
-                return "Hour";
             case "1":
-                return "Day";
+                return "Hour";
             case "2":
-                return "Week";
+                return "Day";
             case "3":
+                return "Week";
+            case "4":
                 return "Month";
             default:
                 return "Hour";

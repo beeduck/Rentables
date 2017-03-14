@@ -86,7 +86,11 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
 
         if(images.length > 0){
 
-            Glide.with(currentContext).load(ServerConnection.LISTING_IMAGES + "/" + images[0]).asBitmap().into(listingImageView);
+            //Glide.with(currentContext).load(ServerConnection.LISTING_IMAGES + "/" + images[0]).asBitmap().into(listingImageView);
+            Glide
+                    .with(currentContext)
+                    .load(ServerConnection.LISTING_IMAGES + "/" + images[0])
+                    .into(listingImageView);
         }else{
 
             Glide.clear(listingImageView);
@@ -133,13 +137,13 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
     private String convertCategoryId(String categoryId){
 
         switch(categoryId){
-            case "0":
-                return "Hour";
             case "1":
-                return "Day";
+                return "Hour";
             case "2":
-                return "Week";
+                return "Day";
             case "3":
+                return "Week";
+            case "4":
                 return "Month";
             default:
                 return "Hour";

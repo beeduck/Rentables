@@ -35,14 +35,16 @@ import dataobject.*;
 public class ServerConnection<DataObject> extends NotifyingThread {
 
     //User based api calls
-    public final static String USER_LOGIN = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/oauth/token";
-    public final static String CREATE_USER = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/user";
+    public final static String PATH = "http://rentrent.ddns.net/";
+
+    public final static String USER_LOGIN = PATH + "rent-oauth/oauth/token";
+    public final static String CREATE_USER = PATH + "rent-oauth/user";
 
     //Listing based api calls
-    public final static String LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/listing";
+    public final static String LISTING = PATH + "listing";
 
     //Listing image based api calls
-    public final static String LISTING_IMAGES="http://rentapi.us-west-2.elasticbeanstalk.com/listing-images/";
+    public final static String LISTING_IMAGES = PATH + "listing-images/";
 
     //The object in question
     private DataObject dataObject;
@@ -97,7 +99,8 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
         }else if(dataObject.getClass() == ListingImage.class){
 
-            getSpecifiedImage();
+            ListingImage imageToUpload = (ListingImage) dataObject;
+            uploadImage(imageToUpload);
 
         }else if(dataObject.getClass() == Integer.class){
 
@@ -107,12 +110,6 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             throw new RuntimeException("Currently no implementation for the class: " + dataObject.getClass());
         }
-    }
-
-    private void getSpecifiedImage(){
-
-        ListingImage specifiedListingImage = (ListingImage) dataObject;
-
     }
 
     private void createListing(){
@@ -146,6 +143,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
                 while((next = reader.readLine()) != null){
 
+                    addError(next);
                     System.out.println(next);
                 }
 
@@ -206,6 +204,7 @@ public class ServerConnection<DataObject> extends NotifyingThread {
                         while((next = reader.readLine()) != null){
 
                             System.out.println(next);
+                            addError(next);
                         }
 
                         throw new RuntimeException();

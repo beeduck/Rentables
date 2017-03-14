@@ -27,7 +27,7 @@ public class CreateListing {
 
     public void setPriceCategoryId(int newPriceCategoryId){
 
-        if(newPriceCategoryId >= 1 && newPriceCategoryId <= 5){
+        if(newPriceCategoryId >= 1 && newPriceCategoryId <= 4){
 
             priceCategoryId = newPriceCategoryId;
         }
