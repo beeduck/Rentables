@@ -119,7 +119,6 @@ public class BrowseFragment extends Fragment implements ThreadListener{
 
         if(queryThread == null){
 
-            clearFocusOnSearch();
             fragmentProgressDialog.show();
 
             listings = new Listings();
@@ -153,7 +152,6 @@ public class BrowseFragment extends Fragment implements ThreadListener{
         }
 
         fragmentProgressDialog.dismiss();
-        clearFocusOnSearch();
         queryThread = null;
     }
 

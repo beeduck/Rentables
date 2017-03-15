@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Only want to be able to run one thread at a time for creating posts.
     private Fragment currentFragment;
+    private Fragment browseFragment = null;
     private AdvancedSearchDialog advancedSearch;
 
     @Override
@@ -37,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Toolbar toolbarMain = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbarMain.setTitle("Rentables");
+        toolbarMain.setTitle(getString(R.string.app_name));
         toolbarMain.inflateMenu(R.menu.overflow_menu);
         toolbarMain.getMenu().findItem(R.id.search_for_browse_fragment).setVisible(false);
         setSupportActionBar(toolbarMain);
@@ -94,8 +95,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private void clearSearchText(){
 
-        SearchView searchView = (SearchView) findViewById(R.id.search_for_browse_fragment);
-        searchView.setQuery("", false);
+        View view = findViewById(R.id.search_for_browse_fragment);
+
+        if(view.getClass() == SearchView.class){
+
+            SearchView searchView = (SearchView) view;
+            searchView.setQuery("", false);
+        }
     }
 
     private void displayAdvancedSearchDialog(){
@@ -127,7 +133,8 @@ public class HomeActivity extends AppCompatActivity {
         if (view == findViewById(R.id.button1)) {
             currentFragment = new HomeFragment();
         } else if (view == findViewById(R.id.button3)) {
-            currentFragment = new BrowseFragment();
+            if(browseFragment == null){browseFragment = new BrowseFragment();}
+            currentFragment = browseFragment;
         } else if (view == findViewById(R.id.button4)) {
             currentFragment = new MyPostsFragment();
         } else {

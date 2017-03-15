@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             android:adjustViewBounds="true"
             android:id="@+id/recycler_listing_home_thumbnail"/>
         <LinearLayout
@@ -33,10 +33,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17sp"
                 android:id="@+id/recycler_listing_home_description"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:layout_marginTop="15dp"
                 android:id="@+id/recycler_listing_home_price"/>
         </LinearLayout>
     </LinearLayout>

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -34,8 +33,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 
 import dataobject.CreateListing;
 import dataobject.ListingImage;
@@ -152,16 +149,14 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             EditText title = (EditText) findViewById(R.id.create_listing_title_edit_text);
             EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
             EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
-            EditText additionalDetails = (EditText) findViewById(R.id.create_listing_additional_details_edit_text);
             Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 
             String titleText = title.getText().toString().trim();
             String descriptionText = description.getText().toString().trim();
-            String detailsText = additionalDetails.getText().toString().trim();
             int priceCategoryId = getCorrectPriceCategoryId(per.getSelectedItem().toString());
             String priceText = price.getText().toString().trim();
 
-            if(checkAllInputs(titleText, descriptionText, detailsText, priceText, priceCategoryId)){
+            if(checkAllInputs(titleText, descriptionText, priceText, priceCategoryId)){
 
                 //If the form checks out proceed with creating the Listing.
                 showListingCreationProgressDialog();
@@ -185,12 +180,11 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         }
     }
 
-    private boolean checkAllInputs(String titleText, String descriptionText, String details, String currentPrice, int priceCategoryId){
+    private boolean checkAllInputs(String titleText, String descriptionText, String currentPrice, int priceCategoryId){
 
         EditText title = (EditText) findViewById(R.id.create_listing_title_edit_text);
         EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
         EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
-        EditText additionalDetails = (EditText) findViewById(R.id.create_listing_additional_details_edit_text);
         TextView addImage = (TextView) findViewById(R.id.image_view_text_overlay);
         Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 

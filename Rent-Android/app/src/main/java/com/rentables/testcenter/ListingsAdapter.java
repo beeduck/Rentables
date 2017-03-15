@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,10 +27,11 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
     public ListingsAdapter(ArrayList<Listing> l, LayoutInflater i, RecyclerView r, Context c, int id){
 
         adapterInflater = i;
-        listings = l;
         searchRecyclerView = r;
         currentContext = c;
         resourceID = id;
+
+        this.updateDataSet(l);
 
         listener.setRecyclerView(searchRecyclerView);
         listener.setContext(c);
@@ -76,17 +76,20 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
         Listing currentListing = listings.get(position);
         String[] images = currentListing.getImages();
         View currentView = holder.getCurrentView();
+        String price = String.valueOf(currentListing.getPrice());
+        String per = convertCategoryId(currentListing.getPriceCategoryId());
 
         TextView listingTitle = (TextView) currentView.findViewById(R.id.recycler_listing_home_title);
         TextView listingDescription = (TextView) currentView.findViewById(R.id.recycler_listing_home_description);
+        TextView listingPrice = (TextView) currentView.findViewById(R.id.recycler_listing_home_price);
         ImageView listingImageView = (ImageView) currentView.findViewById(R.id.recycler_listing_home_thumbnail);
 
         listingTitle.setText(currentListing.getTitle());
         listingDescription.setText(currentListing.getDescription());
+        listingPrice.setText("$" + price + " per " + per);
 
         if(images.length > 0){
 
-            //Glide.with(currentContext).load(ServerConnection.LISTING_IMAGES + "/" + images[0]).asBitmap().into(listingImageView);
             Glide
                     .with(currentContext)
                     .load(ServerConnection.LISTING_IMAGES + "/" + images[0])
@@ -113,17 +116,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
         listingPrice.setText(createTextForPrice(position));
     }
 
-    public void setCurrentContext(Context theContext){
-
-        currentContext = theContext;
-    }
-
-    public void updateDataSet(ArrayList<Listing> newListings){
-
-        listings = newListings;
-        listener.setListings(listings);
-    }
-
     private String createTextForPrice(int position){
 
         Listing currentListing = listings.get(position);
@@ -148,5 +140,16 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
             default:
                 return "Hour";
         }
+    }
+
+    public void setCurrentContext(Context theContext){
+
+        currentContext = theContext;
+    }
+
+    public void updateDataSet(ArrayList<Listing> newListings){
+
+        listings = newListings;
+        listener.setListings(listings);
     }
 }
