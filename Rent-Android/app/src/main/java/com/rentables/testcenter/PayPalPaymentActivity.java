@@ -14,6 +14,7 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.rentables.testcenter.activity.MainActivity;
+import com.rentables.testcenter.util.RentRequestRouteOptions;
 
 import org.json.JSONException;
 
@@ -53,6 +54,7 @@ public class PayPalPaymentActivity extends AppCompatActivity implements ThreadLi
         RentRequest rentRequest = new RentRequest();
         rentRequest.setListingId(listingBundle.getInt("id"));
         rentRequest.setRequestingUser(MainActivity.CURRENT_USER.getUserId());
+        rentRequest.setOption(RentRequestRouteOptions.CREATE_REQUEST);
         ServerConnection<RentRequest> serverConnection = new ServerConnection<>(rentRequest);
         serverConnection.addListener(this);
         requestThread = new Thread(serverConnection);

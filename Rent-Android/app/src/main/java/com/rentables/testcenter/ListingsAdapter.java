@@ -1,6 +1,7 @@
 package com.rentables.testcenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import dataobject.Listing;
+import dataobject.RentRequest;
 import server.ServerConnection;
 
 public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
 
     private ArrayList<Listing> listings;
+    private List<RentRequest> rentRequests;
     private LayoutInflater adapterInflater;
     private RecyclerView searchRecyclerView;
     private Context currentContext;
@@ -57,10 +63,21 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
 
             setupAdapterForHomeFragment(holder, position);
 
-        }else{
+        }else if(resourceID == R.layout.recycler_view_rent_request) {
+            setupAdapterForRequestFragment(holder, position);
+        }
+
+        else{
 
             throw new RuntimeException("Error at: " + this.getClass().toString());
         }
+    }
+
+    private void setupAdapterForRequestFragment(ListingsViewHolder holder, int position) {
+        RentRequest request = rentRequests.get(position);
+        View currentView = holder.getCurrentView();
+        TextView requestListingId = (TextView)currentView.findViewById(R.id.rent_request_id);
+        requestListingId.setText(String.valueOf(request.getListingId()));
     }
 
     @Override
@@ -115,6 +132,11 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
         listingDescription.setText(currentListing.getDescription());
         listingPrice.setText(createTextForPrice(position));
     }
+
+//    public void updateDataSetForRequests(List<RentRequest> requests) {
+//        rentRequests = requests;
+//        listener.setListings();
+//    }
 
     private String createTextForPrice(int position){
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rent_request"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:clipToPadding="false">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:elevation="2dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:textColor="@color/rentColorPrimaryDark"
+            android:id="@+id/rent_request_id"/>
+    </LinearLayout>
+
+</LRelativeLayout>

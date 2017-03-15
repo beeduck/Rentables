@@ -48,7 +48,7 @@ public class RentRequestFragment extends Fragment implements ThreadListener{
         Toolbar toolbar = (Toolbar) parent.findViewById(R.id.toolbar_main);
         // Inflate the layout for this fragment
         View rootView =  (View)inflater.inflate(R.layout.fragment_rent_request, container, false);
-        browseRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_listings_recycler_view);
+        browseRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_requests_recycler_view);
 
         browseLayoutManager = new LinearLayoutManager(this.getContext());
         browseRecyclerView.setLayoutManager(browseLayoutManager);
@@ -75,7 +75,7 @@ public class RentRequestFragment extends Fragment implements ThreadListener{
 
                 @Override
                 public void run() {
-
+//
 //                    browseListingsAdapter.updateDataSet(rentRequest.getRentRequests());
 //                    browseListingsAdapter.notifyDataSetChanged();
                     Log.i("it worked","Success");
