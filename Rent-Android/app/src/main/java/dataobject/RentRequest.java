@@ -10,11 +10,20 @@ import java.util.List;
 
 public class RentRequest {
 
+    private int id;
     private int listingId;
     private int requestingUser;
     private boolean isAccepted;
     private RentRequestRouteOptions option;
     private List<RentRequest> rentRequests;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public RentRequestRouteOptions getOption() {
         return option;

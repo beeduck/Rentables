@@ -2,18 +2,21 @@ package com.rentables.testcenter.fragment;
 
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.rentables.testcenter.ListingsAdapter;
 import com.rentables.testcenter.R;
@@ -39,8 +42,6 @@ public class HomeFragment extends Fragment implements ThreadListener {
     private ArrayList<Listing> theListings;
     private RentRequest rentRequest;
     private boolean threadFlag;
-    private View view;
-    private Paint p = new Paint();
 
     private Thread thread = null;
     private Thread requestThread = null;
@@ -73,7 +74,6 @@ public class HomeFragment extends Fragment implements ThreadListener {
 
         getCurrentUsersListings();
         initSwipe();
-
     }
 
     public void getCurrentUsersListings(){
@@ -113,6 +113,11 @@ public class HomeFragment extends Fragment implements ThreadListener {
                     }
                 }
             }
+            for(Listing e : currentUserListings.getListings()) {
+                if(!listingsToView.contains(e)) {
+                    listingsToView.add(e);
+                }
+            }
             if (this.getActivity() != null) {
                 this.getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -137,13 +142,54 @@ public class HomeFragment extends Fragment implements ThreadListener {
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                if(direction == ItemTouchHelper.LEFT) {
-                    removeView();
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                final RentRequest request = rentRequest.getRentRequests().get(viewHolder.getAdapterPosition());
+                listingsAdapter.onItemRemove(true, viewHolder.getAdapterPosition(), homeRecyclerView);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                if(direction == ItemTouchHelper.RIGHT) {
+                    alertDialog.setTitle("Approve Rent Request");
+                    alertDialog.setMessage("Are you sure you want to approve this request?");
+                    alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            request.setOption(RentRequestRouteOptions.ACCEPT_REQUEST);
+                            ServerConnection<RentRequest> connection = new ServerConnection<>(request);
+                            requestThread = new Thread(connection);
+                            requestThread.start();
+                            Toast.makeText(getContext(), "Approved", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            listingsAdapter.onItemRemove(false, position, homeRecyclerView);
+                            Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alertDialog.show();
                 }
-                else {
-                    removeView();
+                else if(direction == ItemTouchHelper.LEFT){
+                    alertDialog.setTitle("Deny Rent Request");
+                    alertDialog.setMessage("Are you sure you want to deny this request?");
+                    alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            request.setOption(RentRequestRouteOptions.DENY_REQUEST);
+                            ServerConnection<RentRequest> connection = new ServerConnection<>(request);
+                            requestThread = new Thread(connection);
+                            requestThread.start();
+                            Toast.makeText(getContext(), "Denied", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            listingsAdapter.onItemRemove(false, position, homeRecyclerView);
+                            Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    alertDialog.show();
                 }
             }
 
@@ -153,27 +199,31 @@ public class HomeFragment extends Fragment implements ThreadListener {
                     View itemView = viewHolder.itemView;
                     float height = (float) itemView.getBottom() - (float) itemView.getTop();
                     float width = height / 3;
-                    if(dX < 0) {
-                        p.setColor(Color.parseColor("#388E3C"));
-                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
-                        c.drawRect(background, p);
-                    }
-                    else if(dX > 0) {
-                        p.setColor(Color.parseColor("#D32F2F"));
+                    Paint p = new Paint();
+                    //Approve
+                    if(dX > 0){
+                        p.setColor(Color.parseColor("#4CAF50"));
                         RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
-                        c.drawRect(background, p);
+                        c.drawRect(background,p);
+                    }
+                    //Deny
+                    else if(dX < 0) {
+                        p.setColor(Color.parseColor("#F44336"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
                     }
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder.getAdapterPosition() > rentRequest.getRentRequests().size()-1) return 0;
+                return makeMovementFlags(0,ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT);
+            }
         };
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(homeRecyclerView);
-    }
-
-    private void removeView(){
-        if(view.getParent()!=null) {
-            ((ViewGroup) view.getParent()).removeView(view);
-        }
     }
 }

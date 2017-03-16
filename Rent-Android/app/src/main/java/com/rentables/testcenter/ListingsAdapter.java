@@ -2,6 +2,7 @@ package com.rentables.testcenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
     private Context currentContext;
     private final RecyclerViewListener listener = new RecyclerViewListener();
     private int resourceID;
+    private Listing toBeDeleted;
 
     public ListingsAdapter(ArrayList<Listing> l, LayoutInflater i, RecyclerView r, Context c, int id){
 
@@ -84,6 +86,19 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
     public int getItemCount() {
 
         return listings.size();
+    }
+
+    public void onItemRemove(boolean confirm, final int position, final RecyclerView recyclerView) {
+        Listing currentListing = listings.get(position);
+        if(!confirm && toBeDeleted != null) {
+            listings.add(position, toBeDeleted);
+            notifyItemInserted(position);
+            recyclerView.scrollToPosition(position);
+            return;
+        }
+        toBeDeleted = currentListing;
+        listings.remove(position);
+        notifyItemRemoved(position);
     }
 
     private void setupAdapterForHomeFragment(ListingsViewHolder holder, int position){

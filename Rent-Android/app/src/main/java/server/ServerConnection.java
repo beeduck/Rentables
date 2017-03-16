@@ -131,6 +131,11 @@ public class ServerConnection<DataObject> extends NotifyingThread {
                 case REQUEST_FOR_USER:
                     getRequestsForUser();
                     break;
+                case ACCEPT_REQUEST:
+                    acceptRentRequest();
+                    break;
+                case DENY_REQUEST:
+                    denyRentRequest();
                 default:
                     break;
             }
@@ -138,6 +143,70 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }else{
 
             throw new RuntimeException("Currently no implementation for the class: " + dataObject.getClass());
+        }
+    }
+
+    private void denyRentRequest() {
+        RentRequest rentRequest = (RentRequest)dataObject;
+        try {
+            URL url = new URL(RENTING + "/request/" + Integer.toString(rentRequest.getListingId()) + "/deny/"
+                    + Integer.toString(rentRequest.getId()));
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("PUT");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+            connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
+            if(connect.getResponseCode() != 200){
+
+                BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getErrorStream()));
+                String error;
+
+                while((error = buffReader.readLine()) != null){
+
+                    this.addError(error);
+                }
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+
+            }else{
+
+                System.out.println("Connection successful!");
+            }
+            connect.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void acceptRentRequest() {
+        RentRequest rentRequest = (RentRequest)dataObject;
+        try {
+            URL url = new URL(RENTING + "/request/" + Integer.toString(rentRequest.getListingId()) + "/accept/"
+                + Integer.toString(rentRequest.getId()));
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("PUT");
+            connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestProperty("charset", "utf-8");
+            connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
+            if(connect.getResponseCode() != 200){
+
+                BufferedReader buffReader = new BufferedReader(new InputStreamReader(connect.getErrorStream()));
+                String error;
+
+                while((error = buffReader.readLine()) != null){
+
+                    this.addError(error);
+                }
+
+                throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
+
+            }else{
+
+                System.out.println("Connection successful!");
+            }
+            connect.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
