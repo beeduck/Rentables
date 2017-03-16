@@ -3,6 +3,8 @@ package com.rent.utility.oauth;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -15,8 +17,9 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
         OAuth2Authentication oAuth2Authentication = super.extractAuthentication(map);
 
         Integer userId = null;
-        if( ((String)map.get("authorities")).equalsIgnoreCase("ROLE_USER")) {
-            userId = Integer.parseInt((String) map.get("userId"));
+        if( ((ArrayList)map.get("authorities")).contains("ROLE_USER")) {
+            Object object = map.get("userId");
+            userId = (Integer)map.get("userId");
         }
         CustomOAuth2Authentication customOAuth2Authentication = new CustomOAuth2Authentication(userId,
                 oAuth2Authentication.getOAuth2Request(), oAuth2Authentication.getUserAuthentication());

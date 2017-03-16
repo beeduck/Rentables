@@ -17,11 +17,11 @@ function setConnected(connected) {
 function connect() {
     var headers = {
       // additional header
-      'Access-Control-Allow-Origin': ''
+      'Authorization': 'Bearer 37177f44-66f4-436a-9075-ea09e9a589f7'
     };
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+    var socket = new SockJS('http://localhost:8080/rent-chat?access_token=37177f44-66f4-436a-9075-ea09e9a589f7');
     stompClient = Stomp.over(socket);
-    stompClient.connect(headers, function (frame) {
+    stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/' + $("#userId").val(), function (greeting) {
@@ -44,7 +44,7 @@ function disconnect() {
 }
 
 function sendMessage() {
-    stompClient.send("/app/hello/" + $("#destinationUserId").val(), {}, JSON.stringify({'userId': fromUserId, 'message': $("#message").val()}));
+    stompClient.send("/msg/hello/" + $("#destinationUserId").val(), {}, JSON.stringify({'userId': fromUserId, 'message': $("#message").val()}));
 }
 
 function showGreeting(message) {
