@@ -17,9 +17,9 @@ function setConnected(connected) {
 function connect() {
     var headers = {
       // additional header
-      'Authorization': 'Bearer 37177f44-66f4-436a-9075-ea09e9a589f7'
     };
-    var socket = new SockJS('http://localhost:8080/rent-chat?access_token=37177f44-66f4-436a-9075-ea09e9a589f7');
+    var oauthToken = $("#token").val();
+    var socket = new SockJS('http://localhost:8082/rent-chat?access_token=' + oauthToken);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
@@ -30,6 +30,7 @@ function connect() {
         });
         fromUserId = $("#userId").val();
         $("#userId").prop("disabled", true);
+        $("#token").prop("disabled", true);
     });
 
 }
@@ -41,6 +42,7 @@ function disconnect() {
     setConnected(false);
     console.log("Disconnected");
     $("#userId").prop("disabled", false);
+    $("#token").prop("disabled", false);
 }
 
 function sendMessage() {
