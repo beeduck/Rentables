@@ -21,7 +21,6 @@
         android:layout_above="@+id/toolbar_navigate"
         android:background="@color/whiteSmoke">
     </LinearLayout>
-
     <include
         android:id="@+id/toolbar_navigate"
         layout="@layout/toolbar_navigate"

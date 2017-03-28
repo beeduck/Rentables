@@ -7,6 +7,7 @@ public class CreateListing {
     private double price;
     private int priceCategoryId;
     private int userId;
+    private ListingImage listingImage = new ListingImage();
 
     public void setTitle(String newTitle){title = newTitle;}
     public void setDescription(String newDescription){description = newDescription;}
@@ -26,7 +27,7 @@ public class CreateListing {
 
     public void setPriceCategoryId(int newPriceCategoryId){
 
-        if(newPriceCategoryId >= 1 && newPriceCategoryId <= 5){
+        if(newPriceCategoryId >= 1 && newPriceCategoryId <= 4){
 
             priceCategoryId = newPriceCategoryId;
         }
@@ -38,4 +39,5 @@ public class CreateListing {
     }
 
     public int getUserId(){return userId;}
+    public ListingImage getListingImage(){return listingImage;}
 }

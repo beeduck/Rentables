@@ -60,6 +60,8 @@
     <string name="create_listing_additional_details_hint">Additional Details…</string>
     <string name="create_listing_additional_details_string">Add any additional details you would like to add put here.</string>
     <string name="create_listing_button_string">Create Listing</string>
+    <string name="create_listing_add_image">Add a Photo!</string>
+    <string name="create_listing_no_photo">No photos selected yet!</string>
 
     <string name="user_posts_title">User Posts</string>
 
@@ -68,6 +70,5 @@
         <item>Day</item>
         <item>Week</item>
         <item>Month</item>
-        <item>Semester</item>
     </string-array>
 </resources>

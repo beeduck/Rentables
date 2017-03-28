@@ -19,7 +19,6 @@ import server.ServerConnection;
 
 public class ListingDetailsActivity extends AppCompatActivity {
 
-    private Thread imageThread;
     private final Listing currentListing = new Listing();
 
     @Override
@@ -28,15 +27,15 @@ public class ListingDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_details);
 
-        //Setup the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Rentables");
-        setSupportActionBar(toolbar);
-
         //Recreate the listing passed to the activity.
         createListingFromIntent();
         setImage();
         setText();
+
+        //Setup the toolbar.
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar.setTitle(currentListing.getTitle());
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -111,13 +110,13 @@ public class ListingDetailsActivity extends AppCompatActivity {
     private String convertCategoryId(String categoryId){
 
         switch(categoryId){
-            case "0":
-                return "Hour";
             case "1":
-                return "Day";
+                return "Hour";
             case "2":
-                return "Week";
+                return "Day";
             case "3":
+                return "Week";
+            case "4":
                 return "Month";
             default:
                 return "Hour";

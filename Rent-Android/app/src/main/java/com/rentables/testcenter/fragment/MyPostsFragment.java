@@ -49,7 +49,7 @@ public class MyPostsFragment extends Fragment implements ThreadListener {
         browseRecyclerView.setLayoutManager(browseLayoutManager);
 
         theListings = listings.getListings();
-        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext());
+        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext(), R.layout.recyclerview_listing);
         browseRecyclerView.setAdapter(browseListingsAdapter);
 
         return rootView;

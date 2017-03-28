@@ -1,17 +1,27 @@
 package server;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Base64;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +35,16 @@ import dataobject.*;
 public class ServerConnection<DataObject> extends NotifyingThread {
 
     //User based api calls
-    public final static String USER_LOGIN = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/oauth/token";
-    public final static String CREATE_USER = "http://rentapi.us-west-2.elasticbeanstalk.com/rent-oauth/user";
+    public final static String PATH = "http://rentrent.ddns.net/";
+
+    public final static String USER_LOGIN = PATH + "rent-oauth/oauth/token";
+    public final static String CREATE_USER = PATH + "rent-oauth/user";
 
     //Listing based api calls
-    public final static String LISTING = "http://rentapi.us-west-2.elasticbeanstalk.com/listing";
+    public final static String LISTING = PATH + "listing";
 
     //Listing image based api calls
-    public final static String LISTING_IMAGES="http://rentapi.us-west-2.elasticbeanstalk.com/listing-images";
+    public final static String LISTING_IMAGES = PATH + "listing-images/";
 
     //The object in question
     private DataObject dataObject;
@@ -42,6 +54,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     private String basicAuthUsername = "postmanApi";
     private String basicAuthPassword = "";
     private String basicAuth;
+    private String lineFeed = "\r\n";
+    private String hyphens = "--";
+    private String formBoundary = "Rentables";
+    private String boundary = hyphens + formBoundary + lineFeed;
 
     public ServerConnection(DataObject data){
 
@@ -81,9 +97,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
             createListing();
 
-        }else if(dataObject.getClass() == dataobject.Image.class){
+        }else if(dataObject.getClass() == ListingImage.class){
 
-            getSpecifiedImage();
+            ListingImage imageToUpload = (ListingImage) dataObject;
+            uploadImage(imageToUpload);
 
         }else if(dataObject.getClass() == Integer.class){
 
@@ -95,15 +112,10 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
     }
 
-    private void getSpecifiedImage(){
-
-        Image specifiedImage = (Image) dataObject;
-
-    }
-
     private void createListing(){
 
         CreateListing theNewListing = (CreateListing) dataObject;
+        ListingImage image = theNewListing.getListingImage();
 
         try{
 
@@ -115,12 +127,11 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             connect.setRequestProperty("charset", "utf-8");
             connect.setRequestProperty("Authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setExclusionStrategies(new ImageExclusionStrategy()).serializeNulls().create();
             String json = gson.toJson(theNewListing);
 
             DataOutputStream outputStream = new DataOutputStream(connect.getOutputStream());
 
-            System.out.println(json);
             outputStream.write(json.getBytes());
             outputStream.flush();
             outputStream.close();
@@ -132,13 +143,22 @@ public class ServerConnection<DataObject> extends NotifyingThread {
 
                 while((next = reader.readLine()) != null){
 
+                    addError(next);
                     System.out.println(next);
                 }
 
                 throw new RuntimeException("HTTP error with response code: " + connect.getResponseCode());
             }
 
+            //Get the id that was returned from the newly created listing.
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+            image.setId(getCreatedListingId(reader));
+
+            //Disconnect.
             connect.disconnect();
+
+            //Upload the image.
+            uploadImage(image);
 
         }catch(MalformedURLException malform){
 
@@ -153,6 +173,108 @@ public class ServerConnection<DataObject> extends NotifyingThread {
             runtime.printStackTrace();
         }
     }
+
+    private void uploadImage(ListingImage image){
+
+        //The ListingImage should have its designated Listing id within it and the path as well.
+
+        if(image != null){
+            if(image.getId() != -1){
+
+                try{
+
+                    URL url = new URL(LISTING_IMAGES);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setRequestProperty("content-type", "multipart/form-data; boundary=" + formBoundary);
+                    connection.setRequestProperty("authorization", "Bearer " + MainActivity.CURRENT_USER.getAccessToken());
+                    connection.setRequestProperty("cache-control", "no-cache");
+
+                    DataOutputStream requestBody = new DataOutputStream(connection.getOutputStream());
+
+                    createImageUploadRequestBody(requestBody, image);
+
+                    if(connection.getResponseCode() != 200){
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                        String next;
+
+                        while((next = reader.readLine()) != null){
+
+                            System.out.println(next);
+                            addError(next);
+                        }
+
+                        throw new RuntimeException();
+                    }
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                    String next;
+
+                    while((next = reader.readLine()) != null){
+
+                        System.out.println(next);
+                    }
+
+                    connection.disconnect();
+                    image.getImageStream().close();
+
+                } catch (MalformedURLException e) {
+
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                } catch (RuntimeException e){
+
+                    e.printStackTrace();
+                }
+
+
+            }else{
+
+                throw new RuntimeException("Error: The Image being uploaded does not have an associated Listing id.");
+            }
+        }
+    }
+
+    private void createImageUploadRequestBody(DataOutputStream requestBody, ListingImage image) throws IOException {
+
+        //Creating the body of the request.
+        int id = image.getId();
+
+        //TODO Change this placeholder eventually?
+        String placeHolder = "placeholder.jpg";
+
+        //Add the listing Id
+        requestBody.writeBytes(boundary);
+        requestBody.writeBytes("Content-Disposition: form-data; name=\"listingId\"" + lineFeed);
+        requestBody.writeBytes(lineFeed);
+        requestBody.writeBytes(String.valueOf(id) + lineFeed);
+
+        //Add the image
+        requestBody.writeBytes(boundary);
+        requestBody.writeBytes("Content-Disposition: form-data; name=\"files\"; filename=\"" + placeHolder + "\"" + lineFeed);
+        requestBody.writeBytes("Content-Type: image/jpeg" + lineFeed);
+        requestBody.writeBytes(lineFeed);
+
+        writeFile(image.getImageStream(), requestBody);
+        requestBody.writeBytes(lineFeed);
+        requestBody.writeBytes(hyphens + formBoundary + hyphens);
+    }
+
+    private void writeFile(FileInputStream file, DataOutputStream requestBody) throws IOException {
+
+        Bitmap bmp = BitmapFactory.decodeStream(file);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 30, requestBody);
+
+    }
+
 
     private void getSpecifiedListings(){
 
@@ -398,5 +520,14 @@ public class ServerConnection<DataObject> extends NotifyingThread {
         }
 
         return toEncode;
+    }
+
+    private int getCreatedListingId(BufferedReader reader){
+
+        Gson gson = new Gson();
+
+        Listing createdListing = gson.fromJson(reader, Listing.class);
+
+        return createdListing.getId();
     }
 }

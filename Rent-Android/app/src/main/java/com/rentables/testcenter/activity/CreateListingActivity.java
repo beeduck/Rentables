@@ -29,11 +29,13 @@ import com.rentables.testcenter.dialog.CreatePostDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import dataobject.CreateListing;
+import dataobject.ListingImage;
 import server.NotifyingThread;
 import server.ServerConnection;
 import server.ThreadListener;
@@ -41,8 +43,10 @@ import server.ThreadListener;
 public class CreateListingActivity extends AppCompatActivity implements ThreadListener {
 
     private Thread currentThread = null;
+    private CreateListing currentListing = new CreateListing();
     private ProgressDialog listingCreationProgress;
 
+    private boolean imageSet = false;
     private String task;
     private static final int REQUEST_CAMERA = 0;
     private static final int SELECT_FILE = 1;
@@ -145,19 +149,16 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             EditText title = (EditText) findViewById(R.id.create_listing_title_edit_text);
             EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
             EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
-            EditText additionalDetails = (EditText) findViewById(R.id.create_listing_additional_details_edit_text);
             Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 
             String titleText = title.getText().toString().trim();
             String descriptionText = description.getText().toString().trim();
-            String detailsText = additionalDetails.getText().toString().trim();
             int priceCategoryId = getCorrectPriceCategoryId(per.getSelectedItem().toString());
             String priceText = price.getText().toString().trim();
 
-            if(checkAllInputs(titleText, descriptionText, detailsText, priceText, priceCategoryId)){
+            if(checkAllInputs(titleText, descriptionText, priceText, priceCategoryId)){
 
                 //If the form checks out proceed with creating the Listing.
-                CreateListing currentListing = new CreateListing();
                 showListingCreationProgressDialog();
 
                 currentListing.setTitle(titleText);
@@ -179,12 +180,12 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         }
     }
 
-    private boolean checkAllInputs(String titleText, String descriptionText, String details, String currentPrice, int priceCategoryId){
+    private boolean checkAllInputs(String titleText, String descriptionText, String currentPrice, int priceCategoryId){
 
         EditText title = (EditText) findViewById(R.id.create_listing_title_edit_text);
         EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
         EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
-        EditText additionalDetails = (EditText) findViewById(R.id.create_listing_additional_details_edit_text);
+        TextView addImage = (TextView) findViewById(R.id.image_view_text_overlay);
         Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 
         boolean pass = true;
@@ -204,6 +205,13 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         if(currentPrice.length() == 0){
 
             price.setError("Please Enter a Price.");
+            pass = false;
+        }
+
+        if(!imageSet){
+
+            addImage.setText("Please Select a Photo.");
+            addImage.setTextColor(getResources().getColor(R.color.red));
             pass = false;
         }
 
@@ -237,19 +245,17 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
 
         switch (priceCategoryId.toLowerCase()){
 
-            case "hours":
+            case "hour":
                 return 1;
-            case "days":
+            case "day":
                 return 2;
-            case "weeks":
+            case "week":
                 return 3;
-            case "months":
+            case "month":
                 return 4;
-            case "semester":
-                return 5;
+            default:
+                return 1;
         }
-
-        return 1;
     }
 
     private void hideKeyboard(){
@@ -333,10 +339,26 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
 
-        Bitmap bm=null;
+        //Get input stream and then pass it to the output stream
+
+        try {
+
+            FileInputStream fileStream = (FileInputStream) getApplicationContext().getContentResolver().openInputStream(data.getData());
+            ListingImage image = currentListing.getListingImage();
+            image.setImageStream(fileStream);
+            image.setUri(data.getData());
+            imageSet = true;
+
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+        }
+
+
+        /*Bitmap bm=null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -345,7 +367,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             }
         }
         newText.setText("");
-        img.setImageBitmap(bm);
+        img.setImageBitmap(bm);*/
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -368,6 +390,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             e.printStackTrace();
         }
 
+        newText.setText("");
         img.setImageBitmap(thumbnail);
     }
 }
