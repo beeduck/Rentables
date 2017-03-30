@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.rentables.testcenter.PayPalPaymentActivity;
 import com.rentables.testcenter.R;
 
@@ -21,7 +22,7 @@ import server.ServerConnection;
 
 public class ListingDetailsActivity extends AppCompatActivity {
 
-    private final Listing currentListing = new Listing();
+    private Listing currentListing = new Listing();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -74,17 +75,7 @@ public class ListingDetailsActivity extends AppCompatActivity {
         //Through the intent.
 
         Bundle b = this.getIntent().getExtras();
-
-        currentListing.setId(b.getInt("id"));
-        currentListing.setTitle(b.getString("title"));
-        currentListing.setDescription(b.getString("description"));
-        currentListing.setCreateDate(b.getString("createDate"));
-        currentListing.setLastEditDate(b.getString("lastEditDate"));
-        currentListing.setUserId(b.getString("userId"));
-        currentListing.setPriceCategoryId(b.getString("priceCategoryId"));
-        currentListing.setImages(b.getStringArray("images"));
-        currentListing.setPrice(b.getDouble("price"));
-        currentListing.setActive(b.getBoolean("active"));
+        currentListing = new Gson().fromJson(b.getString("listing"),Listing.class);
     }
 
     private void setImage(){

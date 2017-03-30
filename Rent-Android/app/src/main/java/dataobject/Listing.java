@@ -1,5 +1,7 @@
 package dataobject;
 
+import java.util.List;
+
 public class Listing {
 
     private int id;
@@ -13,6 +15,8 @@ public class Listing {
     private double price;
     private boolean active;
 
+    private List<RentRequest> rentRequests;
+
     public void setId(int i){id = i;}
     public void setTitle(String s){title = s;}
     public void setDescription(String s){description = s;}
@@ -23,6 +27,9 @@ public class Listing {
     public void setImages(String[] i){images = i;}
     public void setPrice(double d){price = d;}
     public void setActive(boolean b){active = b;}
+    public void setRentRequests(List<RentRequest> rentRequests) {
+        this.rentRequests = rentRequests;
+    }
 
     public int getId(){return id;}
     public String getTitle(){return title;}
@@ -34,4 +41,7 @@ public class Listing {
     public String[] getImages(){return images;}
     public double getPrice(){return price;}
     public boolean getActive(){return active;}
+    public List<RentRequest> getRentRequests() {
+        return rentRequests;
+    }
 }

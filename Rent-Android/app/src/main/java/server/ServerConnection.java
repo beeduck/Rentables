@@ -40,11 +40,11 @@ public class ServerConnection<DataObject> extends NotifyingThread {
     public final static String PATH = "http://rentrent.ddns.net/";
 
     //Listing image based api calls
-    public final static String BASE_DEV_API = "http://10.0.2.2:8080";
-    public final static String BASE_DEV_AUTH = "http://10.0.2.2:8081";
+//    public final static String BASE_DEV_API = "http://10.0.2.2:8080";
+//    public final static String BASE_DEV_AUTH = "http://10.0.2.2:8081";
 
-//    public final static String BASE_DEV_API = "http://rentables.bounceme.net";
-//    public final static String BASE_DEV_AUTH = "http://rentables.bounceme.net/rent-oauth";
+    public final static String BASE_DEV_API = "http://rentables.bounceme.net";
+    public final static String BASE_DEV_AUTH = "http://rentables.bounceme.net/rent-oauth";
 //    public final static String BASE_DEV_API = "http://localhost:8080";
 //    public final static String BASE_DEV_AUTH = "http://localhost:8081";
 

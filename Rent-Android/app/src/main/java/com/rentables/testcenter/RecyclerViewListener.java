@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.rentables.testcenter.activity.ListingDetailsActivity;
 
 import java.util.ArrayList;
 
 import dataobject.Listing;
+import dataobject.RentRequest;
 
 public class RecyclerViewListener implements View.OnClickListener {
 
@@ -59,20 +61,12 @@ public class RecyclerViewListener implements View.OnClickListener {
         String[] images = currentListing.getImages();
         double price = currentListing.getPrice();
         boolean active = currentListing.getActive();
+        String serializedObj = (new Gson()).toJson(currentListing);
 
         //Create the new Intent object.
         Intent intent = new Intent();
         intent.setClass(contextForListener, ListingDetailsActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("title", title);
-        intent.putExtra("description", description);
-        intent.putExtra("createDate", createDate);
-        intent.putExtra("lastEditDate", lastEditDate);
-        intent.putExtra("userId", userId);
-        intent.putExtra("priceCategoryId", priceCategoryId);
-        intent.putExtra("images", images);
-        intent.putExtra("price", price);
-        intent.putExtra("active", active);
+        intent.putExtra("listing", serializedObj);
 
         contextForListener.startActivity(intent);
     }

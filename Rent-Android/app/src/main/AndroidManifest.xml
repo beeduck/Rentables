@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rentables.testcenter">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/for_rent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,22 +30,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.HomeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.RegisterUserActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:label="@string/Register"/>
-        <activity android:name=".activity.CreateListingActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".activity.ListingDetailsActivity"/>
-        <activity android:name=".PayPalPaymentActivity"></activity>
+        <activity
+            android:name=".activity.RegisterUserActivity"
+            android:label="@string/Register"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".activity.CreateListingActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.ListingDetailsActivity" />
+        <activity android:name=".PayPalPaymentActivity" />
+        <activity android:name=".activity.RentRequestsActivity"></activity>
     </application>
-    <uses-permission android:name = "android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false" />
+
 </manifest>

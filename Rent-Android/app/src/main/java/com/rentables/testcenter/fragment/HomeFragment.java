@@ -110,6 +110,10 @@ public class HomeFragment extends Fragment implements ThreadListener {
                 for(Listing e : currentUserListings.getListings()) {
                     if(r.getListingId() == e.getId()) {
                         listingsToView.add(e);
+                        if(e.getRentRequests() == null) {
+                            e.setRentRequests(new ArrayList<RentRequest>());
+                        }
+                        e.getRentRequests().add(r);
                     }
                 }
             }
