@@ -59,6 +59,12 @@
                     android:layout_height="wrap_content"
                     android:text = "Rent"
                     android:onClick="toPayPalPaymentActivity"/>
+                <Button
+                    android:id="@+id/Requests"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text = "Requests"
+                    android:onClick="toRentRequestsActivity"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

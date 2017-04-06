@@ -50,17 +50,6 @@ public class RecyclerViewListener implements View.OnClickListener {
     private void startListingDetailsActivity(Listing currentListing){
 
         //We need to get the data from the current listing's object.
-
-        int id = currentListing.getId();
-        String title = currentListing.getTitle();
-        String description = currentListing.getDescription();
-        String createDate = currentListing.getCreateDate();
-        String lastEditDate = currentListing.getLastEditDate();
-        String userId = currentListing.getUserId();
-        String priceCategoryId = currentListing.getPriceCategoryId();
-        String[] images = currentListing.getImages();
-        double price = currentListing.getPrice();
-        boolean active = currentListing.getActive();
         String serializedObj = (new Gson()).toJson(currentListing);
 
         //Create the new Intent object.

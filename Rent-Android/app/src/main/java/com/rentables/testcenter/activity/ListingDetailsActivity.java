@@ -17,7 +17,10 @@ import com.google.gson.Gson;
 import com.rentables.testcenter.PayPalPaymentActivity;
 import com.rentables.testcenter.R;
 
+import java.util.List;
+
 import dataobject.Listing;
+import dataobject.RentRequest;
 import server.ServerConnection;
 
 public class ListingDetailsActivity extends AppCompatActivity {
@@ -134,6 +137,13 @@ public class ListingDetailsActivity extends AppCompatActivity {
         listingBundle.putInt("id",currentListing.getId());
         paymentIntent.putExtras(listingBundle);
         startActivity(paymentIntent);
+    }
+
+    public void toRentRequestsActivity(View view) {
+        Intent requestsIntent = new Intent();
+        requestsIntent.setClass(this, RentRequestsActivity.class);
+        requestsIntent.putExtra("listing", new Gson().toJson(currentListing));
+        startActivity(requestsIntent);
     }
 
     public void userLogout(){
