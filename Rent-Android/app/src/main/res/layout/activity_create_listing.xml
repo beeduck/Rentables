@@ -58,10 +58,14 @@
                     android:id="@+id/create_listing_add_photo"
                     android:layout_marginTop="15dp"
                     android:text="@string/create_listing_add_image" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="120dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:layout_marginTop="20dp">
+
                     <ImageButton
                         android:id="@+id/image_button"
                         android:layout_width="75dp"
@@ -70,22 +74,99 @@
                         android:background="@color/grey"
                         android:onClick="selectImage" />
                     <ImageView
-                        android:id="@+id/target_image"
-                        android:layout_width="100dp"
+                        android:id="@+id/target_image1"
+                        android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:layout_marginLeft="150dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/image_button"
                         android:background="@drawable/image_view_border" />
+                    <ImageButton
+                        android:id="@+id/image_delete_button1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_alignRight="@+id/target_image1"
+                        android:src="@drawable/ic_clear_white_24dp"
+                        android:background="@drawable/circle_button"
+                        android:onClick="removeImage"
+                        android:visibility="gone"/>
                     <TextView
-                        android:id="@+id/image_view_text_overlay"
+                        android:id="@+id/image_view_text_overlay1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No photo selected yet"
+                        android:textSize="10dp"
+                        android:layout_alignLeft="@+id/target_image1"
+                        android:layout_alignRight="@+id/target_image1"
+                        android:layout_alignBottom="@+id/target_image1"
+                        android:layout_alignTop="@+id/target_image1"
+                        android:gravity="center"/>
+
+
+                    <ImageView
+                        android:id="@+id/target_image2"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/target_image1"
+                        android:background="@drawable/image_view_border" />
+                    <ImageButton
+                        android:id="@+id/image_delete_button2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_alignRight="@+id/target_image2"
+                        android:src="@drawable/ic_clear_white_24dp"
+                        android:background="@drawable/circle_button"
+                        android:onClick="removeImage"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/image_view_text_overlay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No photo selected yet"
+                        android:textSize="10dp"
+                        android:layout_alignLeft="@+id/target_image2"
+                        android:layout_alignRight="@+id/target_image2"
+                        android:layout_alignBottom="@+id/target_image2"
+                        android:layout_alignTop="@+id/target_image2"
+                        android:gravity="center"/>
+
+
+                    <ImageView
+                        android:id="@+id/target_image3"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/target_image2"
+                        android:background="@drawable/image_view_border" />
+                    <ImageButton
+                        android:id="@+id/image_delete_button3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_alignRight="@+id/target_image3"
+                        android:src="@drawable/ic_clear_white_24dp"
+                        android:background="@drawable/circle_button"
+                        android:onClick="removeImage"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/image_view_text_overlay3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/create_listing_no_photo"
-                        android:layout_alignStart="@+id/target_image"
-                        android:layout_alignEnd="@+id/target_image"
-                        android:layout_alignBottom="@+id/target_image"
-                        android:layout_alignTop="@+id/target_image"
+                        android:textSize="10dp"
+                        android:layout_alignLeft="@+id/target_image3"
+                        android:layout_alignRight="@+id/target_image3"
+                        android:layout_alignBottom="@+id/target_image3"
+                        android:layout_alignTop="@+id/target_image3"
                         android:gravity="center"/>
+
                 </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
