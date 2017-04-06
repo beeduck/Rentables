@@ -7,9 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,8 +55,9 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
     private String task;
     private static final int REQUEST_CAMERA = 0;
     private static final int SELECT_FILE = 1;
-    private ImageView img;
-    private TextView newText;
+    private ImageView img1, img2, img3;
+    private TextView newText1, newText2,newText3;
+    private ImageButton btnShow1, btnShow2, btnShow3;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -59,8 +65,15 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_listing);
 
-        img = (ImageView)findViewById(R.id.target_image);
-        newText = (TextView)findViewById(R.id.image_view_text_overlay);
+        img1 = (ImageView)findViewById(R.id.target_image1);
+        img2 = (ImageView)findViewById(R.id.target_image2);
+        img3 = (ImageView)findViewById(R.id.target_image3);
+        newText1 = (TextView)findViewById(R.id.image_view_text_overlay1);
+        newText2 = (TextView)findViewById(R.id.image_view_text_overlay2);
+        newText3 = (TextView)findViewById(R.id.image_view_text_overlay3);
+        btnShow1 = (ImageButton)findViewById(R.id.image_delete_button1);
+        btnShow2 = (ImageButton)findViewById(R.id.image_delete_button2);
+        btnShow3 = (ImageButton)findViewById(R.id.image_delete_button3);
 
         setupToolbar();
         setTextForSpinners();
@@ -185,7 +198,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         EditText title = (EditText) findViewById(R.id.create_listing_title_edit_text);
         EditText description = (EditText) findViewById(R.id.create_listing_description_edit_text);
         EditText price = (EditText) findViewById(R.id.create_listing_price_edit_text);
-        TextView addImage = (TextView) findViewById(R.id.image_view_text_overlay);
+        TextView addImage = (TextView) findViewById(R.id.image_view_text_overlay1);
         Spinner per = (Spinner) findViewById(R.id.create_listing_per_spinner);
 
         boolean pass = true;
@@ -358,7 +371,7 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
         }
 
 
-        /*Bitmap bm=null;
+        Bitmap bm=null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -366,8 +379,21 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
                 e.printStackTrace();
             }
         }
-        newText.setText("");
-        img.setImageBitmap(bm);*/
+
+
+        if (!hasImage(img1)) {
+            img1.setImageBitmap(bm);
+            newText1.setText("");
+            btnShow1.setVisibility(View.VISIBLE);
+        } else if (!hasImage(img2)) {
+            img2.setImageBitmap(bm);
+            newText2.setText("");
+            btnShow2.setVisibility(View.VISIBLE);
+        } else {
+            img3.setImageBitmap(bm);
+            newText3.setText("");
+            btnShow3.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -390,7 +416,54 @@ public class CreateListingActivity extends AppCompatActivity implements ThreadLi
             e.printStackTrace();
         }
 
-        newText.setText("");
-        img.setImageBitmap(thumbnail);
+
+        if (!hasImage(img1)) {
+            img1.setImageBitmap(thumbnail);
+            newText1.setText("");
+            btnShow1.setVisibility(View.VISIBLE);
+        } else if (!hasImage(img2)) {
+            img2.setImageBitmap(thumbnail);
+            newText2.setText("");
+            btnShow2.setVisibility(View.VISIBLE);
+        } else {
+            img3.setImageBitmap(thumbnail);
+            newText3.setText("");
+            btnShow3.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean hasImage(@NonNull ImageView view) {
+        Drawable drawable = view.getDrawable();
+        boolean hasImage = (drawable != null);
+
+        if (hasImage && (drawable instanceof BitmapDrawable)) {
+            hasImage = ((BitmapDrawable)drawable).getBitmap() != null;
+        }
+
+        return hasImage;
+    }
+
+    public void removeImage(View view) {
+
+        switch(view.getId()) {
+            case R.id.image_delete_button1:
+                img1.setImageBitmap(null);
+                newText1.setText(R.string.create_listing_no_photo);
+                btnShow1.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.image_delete_button2:
+                img2.setImageBitmap(null);
+                newText2.setText(R.string.create_listing_no_photo);
+                btnShow2.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.image_delete_button3:
+                img3.setImageBitmap(null);
+                newText3.setText(R.string.create_listing_no_photo);
+                btnShow3.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                throw new RuntimeException("Unknown button ID");
+
+        }
     }
 }
