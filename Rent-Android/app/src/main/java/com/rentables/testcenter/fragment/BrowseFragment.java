@@ -55,7 +55,7 @@ public class BrowseFragment extends Fragment implements ThreadListener{
         browseRecyclerView.setLayoutManager(browseLayoutManager);
 
         theListings = listings.getListings();
-        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext(), R.layout.recyclerview_listing);
+        browseListingsAdapter = new ListingsAdapter(theListings, inflater, browseRecyclerView, this.getContext(), R.layout.recycler_view_listing_home);
         browseListingsAdapter.setCurrentContext(this.getContext());
         browseRecyclerView.setAdapter(browseListingsAdapter);
 

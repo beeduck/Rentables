@@ -105,15 +105,29 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsViewHolder> {
         //Method for creating the Recycler View for the Browse Fragment.
 
         Listing currentListing = listings.get(position);
+        String[] images = currentListing.getImages();
         View currentView = holder.getCurrentView();
 
         TextView listingTitle = (TextView) currentView.findViewById(R.id.user_listing_title);
         TextView listingDescription = (TextView) currentView.findViewById(R.id.user_listing_description);
         TextView listingPrice = (TextView) currentView.findViewById(R.id.user_listing_price);
+        ImageView listingImageView = (ImageView) currentView.findViewById(R.id.recycler_listing_home_thumbnail);
 
         listingTitle.setText(currentListing.getTitle());
         listingDescription.setText(currentListing.getDescription());
         listingPrice.setText(createTextForPrice(position));
+
+
+        if(images.length > 0){
+
+            Glide
+                    .with(currentContext)
+                    .load(ServerConnection.LISTING_IMAGES + "/" + images[0])
+                    .into(listingImageView);
+        }else{
+
+            Glide.clear(listingImageView);
+        }
     }
 
     private String createTextForPrice(int position){
