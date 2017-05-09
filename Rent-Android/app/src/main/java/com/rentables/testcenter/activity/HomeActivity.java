@@ -128,6 +128,12 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(settingsIntent);
     }
 
+    public void toPayPayPaymentActivity(View view) {
+        Intent paymentIntent = new Intent();
+        paymentIntent.setClass(this, PayPalPaymentActivity.class);
+        startActivity(paymentIntent);
+    }
+
     public void selectFrag(View view) {
 
         if (view == findViewById(R.id.button1)) {
